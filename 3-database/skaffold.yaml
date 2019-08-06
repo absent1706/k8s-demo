@@ -1,6 +1,8 @@
 apiVersion: skaffold/v1beta13
 kind: Config
 build:
+  tagPolicy:
+    gitCommit: {}  
   artifacts:
   - image: listings-service
     context: ./listings
