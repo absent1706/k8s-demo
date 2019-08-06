@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: api
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api/listings
+        backend:
+          serviceName: listings
+          servicePort: 80
+      - path: /api/notifications
+        backend:
+          serviceName: notifications
+          servicePort: 80

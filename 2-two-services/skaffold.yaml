@@ -1,0 +1,16 @@
+apiVersion: skaffold/v1beta13
+kind: Config
+build:
+  artifacts:
+  - image: listings-service
+    context: ./listings
+  - image: notifications-service
+    context: ./notifications
+  # local:
+  #   useDockerCLI: true  
+deploy:
+  kubectl:
+    manifests:
+      - ./listings/deployment.yaml
+      - ./notifications/deployment.yaml
+      - ./ingress.yaml
