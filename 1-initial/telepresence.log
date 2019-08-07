@@ -1,0 +1,302 @@
+   0.0 TEL | Telepresence 0.101 launched at Wed Aug  7 16:49:42 2019
+   0.0 TEL |   /usr/bin/telepresence --swap-deployment listings-deployment --expose 8080 --run sudo /usr/bin/python3.7 /snap/pycharm-professional/147/helpers/pydev/pydevd.py --multiproc --qt-support=auto --client 127.0.0.1 --port 35529 --file /home/alex/code/roomster-2-proto/1-initial/app.py
+   0.0 TEL | Platform: linux
+   0.0 TEL | Python 3.6.7 (default, Oct 22 2018, 11:32:17)
+   0.0 TEL | [GCC 8.2.0]
+   0.0 TEL | [1] Running: uname -a
+   0.0   1 | Linux alex-computer 5.0.0-23-generic #24~18.04.1-Ubuntu SMP Mon Jul 29 16:12:28 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+   0.0 TEL | [1] ran in 0.00 secs.
+   0.0 TEL | BEGIN SPAN main.py:40(main)
+   0.0 TEL | BEGIN SPAN startup.py:74(__init__)
+   0.0 TEL | Found kubectl -> /usr/local/bin/kubectl
+   0.0 TEL | [2] Capturing: kubectl version --short
+   0.1 TEL | [2] captured in 0.05 secs.
+   0.1 TEL | [3] Capturing: kubectl config current-context
+   0.1 TEL | [3] captured in 0.03 secs.
+   0.1 TEL | [4] Capturing: kubectl config view -o json
+   0.1 TEL | [4] captured in 0.04 secs.
+   0.1 TEL | [5] Capturing: kubectl --context minikube get ns default
+   0.2 TEL | [5] captured in 0.04 secs.
+   0.2 TEL | Command: kubectl 1.15.1
+   0.2 TEL | Context: minikube, namespace: default, version: 1.15.0
+   0.2 TEL | Looks like we're in a local VM, e.g. minikube.
+   0.2 TEL | END SPAN startup.py:74(__init__)    0.2s
+   0.2 TEL | Found ssh -> /usr/bin/ssh
+   0.2 TEL | [6] Capturing: ssh -V
+   0.2 TEL | [6] captured in 0.00 secs.
+   0.2 TEL | Found sudo -> /usr/bin/sudo
+   0.2 TEL | Found sshuttle-telepresence -> /usr/libexec/sshuttle-telepresence
+   0.2 TEL | Found conntrack -> /usr/sbin/conntrack
+   0.2 TEL | Found iptables -> /sbin/iptables
+   0.2 TEL | Found sudo -> /usr/bin/sudo
+   0.2 TEL | [7] Running: sudo -n echo -n
+   0.2 TEL | [7] ran in 0.01 secs.
+   0.2 TEL | [8] Capturing: sudo iptables --list
+   0.2 TEL | [8] captured in 0.01 secs.
+   0.2 >>> | Starting proxy with method 'vpn-tcp', which has the following limitations: All processes are affected, only one telepresence can run per machine, and you can't use other VPNs. You may need to add cloud hosts and headless services with --also-proxy. For a full list of method limitations see https://telepresence.io/reference/methods.html
+   0.2 TEL | Found sshfs -> /usr/bin/sshfs
+   0.2 TEL | Found fusermount -> /bin/fusermount
+   0.2 >>> | Volumes are rooted at $TELEPRESENCE_ROOT. See https://telepresence.io/howto/volumes.html for details.
+   0.2 TEL | [9] Running: kubectl --context minikube --namespace default get pods telepresence-connectivity-check --ignore-not-found
+   0.2 TEL | [9] ran in 0.05 secs.
+   1.0 TEL | Scout info: {'latest_version': '0.101', 'application': 'telepresence', 'notices': []}
+   1.0 TEL | BEGIN SPAN deployment.py:179(supplant_deployment)
+   1.0 >>> | Starting network proxy to cluster by swapping out Deployment listings-deployment with a proxy
+   1.0 TEL | BEGIN SPAN remote.py:78(get_deployment_json)
+   1.0 TEL | [10] Capturing: kubectl --context minikube --namespace default get deployment -o json listings-deployment
+   1.1 TEL | [10] captured in 0.05 secs.
+   1.1 TEL | END SPAN remote.py:78(get_deployment_json)    0.0s
+   1.1 TEL | [11] Running: kubectl --context minikube --namespace default delete deployment listings-deployme-8e44d83538d3467c9881b2221d8b62f1 --ignore-not-found
+   1.1 TEL | [11] ran in 0.05 secs.
+   1.1 TEL | [12] Running: kubectl --context minikube --namespace default apply -f -
+   1.3  12 | deployment.extensions/listings-deployme-8e44d83538d3467c9881b2221d8b62f1 created
+   1.3 TEL | [12] ran in 0.17 secs.
+   1.3 TEL | [13] Running: kubectl --context minikube --namespace default scale deployment listings-deployment --replicas=0
+   1.3  13 | deployment.extensions/listings-deployment scaled
+   1.3 TEL | [13] ran in 0.06 secs.
+   1.3 TEL | END SPAN deployment.py:179(supplant_deployment)    0.3s
+   1.3 TEL | BEGIN SPAN remote.py:151(get_remote_info)
+   1.3 TEL | BEGIN SPAN remote.py:78(get_deployment_json)
+   1.3 TEL | [14] Capturing: kubectl --context minikube --namespace default get deployment -o json --selector=telepresence=8e44d83538d3467c9881b2221d8b62f1
+   1.4 TEL | [14] captured in 0.05 secs.
+   1.4 TEL | END SPAN remote.py:78(get_deployment_json)    0.1s
+   1.4 TEL | Searching for Telepresence pod:
+   1.4 TEL |   with name listings-deployme-8e44d83538d3467c9881b2221d8b62f1-*
+   1.4 TEL |   with labels {'app.kubernetes.io/managed-by': 'skaffold-v0.35.0', 'name': 'listings', 'skaffold.dev/builder': 'local', 'skaffold.dev/cleanup': 'true', 'skaffold.dev/deployer': 'kubectl', 'skaffold.dev/docker-api-version': '1.39', 'skaffold.dev/tag-policy': 'git-commit', 'skaffold.dev/tail': 'true', 'telepresence': '8e44d83538d3467c9881b2221d8b62f1', 'type': 'service'}
+   1.4 TEL | [15] Capturing: kubectl --context minikube --namespace default get pod -o json --selector=telepresence=8e44d83538d3467c9881b2221d8b62f1
+   1.4 TEL | [15] captured in 0.05 secs.
+   1.4 TEL | Checking listings-deployme-8e44d83538d3467c9881b2221d8b62f1-5c897d5crfwg
+   1.4 TEL | Looks like we've found our pod!
+   1.4 TEL | BEGIN SPAN remote.py:113(wait_for_pod)
+   1.4 TEL | [16] Capturing: kubectl --context minikube --namespace default get pod listings-deployme-8e44d83538d3467c9881b2221d8b62f1-5c897d5crfwg -o json
+   1.5 TEL | [16] captured in 0.04 secs.
+   1.7 TEL | [17] Capturing: kubectl --context minikube --namespace default get pod listings-deployme-8e44d83538d3467c9881b2221d8b62f1-5c897d5crfwg -o json
+   1.8 TEL | [17] captured in 0.05 secs.
+   2.0 TEL | [18] Capturing: kubectl --context minikube --namespace default get pod listings-deployme-8e44d83538d3467c9881b2221d8b62f1-5c897d5crfwg -o json
+   2.1 TEL | [18] captured in 0.05 secs.
+   2.3 TEL | [19] Capturing: kubectl --context minikube --namespace default get pod listings-deployme-8e44d83538d3467c9881b2221d8b62f1-5c897d5crfwg -o json
+   2.4 TEL | [19] captured in 0.05 secs.
+   2.6 TEL | [20] Capturing: kubectl --context minikube --namespace default get pod listings-deployme-8e44d83538d3467c9881b2221d8b62f1-5c897d5crfwg -o json
+   2.7 TEL | [20] captured in 0.05 secs.
+   2.9 TEL | [21] Capturing: kubectl --context minikube --namespace default get pod listings-deployme-8e44d83538d3467c9881b2221d8b62f1-5c897d5crfwg -o json
+   3.0 TEL | [21] captured in 0.04 secs.
+   3.2 TEL | [22] Capturing: kubectl --context minikube --namespace default get pod listings-deployme-8e44d83538d3467c9881b2221d8b62f1-5c897d5crfwg -o json
+   3.3 TEL | [22] captured in 0.07 secs.
+   3.3 TEL | END SPAN remote.py:113(wait_for_pod)    1.9s
+   3.3 TEL | END SPAN remote.py:151(get_remote_info)    2.0s
+   3.3 TEL | BEGIN SPAN connect.py:36(connect)
+   3.3 TEL | [23] Launching kubectl logs: kubectl --context minikube --namespace default logs -f listings-deployme-8e44d83538d3467c9881b2221d8b62f1-5c897d5crfwg --container listings --tail=10
+   3.3 TEL | [24] Launching kubectl port-forward: kubectl --context minikube --namespace default port-forward listings-deployme-8e44d83538d3467c9881b2221d8b62f1-5c897d5crfwg 43421:8022
+   3.3 TEL | [25] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 43421 telepresence@127.0.0.1 /bin/true
+   3.3 TEL | [25] exit 255 in 0.01 secs.
+   3.3  23 | Listening...
+   3.3  23 | 2019-08-07T13:49:45+0000 [-] Loading ./forwarder.py...
+   3.3  23 | 2019-08-07T13:49:45+0000 [-] SOCKSv5Factory starting on 9050
+   3.3  23 | 2019-08-07T13:49:45+0000 [socks.SOCKSv5Factory#info] Starting factory <socks.SOCKSv5Factory object at 0x7f90e0801550>
+   3.3  23 | 2019-08-07T13:49:45+0000 [-] DNSDatagramProtocol starting on 9053
+   3.3  23 | 2019-08-07T13:49:45+0000 [-] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f90e08017f0>
+   3.3  23 | 2019-08-07T13:49:45+0000 [-] Loaded.
+   3.3  23 | 2019-08-07T13:49:45+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 19.2.1 (/usr/bin/python3.6 3.6.8) starting up.
+   3.3  23 | 2019-08-07T13:49:45+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+   3.4  24 | Forwarding from 127.0.0.1:43421 -> 8022
+   3.4  24 | Forwarding from [::1]:43421 -> 8022
+   3.5 TEL | [26] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 43421 telepresence@127.0.0.1 /bin/true
+   3.6  24 | Handling connection for 43421
+   3.8 TEL | [26] ran in 0.22 secs.
+   3.8 >>> | Forwarding remote port 8080 to local port 8080.
+   3.8 TEL | [27] Launching SSH port forward (exposed ports): ssh -N -oServerAliveInterval=1 -oServerAliveCountMax=10 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 43421 telepresence@127.0.0.1 -R '*:8080:127.0.0.1:8080'
+   3.8 >>> | 
+   3.8 TEL | Launching Web server for proxy poll
+   3.8 TEL | [28] Launching SSH port forward (socks and proxy poll): ssh -N -oServerAliveInterval=1 -oServerAliveCountMax=10 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 43421 telepresence@127.0.0.1 -L127.0.0.1:46767:127.0.0.1:9050 -R9055:127.0.0.1:43547
+   3.8  24 | Handling connection for 43421
+   3.8 TEL | END SPAN connect.py:36(connect)    0.5s
+   3.8 TEL | BEGIN SPAN remote_env.py:28(get_remote_env)
+   3.8 TEL | [29] Capturing: kubectl --context minikube --namespace default exec listings-deployme-8e44d83538d3467c9881b2221d8b62f1-5c897d5crfwg --container listings -- python3 podinfo.py
+   3.8  24 | Handling connection for 43421
+   3.9 TEL | [29] captured in 0.17 secs.
+   3.9 TEL | END SPAN remote_env.py:28(get_remote_env)    0.2s
+   3.9 TEL | BEGIN SPAN mount.py:32(mount_remote_volumes)
+   3.9 TEL | [30] Running: sshfs -p 43421 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null telepresence@127.0.0.1:/ /tmp/tel-h48i8bx5/fs
+   3.9  24 | Handling connection for 43421
+   4.1 TEL | [30] ran in 0.13 secs.
+   4.1 TEL | END SPAN mount.py:32(mount_remote_volumes)    0.1s
+   4.1 TEL | BEGIN SPAN vpn.py:264(connect_sshuttle)
+   4.1 TEL | BEGIN SPAN vpn.py:74(get_proxy_cidrs)
+   4.1 TEL | END SPAN vpn.py:74(get_proxy_cidrs)    0.0s
+   4.1 TEL | [31] Launching sshuttle: sshuttle-telepresence -v --dns --method nat -e 'ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null' -r telepresence@127.0.0.1:43421 --to-ns 127.0.0.1:9053 10.96.0.0/12
+   4.1 TEL | BEGIN SPAN vpn.py:287(connect_sshuttle,sshuttle-wait)
+   4.1 TEL | Wait for vpn-tcp connection: hellotelepresence-0
+   4.1 TEL | [32] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-0")'
+   4.2 TEL | [32] exit 1 in 0.12 secs.
+   4.2 TEL | [33] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-0.a.sanity.check.telepresence.io")'
+   4.4 TEL | [33] exit 1 in 0.17 secs.
+   4.4  31 | Starting sshuttle proxy.
+   4.5 TEL | Wait for vpn-tcp connection: hellotelepresence-1
+   4.5 TEL | [34] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-1")'
+   4.6 TEL | [34] exit 1 in 0.12 secs.
+   4.6 TEL | [35] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-1.a.sanity.check.telepresence.io")'
+   4.6  31 | firewall manager: Starting firewall with Python version 3.6.7
+   4.6  31 | firewall manager: ready method name nat.
+   4.6  31 | IPv6 enabled: False
+   4.6  31 | UDP enabled: False
+   4.6  31 | DNS enabled: True
+   4.6  31 | TCP redirector listening on ('127.0.0.1', 12300).
+   4.6  31 | DNS listening on ('127.0.0.1', 12300).
+   4.6  31 | Starting client with Python version 3.6.7
+   4.6  31 | c : connecting to server...
+   4.6  24 | Handling connection for 43421
+   4.6  31 | Warning: Permanently added '[127.0.0.1]:43421' (ECDSA) to the list of known hosts.
+   4.8 TEL | [35] exit 1 in 0.22 secs.
+   4.8  31 | Starting server with Python version 3.6.8
+   4.8  31 |  s: latency control setting = True
+   4.8  31 |  s: available routes:
+   4.8  31 |  s:   2/172.17.0.0/16
+   4.8  31 | c : Connected.
+   4.8  31 | firewall manager: setting up.
+   4.8  31 | >> iptables -t nat -N sshuttle-12300
+   4.8  31 | >> iptables -t nat -F sshuttle-12300
+   4.8  31 | >> iptables -t nat -I OUTPUT 1 -j sshuttle-12300
+   4.8  31 | >> iptables -t nat -I PREROUTING 1 -j sshuttle-12300
+   4.8  31 | >> iptables -t nat -A sshuttle-12300 -j RETURN --dest 127.0.0.1/32 -p tcp
+   4.8  31 | >> iptables -t nat -A sshuttle-12300 -j REDIRECT --dest 10.96.0.0/12 -p tcp --to-ports 12300 -m ttl ! --ttl 42
+   4.8  31 | >> iptables -t nat -A sshuttle-12300 -j REDIRECT --dest 127.0.0.53/32 -p udp --dport 53 --to-ports 12300 -m ttl ! --ttl 42
+   4.8  31 | >> iptables -t nat -A sshuttle-12300 -j REDIRECT --dest 224.0.0.252/32 -p udp --dport 5355 --to-ports 12300 -m ttl ! --ttl 42
+   4.8  31 | conntrack v1.4.4 (conntrack-tools): 0 flow entries have been deleted.
+   4.9 TEL | Wait for vpn-tcp connection: hellotelepresence-2
+   4.9 TEL | [36] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-2")'
+   4.9  31 | c : DNS request from ('127.0.0.1', 51789) to None: 37 bytes
+   4.9  23 | 2019-08-07T13:49:47+0000 [stdout#info] Set DNS suffix we filter out to: [()]
+   4.9  23 | 2019-08-07T13:49:47+0000 [stdout#info] Result for b'hellotelepresence-2' is ['127.0.0.1']
+   5.0 TEL | [36] captured in 0.07 secs.
+   5.0 TEL | Resolved hellotelepresence-2. 2 more...
+   5.0 TEL | [37] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-2.a.sanity.check.telepresence.io")'
+   5.0  31 | c : DNS request from ('127.0.0.1', 60931) to None: 68 bytes
+   5.0  23 | 2019-08-07T13:49:48+0000 [stdout#info] Sanity check: b'hellotelepresence-2.a.sanity.check.telepresence.io'
+   5.1 TEL | [37] exit 1 in 0.12 secs.
+   5.2 TEL | Wait for vpn-tcp connection: hellotelepresence-3
+   5.2 TEL | [38] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-3")'
+   5.2  31 | c : DNS request from ('127.0.0.1', 52003) to None: 37 bytes
+   5.2  23 | 2019-08-07T13:49:48+0000 [stdout#info] Result for b'hellotelepresence-3' is ['127.0.0.1']
+   5.2 TEL | [38] captured in 0.07 secs.
+   5.2 TEL | Resolved hellotelepresence-3. 1 more...
+   5.2 TEL | [39] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-3.a.sanity.check.telepresence.io")'
+   5.3  31 | c : DNS request from ('127.0.0.1', 55420) to None: 68 bytes
+   5.3  23 | 2019-08-07T13:49:48+0000 [stdout#info] Sanity check: b'hellotelepresence-3.a.sanity.check.telepresence.io'
+   5.4 TEL | [39] exit 1 in 0.12 secs.
+   5.5 TEL | Wait for vpn-tcp connection: hellotelepresence-4
+   5.5 TEL | [40] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-4")'
+   5.5  31 | c : DNS request from ('127.0.0.1', 46391) to None: 37 bytes
+   5.5  23 | 2019-08-07T13:49:48+0000 [stdout#info] Result for b'hellotelepresence-4' is ['127.0.0.1']
+   5.5 TEL | [40] captured in 0.07 secs.
+   5.5 TEL | Resolved hellotelepresence-4. 0 more...
+   5.5 TEL | END SPAN vpn.py:287(connect_sshuttle,sshuttle-wait)    1.5s
+   5.5 TEL | END SPAN vpn.py:264(connect_sshuttle)    1.5s
+   5.5 >>> | Setup complete. Launching your command.
+   5.5 TEL | Everything launched. Waiting to exit...
+   5.5 TEL | BEGIN SPAN runner.py:682(wait_for_exit)
+   5.7 TEL | END SPAN runner.py:682(wait_for_exit)    0.2s
+   5.7 TEL | Main process (sudo /usr/bin/python3.7 /snap/pycharm-professional/147/helpers/pydev/pydevd.py --multiproc --qt-support=auto --client 127.0.0.1 --port 35529 --file /home/alex/code/roomster-2-proto/1-initial/app.py)
+   5.7 TEL |  exited with code 1.
+   5.7 >>> | Your process exited with return code 1.
+   5.7 TEL | EXITING successful session.
+   5.7 >>> | Exit cleanup in progress
+   5.7 TEL | (Cleanup) Terminate local process
+   5.7 TEL | (Cleanup) Kill BG process [31] sshuttle
+   5.7 TEL | (Cleanup) Unmount remote filesystem
+   5.7 TEL | [41] Running: fusermount -z -u /tmp/tel-h48i8bx5/fs
+   5.7  31 | >> iptables -t nat -D OUTPUT -j sshuttle-12300
+   5.7  31 | >> iptables -t nat -D PREROUTING -j sshuttle-12300
+   5.7  31 | >> iptables -t nat -F sshuttle-12300
+   5.7 TEL | [41] ran in 0.01 secs.
+   5.7 TEL | (Cleanup) Kill BG process [28] SSH port forward (socks and proxy poll)
+   5.7  31 | >> iptables -t nat -X sshuttle-12300
+   5.7 TEL | [28] SSH port forward (socks and proxy poll): exit 0
+   5.7 TEL | (Cleanup) Kill Web server for proxy poll
+   5.8 TEL | [31] sshuttle: exit -15
+   5.8 TEL | (Cleanup) Kill BG process [27] SSH port forward (exposed ports)
+   5.8 TEL | [27] SSH port forward (exposed ports): exit 0
+   5.8 TEL | (Cleanup) Kill BG process [24] kubectl port-forward
+   5.8 TEL | [24] kubectl port-forward: exit -15
+   5.8 TEL | (Cleanup) Kill BG process [23] kubectl logs
+   5.8 TEL | [23] kubectl logs: exit -15
+   5.8 TEL | Background process (kubectl logs) exited with return code -15. Command was:
+   5.8 TEL |   kubectl --context minikube --namespace default logs -f listings-deployme-8e44d83538d3467c9881b2221d8b62f1-5c897d5crfwg --container listings --tail=10
+   5.8 TEL | 
+   5.8 TEL | Recent output was:
+   5.8 TEL |   2019-08-07T13:49:45+0000 [-] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f90e08017f0>
+   5.8 TEL |   2019-08-07T13:49:45+0000 [-] Loaded.
+   5.8 TEL |   2019-08-07T13:49:45+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 19.2.1 (/usr/bin/python3.6 3.6.8) starting up.
+   5.8 TEL |   2019-08-07T13:49:45+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+   5.8 TEL |   2019-08-07T13:49:47+0000 [stdout#info] Set DNS suffix we filter out to: [()]
+   5.8 TEL |   2019-08-07T13:49:47+0000 [stdout#info] Result for b'hellotelepresence-2' is ['127.0.0.1']
+   5.8 TEL |   2019-08-07T13:49:48+0000 [stdout#info] Sanity check: b'hellotelepresence-2.a.sanity.check.telepresence.io'
+   5.8 TEL |   2019-08-07T13:49:48+0000 [stdout#info] Result for b'hellotelepresence-3' is ['127.0.0.1']
+   5.8 TEL |   2019-08-07T13:49:48+0000 [stdout#info] Sanity check: b'hellotelepresence-3.a.sanity.check.telepresence.io'
+   5.8 TEL |   2019-08-07T13:49:48+0000 [stdout#info] Result for b'hellotelepresence-4' is ['127.0.0.1']
+   5.8 TEL | (Cleanup) Re-scale original deployment
+   5.8 TEL | [42] Running: kubectl --context minikube --namespace default scale deployment listings-deployment --replicas=1
+   5.8  42 | deployment.extensions/listings-deployment scaled
+   5.8 TEL | [42] ran in 0.05 secs.
+   5.8 TEL | (Cleanup) Delete new deployment
+   5.8 >>> | Swapping Deployment listings-deployment back to its original state
+   5.8 TEL | [43] Running: kubectl --context minikube --namespace default delete deployment listings-deployme-8e44d83538d3467c9881b2221d8b62f1
+   5.9  43 | deployment.extensions "listings-deployme-8e44d83538d3467c9881b2221d8b62f1" deleted
+   5.9 TEL | [43] ran in 0.06 secs.
+   5.9 TEL | (Cleanup) Kill sudo privileges holder
+   5.9 TEL | (Cleanup) Stop time tracking
+   5.9 TEL | END SPAN main.py:40(main)    5.9s
+   5.9 TEL | SPAN SUMMARY:
+   5.9 TEL |    5.9s main.py:40(main)
+   5.9 TEL |    0.2s   startup.py:74(__init__)
+   5.9 TEL |    0.0s     2 kubectl version --short
+   5.9 TEL |    0.0s     3 kubectl config current-context
+   5.9 TEL |    0.0s     4 kubectl config view -o json
+   5.9 TEL |    0.0s     5 kubectl --context minikube get ns default
+   5.9 TEL |    0.0s   6 ssh -V
+   5.9 TEL |    0.0s   7 sudo -n echo -n
+   5.9 TEL |    0.0s   8 sudo iptables --list
+   5.9 TEL |    0.0s   9 kubectl --context minikube --namespace default get pods telepresence-connectiv
+   5.9 TEL |    0.3s   deployment.py:179(supplant_deployment)
+   5.9 TEL |    0.0s     remote.py:78(get_deployment_json)
+   5.9 TEL |    0.0s       10 kubectl --context minikube --namespace default get deployment -o json listing
+   5.9 TEL |    0.0s     11 kubectl --context minikube --namespace default delete deployment listings-dep
+   5.9 TEL |    0.2s     12 kubectl --context minikube --namespace default apply -f -
+   5.9 TEL |    0.1s     13 kubectl --context minikube --namespace default scale deployment listings-depl
+   5.9 TEL |    2.0s   remote.py:151(get_remote_info)
+   5.9 TEL |    0.1s     remote.py:78(get_deployment_json)
+   5.9 TEL |    0.1s       14 kubectl --context minikube --namespace default get deployment -o json --selec
+   5.9 TEL |    0.0s     15 kubectl --context minikube --namespace default get pod -o json --selector=tel
+   5.9 TEL |    1.9s     remote.py:113(wait_for_pod)
+   5.9 TEL |    0.0s       16 kubectl --context minikube --namespace default get pod listings-deployme-8e44
+   5.9 TEL |    0.0s       17 kubectl --context minikube --namespace default get pod listings-deployme-8e44
+   5.9 TEL |    0.0s       18 kubectl --context minikube --namespace default get pod listings-deployme-8e44
+   5.9 TEL |    0.0s       19 kubectl --context minikube --namespace default get pod listings-deployme-8e44
+   5.9 TEL |    0.0s       20 kubectl --context minikube --namespace default get pod listings-deployme-8e44
+   5.9 TEL |    0.0s       21 kubectl --context minikube --namespace default get pod listings-deployme-8e44
+   5.9 TEL |    0.1s       22 kubectl --context minikube --namespace default get pod listings-deployme-8e44
+   5.9 TEL |    0.5s   connect.py:36(connect)
+   5.9 TEL |    0.0s     25 ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q
+   5.9 TEL |    0.2s     26 ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q
+   5.9 TEL |    0.2s   remote_env.py:28(get_remote_env)
+   5.9 TEL |    0.2s     29 kubectl --context minikube --namespace default exec listings-deployme-8e44d83
+   5.9 TEL |    0.1s   mount.py:32(mount_remote_volumes)
+   5.9 TEL |    0.1s     30 sshfs -p 43421 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/
+   5.9 TEL |    1.5s   vpn.py:264(connect_sshuttle)
+   5.9 TEL |    0.0s     vpn.py:74(get_proxy_cidrs)
+   5.9 TEL |    1.5s     vpn.py:287(connect_sshuttle,sshuttle-wait)
+   5.9 TEL |    0.1s       32 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-0")'
+   5.9 TEL |    0.2s       33 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-0.a.sanity
+   5.9 TEL |    0.1s       34 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-1")'
+   5.9 TEL |    0.2s       35 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-1.a.sanity
+   5.9 TEL |    0.1s       36 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-2")'
+   5.9 TEL |    0.1s       37 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-2.a.sanity
+   5.9 TEL |    0.1s       38 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-3")'
+   5.9 TEL |    0.1s       39 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-3.a.sanity
+   5.9 TEL |    0.1s       40 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-4")'
+   5.9 TEL |    0.2s   runner.py:682(wait_for_exit)
+   5.9 TEL |    0.0s   41 fusermount -z -u /tmp/tel-h48i8bx5/fs
+   5.9 TEL |    0.1s   42 kubectl --context minikube --namespace default scale deployment listings-depl
+   5.9 TEL |    0.1s   43 kubectl --context minikube --namespace default delete deployment listings-dep
+   5.9 TEL | (Cleanup) Remove temporary directory
+   5.9 TEL | (Cleanup) Save caches
+   6.2 TEL | (sudo privileges holder thread exiting)

@@ -1,13 +1,3 @@
-try:
-  import googleclouddebugger
-  googleclouddebugger.enable(
-      module='listings',
-      version='0.0.1',
-      service_account_json_file='../litvinenko-test-95b1a12d7810.json'
-  )
-except ImportError:
-  pass
-
 from flask import Flask
 from pymongo import MongoClient
 import pprint
