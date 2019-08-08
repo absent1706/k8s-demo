@@ -1,0 +1,2155 @@
+   0.0 TEL | Telepresence 0.101 launched at Tue Aug  6 18:48:36 2019
+   0.0 TEL |   /usr/bin/telepresence --new-deployment new-service --expose 8081
+   0.0 TEL | Platform: linux
+   0.0 TEL | Python 3.6.7 (default, Oct 22 2018, 11:32:17)
+   0.0 TEL | [GCC 8.2.0]
+   0.0 TEL | [1] Running: uname -a
+   0.0   1 | Linux alex-computer 5.0.0-23-generic #24~18.04.1-Ubuntu SMP Mon Jul 29 16:12:28 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+   0.0 TEL | [1] ran in 0.00 secs.
+   0.0 TEL | BEGIN SPAN main.py:40(main)
+   0.0 TEL | BEGIN SPAN startup.py:74(__init__)
+   0.0 TEL | Found kubectl -> /usr/local/bin/kubectl
+   0.0 TEL | [2] Capturing: kubectl version --short
+   0.1 TEL | [2] captured in 0.05 secs.
+   0.1 TEL | [3] Capturing: kubectl config current-context
+   0.1 TEL | [3] captured in 0.04 secs.
+   0.1 TEL | [4] Capturing: kubectl config view -o json
+   0.1 TEL | [4] captured in 0.04 secs.
+   0.1 TEL | [5] Capturing: kubectl --context minikube get ns default
+   0.2 TEL | [5] captured in 0.05 secs.
+   0.2 TEL | Command: kubectl 1.15.1
+   0.2 TEL | Context: minikube, namespace: default, version: 1.15.0
+   0.2 TEL | Looks like we're in a local VM, e.g. minikube.
+   0.2 TEL | END SPAN startup.py:74(__init__)    0.2s
+   0.2 TEL | Found ssh -> /usr/bin/ssh
+   0.2 TEL | [6] Capturing: ssh -V
+   0.2 TEL | [6] captured in 0.00 secs.
+   0.2 TEL | Found bash -> /bin/bash
+   0.2 TEL | Found sshuttle-telepresence -> /usr/libexec/sshuttle-telepresence
+   0.2 TEL | Found conntrack -> /usr/sbin/conntrack
+   0.2 TEL | Found iptables -> /sbin/iptables
+   0.2 TEL | Found sudo -> /usr/bin/sudo
+   0.2 TEL | [7] Running: sudo -n echo -n
+   0.2 TEL | [7] ran in 0.00 secs.
+   0.2 TEL | [8] Capturing: sudo iptables --list
+   0.2 TEL | [8] captured in 0.01 secs.
+   0.2 >>> | Starting proxy with method 'vpn-tcp', which has the following limitations: All processes are affected, only one telepresence can run per machine, and you can't use other VPNs. You may need to add cloud hosts and headless services with --also-proxy. For a full list of method limitations see https://telepresence.io/reference/methods.html
+   0.2 TEL | Found sshfs -> /usr/bin/sshfs
+   0.2 TEL | Found fusermount -> /bin/fusermount
+   0.2 >>> | Volumes are rooted at $TELEPRESENCE_ROOT. See https://telepresence.io/howto/volumes.html for details.
+   0.2 TEL | [9] Running: kubectl --context minikube --namespace default get pods telepresence-connectivity-check --ignore-not-found
+   0.2 TEL | [9] ran in 0.05 secs.
+   1.1 TEL | Scout info: {'latest_version': '0.101', 'application': 'telepresence', 'notices': []}
+   1.1 TEL | BEGIN SPAN deployment.py:97(create_new_deployment)
+   1.1 >>> | Starting network proxy to cluster using new Deployment new-service
+   1.1 TEL | [10] Running: kubectl --context minikube --namespace default delete --ignore-not-found svc,deploy --selector=telepresence=1ab2c1237b13443dae91ea7c5b2f016e
+   1.2  10 | No resources found
+   1.2 TEL | [10] ran in 0.09 secs.
+   1.2 TEL | [11] Running: kubectl --context minikube --namespace default run --restart=Always --limits=cpu=100m,memory=256Mi --requests=cpu=25m,memory=64Mi new-service --image=datawire/telepresence-k8s:0.101 --labels=telepresence=1ab2c1237b13443dae91ea7c5b2f016e --port=8081 --expose --env=TELEPRESENCE_NAMESERVER=8.8.8.8
+   1.3  11 | kubectl run --generator=deployment/apps.v1 is DEPRECATED and will be removed in a future version. Use kubectl run --generator=run-pod/v1 or kubectl create instead.
+   1.5  11 | service/new-service created
+   1.5  11 | deployment.apps/new-service created
+   1.5 TEL | [11] ran in 0.30 secs.
+   1.5 TEL | END SPAN deployment.py:97(create_new_deployment)    0.4s
+   1.5 TEL | BEGIN SPAN remote.py:151(get_remote_info)
+   1.5 TEL | BEGIN SPAN remote.py:78(get_deployment_json)
+   1.5 TEL | [12] Capturing: kubectl --context minikube --namespace default get deployment -o json --selector=telepresence=1ab2c1237b13443dae91ea7c5b2f016e
+   1.6 TEL | [12] captured in 0.09 secs.
+   1.6 TEL | END SPAN remote.py:78(get_deployment_json)    0.1s
+   1.6 TEL | Searching for Telepresence pod:
+   1.6 TEL |   with name new-service-*
+   1.6 TEL |   with labels {'telepresence': '1ab2c1237b13443dae91ea7c5b2f016e'}
+   1.6 TEL | [13] Capturing: kubectl --context minikube --namespace default get pod -o json --selector=telepresence=1ab2c1237b13443dae91ea7c5b2f016e
+   1.7 TEL | [13] captured in 0.05 secs.
+   1.7 TEL | Checking new-service-8f65f5d7d-fk2xf
+   1.7 TEL | Looks like we've found our pod!
+   1.7 TEL | BEGIN SPAN remote.py:113(wait_for_pod)
+   1.7 TEL | [14] Capturing: kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-fk2xf -o json
+   1.7 TEL | [14] captured in 0.07 secs.
+   2.0 TEL | [15] Capturing: kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-fk2xf -o json
+   2.1 TEL | [15] captured in 0.06 secs.
+   2.3 TEL | [16] Capturing: kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-fk2xf -o json
+   2.4 TEL | [16] captured in 0.05 secs.
+   2.6 TEL | [17] Capturing: kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-fk2xf -o json
+   2.7 TEL | [17] captured in 0.05 secs.
+   2.9 TEL | [18] Capturing: kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-fk2xf -o json
+   3.0 TEL | [18] captured in 0.07 secs.
+   3.2 TEL | [19] Capturing: kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-fk2xf -o json
+   3.3 TEL | [19] captured in 0.07 secs.
+   3.5 TEL | [20] Capturing: kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-fk2xf -o json
+   3.6 TEL | [20] captured in 0.08 secs.
+   3.9 TEL | [21] Capturing: kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-fk2xf -o json
+   3.9 TEL | [21] captured in 0.08 secs.
+   4.2 TEL | [22] Capturing: kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-fk2xf -o json
+   4.3 TEL | [22] captured in 0.07 secs.
+   4.5 TEL | [23] Capturing: kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-fk2xf -o json
+   4.6 TEL | [23] captured in 0.07 secs.
+   4.8 TEL | [24] Capturing: kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-fk2xf -o json
+   4.9 TEL | [24] captured in 0.09 secs.
+   5.2 TEL | [25] Capturing: kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-fk2xf -o json
+   5.3 TEL | [25] captured in 0.08 secs.
+   5.5 TEL | [26] Capturing: kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-fk2xf -o json
+   5.6 TEL | [26] captured in 0.11 secs.
+   5.6 TEL | END SPAN remote.py:113(wait_for_pod)    3.9s
+   5.6 TEL | END SPAN remote.py:151(get_remote_info)    4.1s
+   5.6 TEL | BEGIN SPAN connect.py:36(connect)
+   5.6 TEL | [27] Launching kubectl logs: kubectl --context minikube --namespace default logs -f new-service-8f65f5d7d-fk2xf --container new-service --tail=10
+   5.6 TEL | [28] Launching kubectl port-forward: kubectl --context minikube --namespace default port-forward new-service-8f65f5d7d-fk2xf 43739:8022
+   5.6 TEL | [29] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 43739 telepresence@127.0.0.1 /bin/true
+   5.6 TEL | [29] exit 255 in 0.01 secs.
+   5.8  28 | Forwarding from 127.0.0.1:43739 -> 8022
+   5.8  28 | Forwarding from [::1]:43739 -> 8022
+   5.9 TEL | [30] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 43739 telepresence@127.0.0.1 /bin/true
+   5.9  28 | Handling connection for 43739
+   6.7 TEL | [30] ran in 0.79 secs.
+   6.7 >>> | Forwarding remote port 8081 to local port 8081.
+   6.7 TEL | [31] Launching SSH port forward (exposed ports): ssh -N -oServerAliveInterval=1 -oServerAliveCountMax=10 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 43739 telepresence@127.0.0.1 -R '*:8081:127.0.0.1:8081'
+   6.7 >>> | 
+   6.7 TEL | Launching Web server for proxy poll
+   6.7 TEL | [32] Launching SSH port forward (socks and proxy poll): ssh -N -oServerAliveInterval=1 -oServerAliveCountMax=10 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 43739 telepresence@127.0.0.1 -L127.0.0.1:44647:127.0.0.1:9050 -R9055:127.0.0.1:40649
+   6.7  28 | Handling connection for 43739
+   6.7 TEL | END SPAN connect.py:36(connect)    1.1s
+   6.7  28 | Handling connection for 43739
+   6.7 TEL | BEGIN SPAN remote_env.py:28(get_remote_env)
+   6.7 TEL | [33] Capturing: kubectl --context minikube --namespace default exec new-service-8f65f5d7d-fk2xf --container new-service -- python3 podinfo.py
+  10.5 TEL | [33] captured in 3.85 secs.
+  10.5 TEL | END SPAN remote_env.py:28(get_remote_env)    3.9s
+  10.6 TEL | BEGIN SPAN mount.py:32(mount_remote_volumes)
+  10.6 TEL | [34] Running: sshfs -p 43739 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null telepresence@127.0.0.1:/ /tmp/tel-00tqntia/fs
+  10.6  28 | Handling connection for 43739
+  11.3 TEL | [34] ran in 0.79 secs.
+  11.3 TEL | END SPAN mount.py:32(mount_remote_volumes)    0.8s
+  11.3 TEL | BEGIN SPAN vpn.py:264(connect_sshuttle)
+  11.3 TEL | BEGIN SPAN vpn.py:74(get_proxy_cidrs)
+  11.3 TEL | END SPAN vpn.py:74(get_proxy_cidrs)    0.0s
+  11.3 TEL | [35] Launching sshuttle: sshuttle-telepresence -v --dns --method nat -e 'ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null' -r telepresence@127.0.0.1:43739 --to-ns 127.0.0.1:9053 10.96.0.0/12
+  11.4 TEL | BEGIN SPAN vpn.py:287(connect_sshuttle,sshuttle-wait)
+  11.4 TEL | Wait for vpn-tcp connection: hellotelepresence-0
+  11.4 TEL | [36] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-0")'
+  11.5 TEL | [36] exit 1 in 0.13 secs.
+  11.5 TEL | [37] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-0.a.sanity.check.telepresence.io")'
+  11.6 TEL | [37] exit 1 in 0.12 secs.
+  11.7  35 | Starting sshuttle proxy.
+  11.7 TEL | Wait for vpn-tcp connection: hellotelepresence-1
+  11.7 TEL | [38] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-1")'
+  11.8 TEL | [38] exit 1 in 0.12 secs.
+  11.8 TEL | [39] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-1.a.sanity.check.telepresence.io")'
+  11.9 TEL | [39] exit 1 in 0.12 secs.
+  12.0  35 | firewall manager: Starting firewall with Python version 3.6.7
+  12.0  35 | firewall manager: ready method name nat.
+  12.0  35 | IPv6 enabled: False
+  12.0  35 | UDP enabled: False
+  12.0  35 | DNS enabled: True
+  12.0  35 | TCP redirector listening on ('127.0.0.1', 12300).
+  12.0  35 | DNS listening on ('127.0.0.1', 12300).
+  12.0  35 | Starting client with Python version 3.6.7
+  12.0  35 | c : connecting to server...
+  12.0  28 | Handling connection for 43739
+  12.0 TEL | Wait for vpn-tcp connection: hellotelepresence-2
+  12.0 TEL | [40] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-2")'
+  12.1 TEL | [40] exit 1 in 0.12 secs.
+  12.1 TEL | [41] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-2.a.sanity.check.telepresence.io")'
+  12.2  35 | Warning: Permanently added '[127.0.0.1]:43739' (ECDSA) to the list of known hosts.
+  12.3 TEL | [41] exit 1 in 0.12 secs.
+  12.4 TEL | Wait for vpn-tcp connection: hellotelepresence-3
+  12.4 TEL | [42] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-3")'
+  12.5 TEL | [42] exit 1 in 0.12 secs.
+  12.5 TEL | [43] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-3.a.sanity.check.telepresence.io")'
+  12.6 TEL | [43] exit 1 in 0.12 secs.
+  12.7 TEL | Wait for vpn-tcp connection: hellotelepresence-4
+  12.7 TEL | [44] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-4")'
+  12.9 TEL | [44] exit 1 in 0.17 secs.
+  12.9 TEL | [45] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-4.a.sanity.check.telepresence.io")'
+  13.0 TEL | [45] exit 1 in 0.12 secs.
+  13.1 TEL | Wait for vpn-tcp connection: hellotelepresence-5
+  13.1 TEL | [46] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-5")'
+  13.3 TEL | [46] exit 1 in 0.17 secs.
+  13.3 TEL | [47] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-5.a.sanity.check.telepresence.io")'
+  13.4 TEL | [47] exit 1 in 0.12 secs.
+  13.5 TEL | Wait for vpn-tcp connection: hellotelepresence-6
+  13.5 TEL | [48] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-6")'
+  13.6 TEL | [48] exit 1 in 0.12 secs.
+  13.6 TEL | [49] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-6.a.sanity.check.telepresence.io")'
+  13.7 TEL | [49] exit 1 in 0.12 secs.
+  13.8 TEL | Wait for vpn-tcp connection: hellotelepresence-7
+  13.8 TEL | [50] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-7")'
+  13.9 TEL | [50] exit 1 in 0.12 secs.
+  13.9 TEL | [51] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-7.a.sanity.check.telepresence.io")'
+  14.0 TEL | [51] exit 1 in 0.12 secs.
+  14.1 TEL | Wait for vpn-tcp connection: hellotelepresence-8
+  14.1 TEL | [52] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-8")'
+  14.2  35 | Starting server with Python version 3.6.8
+  14.2  35 |  s: latency control setting = True
+  14.3 TEL | [52] exit 1 in 0.12 secs.
+  14.3 TEL | [53] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-8.a.sanity.check.telepresence.io")'
+  14.4 TEL | [53] exit 1 in 0.12 secs.
+  14.5 TEL | Wait for vpn-tcp connection: hellotelepresence-9
+  14.5 TEL | [54] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-9")'
+  14.6 TEL | [54] exit 1 in 0.12 secs.
+  14.6 TEL | [55] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-9.a.sanity.check.telepresence.io")'
+  14.7 TEL | [55] exit 1 in 0.12 secs.
+  14.8 TEL | Wait for vpn-tcp connection: hellotelepresence-10
+  14.8 TEL | [56] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-10")'
+  14.9 TEL | [56] exit 1 in 0.12 secs.
+  14.9 TEL | [57] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-10.a.sanity.check.telepresence.io")'
+  15.1 TEL | [57] exit 1 in 0.12 secs.
+  15.2 TEL | Wait for vpn-tcp connection: hellotelepresence-11
+  15.2 TEL | [58] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-11")'
+  15.3 TEL | [58] exit 1 in 0.12 secs.
+  15.3 TEL | [59] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-11.a.sanity.check.telepresence.io")'
+  15.3  35 |  s: available routes:
+  15.3  35 |  s:   2/172.17.0.0/16
+  15.3  35 | c : Connected.
+  15.3  35 | firewall manager: setting up.
+  15.3  35 | >> iptables -t nat -N sshuttle-12300
+  15.3  35 | >> iptables -t nat -F sshuttle-12300
+  15.3  35 | >> iptables -t nat -I OUTPUT 1 -j sshuttle-12300
+  15.4  35 | >> iptables -t nat -I PREROUTING 1 -j sshuttle-12300
+  15.4  35 | >> iptables -t nat -A sshuttle-12300 -j RETURN --dest 127.0.0.1/32 -p tcp
+  15.4  35 | >> iptables -t nat -A sshuttle-12300 -j REDIRECT --dest 10.96.0.0/12 -p tcp --to-ports 12300 -m ttl ! --ttl 42
+  15.4  35 | >> iptables -t nat -A sshuttle-12300 -j REDIRECT --dest 127.0.0.53/32 -p udp --dport 53 --to-ports 12300 -m ttl ! --ttl 42
+  15.4  35 | >> iptables -t nat -A sshuttle-12300 -j REDIRECT --dest 224.0.0.252/32 -p udp --dport 5355 --to-ports 12300 -m ttl ! --ttl 42
+  15.4  35 | conntrack v1.4.4 (conntrack-tools): 0 flow entries have been deleted.
+  15.4 TEL | [59] exit 1 in 0.12 secs.
+  15.5 TEL | Wait for vpn-tcp connection: hellotelepresence-12
+  15.5 TEL | [60] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-12")'
+  15.5  35 | c : DNS request from ('127.0.0.1', 37233) to None: 38 bytes
+  20.5 TEL | [60] timed out after 5.01 secs.
+  20.5 TEL | [61] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-12.a.sanity.check.telepresence.io")'
+  20.5  35 | c : DNS request from ('127.0.0.1', 42826) to None: 69 bytes
+  21.5 TEL | [61] timed out after 1.01 secs.
+  21.6 TEL | Wait for vpn-tcp connection: hellotelepresence-13
+  21.6 TEL | [62] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-13")'
+  21.7  35 | c : DNS request from ('127.0.0.1', 44829) to None: 38 bytes
+  22.7  27 | Listening...
+  22.7  27 | 2019-08-06T15:48:57+0000 [-] Loading ./forwarder.py...
+  22.7  27 | 2019-08-06T15:48:59+0000 [-] SOCKSv5Factory starting on 9050
+  22.7  27 | 2019-08-06T15:48:59+0000 [socks.SOCKSv5Factory#info] Starting factory <socks.SOCKSv5Factory object at 0x7f9c86548668>
+  22.7  27 | 2019-08-06T15:48:59+0000 [-] DNSDatagramProtocol starting on 9053
+  22.7  27 | 2019-08-06T15:48:59+0000 [-] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c86548908>
+  22.7  27 | 2019-08-06T15:48:59+0000 [-] Loaded.
+  22.7  27 | 2019-08-06T15:48:59+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 19.2.1 (/usr/bin/python3.6 3.6.8) starting up.
+  22.7  27 | 2019-08-06T15:48:59+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+  26.6 TEL | [62] timed out after 5.01 secs.
+  26.6 TEL | [63] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-13.a.sanity.check.telepresence.io")'
+  26.6  35 | c : DNS request from ('127.0.0.1', 36768) to None: 69 bytes
+  26.6  27 | 2019-08-06T15:49:03+0000 [stdout#info] Sanity check: b'hellotelepresence-13.a.sanity.check.telepresence.io'
+  26.7 TEL | [63] exit 1 in 0.12 secs.
+  26.8 TEL | Wait for vpn-tcp connection: hellotelepresence-14
+  26.8 TEL | [64] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-14")'
+  26.9  35 | c : DNS request from ('127.0.0.1', 59419) to None: 38 bytes
+  26.9  27 | 2019-08-06T15:49:03+0000 [stdout#info] Set DNS suffix we filter out to: [()]
+  26.9  27 | 2019-08-06T15:49:03+0000 [stdout#info] Result for b'hellotelepresence-14' is ['127.0.0.1']
+  27.0 TEL | [64] captured in 0.17 secs.
+  27.0 TEL | Resolved hellotelepresence-14. 2 more...
+  27.0 TEL | [65] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-14.a.sanity.check.telepresence.io")'
+  27.1  35 | c : DNS request from ('127.0.0.1', 58723) to None: 69 bytes
+  27.1  27 | 2019-08-06T15:49:03+0000 [stdout#info] Sanity check: b'hellotelepresence-14.a.sanity.check.telepresence.io'
+  27.2 TEL | [65] exit 1 in 0.17 secs.
+  27.3 TEL | Wait for vpn-tcp connection: hellotelepresence-15
+  27.3 TEL | [66] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-15")'
+  27.3  35 | c : DNS request from ('127.0.0.1', 58234) to None: 38 bytes
+  27.3  27 | 2019-08-06T15:49:04+0000 [stdout#info] Result for b'hellotelepresence-15' is ['127.0.0.1']
+  27.3 TEL | [66] captured in 0.07 secs.
+  27.3 TEL | Resolved hellotelepresence-15. 1 more...
+  27.3 TEL | [67] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-15.a.sanity.check.telepresence.io")'
+  27.4  35 | c : DNS request from ('127.0.0.1', 49318) to None: 69 bytes
+  27.4  27 | 2019-08-06T15:49:04+0000 [stdout#info] Sanity check: b'hellotelepresence-15.a.sanity.check.telepresence.io'
+  27.5 TEL | [67] exit 1 in 0.12 secs.
+  27.6 TEL | Wait for vpn-tcp connection: hellotelepresence-16
+  27.6 TEL | [68] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-16")'
+  27.6  35 | c : DNS request from ('127.0.0.1', 34722) to None: 38 bytes
+  27.6  27 | 2019-08-06T15:49:04+0000 [stdout#info] Result for b'hellotelepresence-16' is ['127.0.0.1']
+  27.7 TEL | [68] captured in 0.12 secs.
+  27.7 TEL | Resolved hellotelepresence-16. 0 more...
+  27.7 TEL | END SPAN vpn.py:287(connect_sshuttle,sshuttle-wait)   16.3s
+  27.7 TEL | END SPAN vpn.py:264(connect_sshuttle)   16.3s
+  27.7 >>> | Setup complete. Launching your command.
+  27.7 TEL | Everything launched. Waiting to exit...
+  27.7 TEL | BEGIN SPAN runner.py:682(wait_for_exit)
+  28.3  35 | c : DNS request from ('127.0.0.1', 57300) to None: 49 bytes
+  28.3  35 | c : DNS request from ('127.0.0.1', 57300) to None: 49 bytes
+  28.3  27 | 2019-08-06T15:49:05+0000 [stdout#info] A query: b'browser.pipe.aria.microsoft.com'
+  28.3  27 | 2019-08-06T15:49:05+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 59555
+  28.3  27 | 2019-08-06T15:49:05+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c865593c8>
+  28.4  27 | 2019-08-06T15:49:05+0000 [stdout#info] AAAA query, sending back A instead: b'browser.pipe.aria.microsoft.com'
+  28.4  27 | 2019-08-06T15:49:05+0000 [stdout#info] A query: b'browser.pipe.aria.microsoft.com'
+  28.4  27 | 2019-08-06T15:49:05+0000 [-] (UDP Port 59555 Closed)
+  28.4  27 | 2019-08-06T15:49:05+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c865593c8>
+  30.2 TEL | [69] Running: sudo -n echo -n
+  30.2 TEL | [69] ran in 0.01 secs.
+  50.2  35 | c : DNS request from ('127.0.0.1', 49884) to None: 43 bytes
+  50.2  35 | c : DNS request from ('127.0.0.1', 49884) to None: 43 bytes
+  50.3  27 | 2019-08-06T15:49:27+0000 [stdout#info] A query: b'vortex.data.microsoft.com'
+  50.3  27 | 2019-08-06T15:49:27+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 17988
+  50.3  27 | 2019-08-06T15:49:27+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c86559518>
+  50.3  27 | 2019-08-06T15:49:27+0000 [stdout#info] AAAA query, sending back A instead: b'vortex.data.microsoft.com'
+  50.3  27 | 2019-08-06T15:49:27+0000 [stdout#info] A query: b'vortex.data.microsoft.com'
+  50.4  27 | 2019-08-06T15:49:27+0000 [-] (UDP Port 17988 Closed)
+  50.4  27 | 2019-08-06T15:49:27+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c86559518>
+  53.2 TEL | (proxy checking local liveness)
+  53.2  27 | 2019-08-06T15:49:30+0000 [Poll#info] Checkpoint
+  60.3 TEL | [70] Running: sudo -n echo -n
+  60.3 TEL | [70] ran in 0.01 secs.
+  82.8 TEL | (proxy checking local liveness)
+  82.8  27 | 2019-08-06T15:49:59+0000 [Poll#info] Checkpoint
+  90.3 TEL | [71] Running: sudo -n echo -n
+  90.3 TEL | [71] ran in 0.02 secs.
+ 108.1  35 | c : DNS request from ('127.0.0.1', 59393) to None: 36 bytes
+ 108.1  35 | c : DNS request from ('127.0.0.1', 59393) to None: 36 bytes
+ 108.1  27 | 2019-08-06T15:50:24+0000 [stdout#info] A query: b'client.dropbox.com'
+ 108.1  27 | 2019-08-06T15:50:24+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 13305
+ 108.1  27 | 2019-08-06T15:50:24+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864b57f0>
+ 108.1  27 | 2019-08-06T15:50:24+0000 [stdout#info] AAAA query, sending back A instead: b'client.dropbox.com'
+ 108.1  27 | 2019-08-06T15:50:24+0000 [stdout#info] A query: b'client.dropbox.com'
+ 108.2  27 | 2019-08-06T15:50:25+0000 [-] (UDP Port 13305 Closed)
+ 108.2  27 | 2019-08-06T15:50:25+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864b57f0>
+ 108.8  35 | c : DNS request from ('127.0.0.1', 38887) to None: 34 bytes
+ 108.8  35 | c : DNS request from ('127.0.0.1', 38887) to None: 34 bytes
+ 108.8  27 | 2019-08-06T15:50:25+0000 [stdout#info] A query: b'bolt.dropbox.com'
+ 108.9  27 | 2019-08-06T15:50:25+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 3932
+ 108.9  27 | 2019-08-06T15:50:25+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864b5d68>
+ 108.9  27 | 2019-08-06T15:50:25+0000 [stdout#info] AAAA query, sending back A instead: b'bolt.dropbox.com'
+ 108.9  27 | 2019-08-06T15:50:25+0000 [stdout#info] A query: b'bolt.dropbox.com'
+ 108.9  27 | 2019-08-06T15:50:25+0000 [-] (UDP Port 3932 Closed)
+ 108.9  35 | c : DNS request from ('127.0.0.1', 38919) to None: 34 bytes
+ 108.9  35 | c : DNS request from ('127.0.0.1', 38919) to None: 34 bytes
+ 108.9  27 | 2019-08-06T15:50:25+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864b5d68>
+ 109.0  27 | 2019-08-06T15:50:25+0000 [stdout#info] A query: b'bolt.dropbox.com'
+ 109.0  27 | 2019-08-06T15:50:25+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 39794
+ 109.0  27 | 2019-08-06T15:50:25+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864b59e8>
+ 109.0  27 | 2019-08-06T15:50:25+0000 [stdout#info] AAAA query, sending back A instead: b'bolt.dropbox.com'
+ 109.0  27 | 2019-08-06T15:50:25+0000 [stdout#info] A query: b'bolt.dropbox.com'
+ 109.0  27 | 2019-08-06T15:50:25+0000 [-] (UDP Port 39794 Closed)
+ 109.0  27 | 2019-08-06T15:50:25+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864b59e8>
+ 112.8 TEL | (proxy checking local liveness)
+ 112.8  27 | 2019-08-06T15:50:29+0000 [Poll#info] Checkpoint
+ 113.9  35 | c : DNS request from ('127.0.0.1', 55449) to None: 38 bytes
+ 113.9  27 | 2019-08-06T15:50:30+0000 [stdout#info] A query: b'registry-1.docker.io'
+ 113.9  27 | 2019-08-06T15:50:30+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 39094
+ 113.9  27 | 2019-08-06T15:50:30+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be160>
+ 114.0  27 | 2019-08-06T15:50:30+0000 [-] (UDP Port 39094 Closed)
+ 114.0  27 | 2019-08-06T15:50:30+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be160>
+ 114.5  35 | c : DNS request from ('127.0.0.1', 41566) to None: 32 bytes
+ 114.5  27 | 2019-08-06T15:50:31+0000 [stdout#info] A query: b'auth.docker.io'
+ 114.6  27 | 2019-08-06T15:50:31+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 37783
+ 114.6  27 | 2019-08-06T15:50:31+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864bea90>
+ 114.6  27 | 2019-08-06T15:50:31+0000 [-] (UDP Port 37783 Closed)
+ 114.6  27 | 2019-08-06T15:50:31+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864bea90>
+ 115.3  35 | c : DNS request from ('127.0.0.1', 41793) to None: 38 bytes
+ 115.4  27 | 2019-08-06T15:50:32+0000 [stdout#info] A query: b'registry-1.docker.io'
+ 115.4  27 | 2019-08-06T15:50:32+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 19597
+ 115.4  27 | 2019-08-06T15:50:32+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be940>
+ 115.4  27 | 2019-08-06T15:50:32+0000 [-] (UDP Port 19597 Closed)
+ 115.4  27 | 2019-08-06T15:50:32+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be940>
+ 116.0  35 | c : DNS request from ('127.0.0.1', 49734) to None: 38 bytes
+ 116.0  27 | 2019-08-06T15:50:32+0000 [stdout#info] A query: b'registry-1.docker.io'
+ 116.1  27 | 2019-08-06T15:50:32+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 60740
+ 116.1  27 | 2019-08-06T15:50:32+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be208>
+ 116.1  27 | 2019-08-06T15:50:32+0000 [-] (UDP Port 60740 Closed)
+ 116.1  27 | 2019-08-06T15:50:32+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be208>
+ 116.7  35 | c : DNS request from ('127.0.0.1', 56262) to None: 38 bytes
+ 116.8  27 | 2019-08-06T15:50:33+0000 [stdout#info] A query: b'registry-1.docker.io'
+ 116.8  27 | 2019-08-06T15:50:33+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 55426
+ 116.8  27 | 2019-08-06T15:50:33+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be518>
+ 116.8  27 | 2019-08-06T15:50:33+0000 [-] (UDP Port 55426 Closed)
+ 116.8  27 | 2019-08-06T15:50:33+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be518>
+ 117.4  35 | c : DNS request from ('127.0.0.1', 53411) to None: 50 bytes
+ 117.4  27 | 2019-08-06T15:50:34+0000 [stdout#info] A query: b'production.cloudflare.docker.com'
+ 117.5  27 | 2019-08-06T15:50:34+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 65371
+ 117.5  27 | 2019-08-06T15:50:34+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be438>
+ 117.5  27 | 2019-08-06T15:50:34+0000 [-] (UDP Port 65371 Closed)
+ 117.5  27 | 2019-08-06T15:50:34+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be438>
+ 120.3 TEL | [72] Running: sudo -n echo -n
+ 120.4 TEL | [72] ran in 0.02 secs.
+ 121.8  35 | c : Accept TCP: 192.168.0.83:44584 -> 10.102.20.56:8080.
+ 121.8  35 | c : Accept TCP: 192.168.0.83:44586 -> 10.102.20.56:8080.
+ 121.9  35 | c : Accept TCP: 192.168.0.83:44588 -> 10.102.20.56:8080.
+ 121.9  35 | c : Accept TCP: 192.168.0.83:44590 -> 10.102.20.56:8080.
+ 121.9  35 | c : Accept TCP: 192.168.0.83:44592 -> 10.102.20.56:8080.
+ 121.9  35 | c : Accept TCP: 192.168.0.83:44594 -> 10.102.20.56:8080.
+ 121.9  35 | c : Accept TCP: 192.168.0.83:44596 -> 10.102.20.56:8080.
+ 121.9  35 | c : Accept TCP: 192.168.0.83:44598 -> 10.102.20.56:8080.
+ 121.9  35 | c : Accept TCP: 192.168.0.83:44600 -> 10.102.20.56:8080.
+ 121.9  35 | c : Accept TCP: 192.168.0.83:44602 -> 10.102.20.56:8080.
+ 121.9  35 | c : Accept TCP: 192.168.0.83:44604 -> 10.102.20.56:8080.
+ 121.9  35 | c : Accept TCP: 192.168.0.83:44606 -> 10.102.20.56:8080.
+ 121.9  35 | c : Accept TCP: 192.168.0.83:44608 -> 10.102.20.56:8080.
+ 121.9  35 | c : Accept TCP: 192.168.0.83:44610 -> 10.102.20.56:8080.
+ 121.9  35 | c : Accept TCP: 192.168.0.83:44612 -> 10.102.20.56:8080.
+ 122.0  35 | c : Accept TCP: 192.168.0.83:44614 -> 10.102.20.56:8080.
+ 122.0  35 | c : Accept TCP: 192.168.0.83:44616 -> 10.102.20.56:8080.
+ 122.0  35 | c : Accept TCP: 192.168.0.83:44618 -> 10.102.20.56:8080.
+ 122.1  35 | c : Accept TCP: 192.168.0.83:44620 -> 10.102.20.56:8080.
+ 122.1  35 | c : Accept TCP: 192.168.0.83:44622 -> 10.102.20.56:8080.
+ 122.1  35 | c : Accept TCP: 192.168.0.83:44624 -> 10.102.20.56:8080.
+ 122.1  35 | c : Accept TCP: 192.168.0.83:44626 -> 10.102.20.56:8080.
+ 122.2  35 | c : Accept TCP: 192.168.0.83:44628 -> 10.102.20.56:8080.
+ 122.2  35 | c : Accept TCP: 192.168.0.83:44630 -> 10.102.20.56:8080.
+ 122.3  35 | c : Accept TCP: 192.168.0.83:44632 -> 10.102.20.56:8080.
+ 122.3  35 | c : Accept TCP: 192.168.0.83:44634 -> 10.102.20.56:8080.
+ 122.3  35 | c : Accept TCP: 192.168.0.83:44636 -> 10.102.20.56:8080.
+ 122.4  35 | c : Accept TCP: 192.168.0.83:44638 -> 10.102.20.56:8080.
+ 122.4  35 | c : Accept TCP: 192.168.0.83:44640 -> 10.102.20.56:8080.
+ 122.5  35 | c : Accept TCP: 192.168.0.83:44642 -> 10.102.20.56:8080.
+ 122.5  35 | c : Accept TCP: 192.168.0.83:44644 -> 10.102.20.56:8080.
+ 122.6  35 | c : Accept TCP: 192.168.0.83:44646 -> 10.102.20.56:8080.
+ 122.6  35 | c : Accept TCP: 192.168.0.83:44648 -> 10.102.20.56:8080.
+ 122.7  35 | c : Accept TCP: 192.168.0.83:44650 -> 10.102.20.56:8080.
+ 122.7  35 | c : Accept TCP: 192.168.0.83:44652 -> 10.102.20.56:8080.
+ 122.8  35 | c : Accept TCP: 192.168.0.83:44654 -> 10.102.20.56:8080.
+ 122.8  35 | c : Accept TCP: 192.168.0.83:44656 -> 10.102.20.56:8080.
+ 122.8  35 | c : Accept TCP: 192.168.0.83:44658 -> 10.102.20.56:8080.
+ 122.9  35 | c : Accept TCP: 192.168.0.83:44660 -> 10.102.20.56:8080.
+ 122.9  35 | c : Accept TCP: 192.168.0.83:44662 -> 10.102.20.56:8080.
+ 123.0  35 | c : Accept TCP: 192.168.0.83:44664 -> 10.102.20.56:8080.
+ 123.0  35 | c : Accept TCP: 192.168.0.83:44666 -> 10.102.20.56:8080.
+ 123.1  35 | c : Accept TCP: 192.168.0.83:44668 -> 10.102.20.56:8080.
+ 123.1  35 | c : Accept TCP: 192.168.0.83:44670 -> 10.102.20.56:8080.
+ 123.1  35 | c : Accept TCP: 192.168.0.83:44672 -> 10.102.20.56:8080.
+ 123.2  35 | c : Accept TCP: 192.168.0.83:44674 -> 10.102.20.56:8080.
+ 123.2  35 | c : Accept TCP: 192.168.0.83:44676 -> 10.102.20.56:8080.
+ 123.3  35 | c : Accept TCP: 192.168.0.83:44678 -> 10.102.20.56:8080.
+ 123.4  35 | c : Accept TCP: 192.168.0.83:44680 -> 10.102.20.56:8080.
+ 123.4  35 | c : Accept TCP: 192.168.0.83:44682 -> 10.102.20.56:8080.
+ 123.7  35 | c : Accept TCP: 192.168.0.83:44684 -> 10.102.20.56:8080.
+ 123.8  35 | c : Accept TCP: 192.168.0.83:44686 -> 10.102.20.56:8080.
+ 123.8  35 | c : Accept TCP: 192.168.0.83:44688 -> 10.102.20.56:8080.
+ 123.8  35 | c : Accept TCP: 192.168.0.83:44690 -> 10.102.20.56:8080.
+ 123.9  35 | c : Accept TCP: 192.168.0.83:44692 -> 10.102.20.56:8080.
+ 123.9  35 | c : Accept TCP: 192.168.0.83:44694 -> 10.102.20.56:8080.
+ 123.9  35 | c : Accept TCP: 192.168.0.83:44696 -> 10.102.20.56:8080.
+ 123.9  35 | c : Accept TCP: 192.168.0.83:44698 -> 10.102.20.56:8080.
+ 124.0  35 | c : Accept TCP: 192.168.0.83:44700 -> 10.102.20.56:8080.
+ 124.1  35 | c : Accept TCP: 192.168.0.83:44702 -> 10.102.20.56:8080.
+ 124.1  35 | c : Accept TCP: 192.168.0.83:44704 -> 10.102.20.56:8080.
+ 124.2  35 | c : Accept TCP: 192.168.0.83:44706 -> 10.102.20.56:8080.
+ 124.3  35 | c : Accept TCP: 192.168.0.83:44708 -> 10.102.20.56:8080.
+ 124.3  35 | c : Accept TCP: 192.168.0.83:44710 -> 10.102.20.56:8080.
+ 124.4  35 | c : Accept TCP: 192.168.0.83:44712 -> 10.102.20.56:8080.
+ 124.5  35 | c : Accept TCP: 192.168.0.83:44714 -> 10.102.20.56:8080.
+ 124.6  35 | c : Accept TCP: 192.168.0.83:44716 -> 10.102.20.56:8080.
+ 124.7  35 | c : Accept TCP: 192.168.0.83:44718 -> 10.102.20.56:8080.
+ 124.7  35 | c : Accept TCP: 192.168.0.83:44720 -> 10.102.20.56:8080.
+ 124.8  35 | c : Accept TCP: 192.168.0.83:44722 -> 10.102.20.56:8080.
+ 124.9  35 | c : Accept TCP: 192.168.0.83:44724 -> 10.102.20.56:8080.
+ 124.9  35 | c : Accept TCP: 192.168.0.83:44726 -> 10.102.20.56:8080.
+ 124.9  35 | c : Accept TCP: 192.168.0.83:44728 -> 10.102.20.56:8080.
+ 125.0  35 | c : Accept TCP: 192.168.0.83:44730 -> 10.102.20.56:8080.
+ 125.0  35 | c : Accept TCP: 192.168.0.83:44732 -> 10.102.20.56:8080.
+ 125.1  35 | c : Accept TCP: 192.168.0.83:44734 -> 10.102.20.56:8080.
+ 125.2  35 | c : Accept TCP: 192.168.0.83:44736 -> 10.102.20.56:8080.
+ 125.2  35 | c : Accept TCP: 192.168.0.83:44738 -> 10.102.20.56:8080.
+ 125.3  35 | c : Accept TCP: 192.168.0.83:44740 -> 10.102.20.56:8080.
+ 125.4  35 | c : Accept TCP: 192.168.0.83:44742 -> 10.102.20.56:8080.
+ 125.5  35 | c : Accept TCP: 192.168.0.83:44744 -> 10.102.20.56:8080.
+ 125.5  35 | c : Accept TCP: 192.168.0.83:44746 -> 10.102.20.56:8080.
+ 125.6  35 | c : Accept TCP: 192.168.0.83:44748 -> 10.102.20.56:8080.
+ 125.7  35 | c : Accept TCP: 192.168.0.83:44750 -> 10.102.20.56:8080.
+ 125.8  35 | c : Accept TCP: 192.168.0.83:44752 -> 10.102.20.56:8080.
+ 125.8  35 | c : Accept TCP: 192.168.0.83:44754 -> 10.102.20.56:8080.
+ 125.9  35 | c : Accept TCP: 192.168.0.83:44756 -> 10.102.20.56:8080.
+ 125.9  35 | c : Accept TCP: 192.168.0.83:44758 -> 10.102.20.56:8080.
+ 125.9  35 | c : Accept TCP: 192.168.0.83:44760 -> 10.102.20.56:8080.
+ 125.9  35 | c : Accept TCP: 192.168.0.83:44762 -> 10.102.20.56:8080.
+ 125.9  35 | c : Accept TCP: 192.168.0.83:44764 -> 10.102.20.56:8080.
+ 126.0  35 | c : Accept TCP: 192.168.0.83:44766 -> 10.102.20.56:8080.
+ 126.1  35 | c : Accept TCP: 192.168.0.83:44768 -> 10.102.20.56:8080.
+ 126.1  35 | c : Accept TCP: 192.168.0.83:44770 -> 10.102.20.56:8080.
+ 126.1  35 | c : Accept TCP: 192.168.0.83:44772 -> 10.102.20.56:8080.
+ 126.1  35 | c : Accept TCP: 192.168.0.83:44774 -> 10.102.20.56:8080.
+ 126.2  35 | c : Accept TCP: 192.168.0.83:44776 -> 10.102.20.56:8080.
+ 126.3  35 | c : Accept TCP: 192.168.0.83:44778 -> 10.102.20.56:8080.
+ 126.4  35 | c : Accept TCP: 192.168.0.83:44780 -> 10.102.20.56:8080.
+ 126.4  35 | c : Accept TCP: 192.168.0.83:44782 -> 10.102.20.56:8080.
+ 126.5  35 | c : Accept TCP: 192.168.0.83:44784 -> 10.102.20.56:8080.
+ 126.7  35 | c : Accept TCP: 192.168.0.83:44786 -> 10.102.20.56:8080.
+ 126.8  35 | c : Accept TCP: 192.168.0.83:51168 -> 10.102.20.56:8081.
+ 126.8  35 | c : Accept TCP: 192.168.0.83:44790 -> 10.102.20.56:8080.
+ 126.8  35 | c : Accept TCP: 192.168.0.83:51172 -> 10.102.20.56:8081.
+ 126.8  35 | c : Accept TCP: 192.168.0.83:44794 -> 10.102.20.56:8080.
+ 126.9  35 | c : Accept TCP: 192.168.0.83:51176 -> 10.102.20.56:8081.
+ 126.9  35 | c : Accept TCP: 192.168.0.83:44798 -> 10.102.20.56:8080.
+ 126.9  35 | c : Accept TCP: 192.168.0.83:51180 -> 10.102.20.56:8081.
+ 126.9  35 | c : Accept TCP: 192.168.0.83:44802 -> 10.102.20.56:8080.
+ 127.0  35 | c : Accept TCP: 192.168.0.83:51184 -> 10.102.20.56:8081.
+ 127.0  35 | c : Accept TCP: 192.168.0.83:44806 -> 10.102.20.56:8080.
+ 127.1  35 | c : Accept TCP: 192.168.0.83:51188 -> 10.102.20.56:8081.
+ 127.2  35 | c : Accept TCP: 192.168.0.83:44810 -> 10.102.20.56:8080.
+ 127.2  35 | c : Accept TCP: 192.168.0.83:51192 -> 10.102.20.56:8081.
+ 127.3  35 | c : Accept TCP: 192.168.0.83:44814 -> 10.102.20.56:8080.
+ 127.3  35 | c : Accept TCP: 192.168.0.83:51196 -> 10.102.20.56:8081.
+ 127.4  35 | c : Accept TCP: 192.168.0.83:44818 -> 10.102.20.56:8080.
+ 127.4  35 | c : Accept TCP: 192.168.0.83:51200 -> 10.102.20.56:8081.
+ 127.5  35 | c : Accept TCP: 192.168.0.83:44822 -> 10.102.20.56:8080.
+ 127.5  35 | c : Accept TCP: 192.168.0.83:51204 -> 10.102.20.56:8081.
+ 127.6  35 | c : Accept TCP: 192.168.0.83:44826 -> 10.102.20.56:8080.
+ 127.6  35 | c : Accept TCP: 192.168.0.83:51208 -> 10.102.20.56:8081.
+ 127.8  35 | c : Accept TCP: 192.168.0.83:44830 -> 10.102.20.56:8080.
+ 127.8  35 | c : Accept TCP: 192.168.0.83:51212 -> 10.102.20.56:8081.
+ 127.9  35 | c : Accept TCP: 192.168.0.83:44834 -> 10.102.20.56:8080.
+ 127.9  35 | c : Accept TCP: 192.168.0.83:51216 -> 10.102.20.56:8081.
+ 128.0  35 | c : Accept TCP: 192.168.0.83:44838 -> 10.102.20.56:8080.
+ 128.1  35 | c : Accept TCP: 192.168.0.83:51220 -> 10.102.20.56:8081.
+ 128.1  35 | c : Accept TCP: 192.168.0.83:44842 -> 10.102.20.56:8080.
+ 128.2  35 | c : Accept TCP: 192.168.0.83:51224 -> 10.102.20.56:8081.
+ 128.2  35 | c : Accept TCP: 192.168.0.83:44846 -> 10.102.20.56:8080.
+ 128.3  35 | c : Accept TCP: 192.168.0.83:51228 -> 10.102.20.56:8081.
+ 128.3  35 | c : Accept TCP: 192.168.0.83:44850 -> 10.102.20.56:8080.
+ 128.5  35 | c : Accept TCP: 192.168.0.83:51232 -> 10.102.20.56:8081.
+ 128.5  35 | c : Accept TCP: 192.168.0.83:44854 -> 10.102.20.56:8080.
+ 128.6  35 | c : Accept TCP: 192.168.0.83:51236 -> 10.102.20.56:8081.
+ 128.6  35 | c : Accept TCP: 192.168.0.83:44858 -> 10.102.20.56:8080.
+ 128.8  35 | c : Accept TCP: 192.168.0.83:51240 -> 10.102.20.56:8081.
+ 128.8  35 | c : Accept TCP: 192.168.0.83:44862 -> 10.102.20.56:8080.
+ 128.9  35 | c : Accept TCP: 192.168.0.83:51244 -> 10.102.20.56:8081.
+ 128.9  35 | c : Accept TCP: 192.168.0.83:44866 -> 10.102.20.56:8080.
+ 129.0  35 | c : Accept TCP: 192.168.0.83:51248 -> 10.102.20.56:8081.
+ 129.0  35 | c : Accept TCP: 192.168.0.83:44870 -> 10.102.20.56:8080.
+ 129.1  35 | c : Accept TCP: 192.168.0.83:51252 -> 10.102.20.56:8081.
+ 129.1  35 | c : Accept TCP: 192.168.0.83:44874 -> 10.102.20.56:8080.
+ 129.3  35 | c : Accept TCP: 192.168.0.83:51256 -> 10.102.20.56:8081.
+ 129.3  35 | c : Accept TCP: 192.168.0.83:44878 -> 10.102.20.56:8080.
+ 129.4  35 | c : Accept TCP: 192.168.0.83:51260 -> 10.102.20.56:8081.
+ 129.4  35 | c : Accept TCP: 192.168.0.83:44882 -> 10.102.20.56:8080.
+ 129.6  35 | c : Accept TCP: 192.168.0.83:51264 -> 10.102.20.56:8081.
+ 129.6  35 | c : Accept TCP: 192.168.0.83:44886 -> 10.102.20.56:8080.
+ 129.7  35 | c : Accept TCP: 192.168.0.83:51268 -> 10.102.20.56:8081.
+ 129.7  35 | c : Accept TCP: 192.168.0.83:44890 -> 10.102.20.56:8080.
+ 129.9  35 | c : Accept TCP: 192.168.0.83:51272 -> 10.102.20.56:8081.
+ 129.9  35 | c : Accept TCP: 192.168.0.83:44894 -> 10.102.20.56:8080.
+ 130.0  35 | c : Accept TCP: 192.168.0.83:51276 -> 10.102.20.56:8081.
+ 130.0  35 | c : Accept TCP: 192.168.0.83:44898 -> 10.102.20.56:8080.
+ 130.1  35 | c : Accept TCP: 192.168.0.83:51280 -> 10.102.20.56:8081.
+ 130.1  35 | c : Accept TCP: 192.168.0.83:44902 -> 10.102.20.56:8080.
+ 130.3  35 | c : Accept TCP: 192.168.0.83:51284 -> 10.102.20.56:8081.
+ 130.3  35 | c : Accept TCP: 192.168.0.83:44906 -> 10.102.20.56:8080.
+ 130.4  35 | c : Accept TCP: 192.168.0.83:51288 -> 10.102.20.56:8081.
+ 130.5  35 | c : Accept TCP: 192.168.0.83:44910 -> 10.102.20.56:8080.
+ 130.6  35 | c : Accept TCP: 192.168.0.83:51292 -> 10.102.20.56:8081.
+ 130.7  35 | c : Accept TCP: 192.168.0.83:44914 -> 10.102.20.56:8080.
+ 130.8  35 | c : Accept TCP: 192.168.0.83:51296 -> 10.102.20.56:8081.
+ 130.8  35 | c : Accept TCP: 192.168.0.83:44918 -> 10.102.20.56:8080.
+ 131.0  35 | c : Accept TCP: 192.168.0.83:51300 -> 10.102.20.56:8081.
+ 131.0  35 | c : Accept TCP: 192.168.0.83:44922 -> 10.102.20.56:8080.
+ 131.1  35 | c : Accept TCP: 192.168.0.83:51304 -> 10.102.20.56:8081.
+ 131.1  35 | c : Accept TCP: 192.168.0.83:44926 -> 10.102.20.56:8080.
+ 131.1  35 | c : Accept TCP: 192.168.0.83:51308 -> 10.102.20.56:8081.
+ 131.3  35 | c : Accept TCP: 192.168.0.83:44930 -> 10.102.20.56:8080.
+ 131.3  35 | c : Accept TCP: 192.168.0.83:51312 -> 10.102.20.56:8081.
+ 131.5  35 | c : Accept TCP: 192.168.0.83:44934 -> 10.102.20.56:8080.
+ 131.5  35 | c : Accept TCP: 192.168.0.83:51316 -> 10.102.20.56:8081.
+ 131.6  35 | c : Accept TCP: 192.168.0.83:44938 -> 10.102.20.56:8080.
+ 131.7  35 | c : Accept TCP: 192.168.0.83:51320 -> 10.102.20.56:8081.
+ 131.8  35 | c : Accept TCP: 192.168.0.83:44942 -> 10.102.20.56:8080.
+ 131.8  35 | c : Accept TCP: 192.168.0.83:51324 -> 10.102.20.56:8081.
+ 132.0  35 | c : Accept TCP: 192.168.0.83:44946 -> 10.102.20.56:8080.
+ 132.0  35 | c : Accept TCP: 192.168.0.83:51328 -> 10.102.20.56:8081.
+ 132.1  35 | c : Accept TCP: 192.168.0.83:44950 -> 10.102.20.56:8080.
+ 132.1  35 | c : Accept TCP: 192.168.0.83:51332 -> 10.102.20.56:8081.
+ 132.3  35 | c : Accept TCP: 192.168.0.83:44954 -> 10.102.20.56:8080.
+ 132.3  35 | c : Accept TCP: 192.168.0.83:51336 -> 10.102.20.56:8081.
+ 132.5  35 | c : Accept TCP: 192.168.0.83:44958 -> 10.102.20.56:8080.
+ 132.5  35 | c : Accept TCP: 192.168.0.83:51340 -> 10.102.20.56:8081.
+ 132.6  35 | c : Accept TCP: 192.168.0.83:44962 -> 10.102.20.56:8080.
+ 132.6  35 | c : Accept TCP: 192.168.0.83:51344 -> 10.102.20.56:8081.
+ 132.8  35 | c : Accept TCP: 192.168.0.83:44966 -> 10.102.20.56:8080.
+ 132.8  35 | c : Accept TCP: 192.168.0.83:51348 -> 10.102.20.56:8081.
+ 132.9  35 | c : Accept TCP: 192.168.0.83:44970 -> 10.102.20.56:8080.
+ 132.9  35 | c : Accept TCP: 192.168.0.83:51352 -> 10.102.20.56:8081.
+ 133.1  35 | c : Accept TCP: 192.168.0.83:44974 -> 10.102.20.56:8080.
+ 133.1  35 | c : Accept TCP: 192.168.0.83:51356 -> 10.102.20.56:8081.
+ 133.3  35 | c : Accept TCP: 192.168.0.83:44978 -> 10.102.20.56:8080.
+ 133.3  35 | c : Accept TCP: 192.168.0.83:51360 -> 10.102.20.56:8081.
+ 133.5  35 | c : Accept TCP: 192.168.0.83:44982 -> 10.102.20.56:8080.
+ 133.5  35 | c : Accept TCP: 192.168.0.83:51364 -> 10.102.20.56:8081.
+ 133.6  35 | c : Accept TCP: 192.168.0.83:44986 -> 10.102.20.56:8080.
+ 133.6  35 | c : Accept TCP: 192.168.0.83:51368 -> 10.102.20.56:8081.
+ 133.7  35 | c : Accept TCP: 192.168.0.83:44990 -> 10.102.20.56:8080.
+ 133.7  35 | c : Accept TCP: 192.168.0.83:51372 -> 10.102.20.56:8081.
+ 133.8  35 | c : Accept TCP: 192.168.0.83:44994 -> 10.102.20.56:8080.
+ 133.8  35 | c : Accept TCP: 192.168.0.83:51376 -> 10.102.20.56:8081.
+ 133.9  35 | c : Accept TCP: 192.168.0.83:44998 -> 10.102.20.56:8080.
+ 133.9  35 | c : Accept TCP: 192.168.0.83:51380 -> 10.102.20.56:8081.
+ 133.9  35 | c : Accept TCP: 192.168.0.83:45002 -> 10.102.20.56:8080.
+ 134.2  35 | c : Accept TCP: 192.168.0.83:51384 -> 10.102.20.56:8081.
+ 134.2  35 | c : Accept TCP: 192.168.0.83:45006 -> 10.102.20.56:8080.
+ 134.3  35 | c : Accept TCP: 192.168.0.83:51388 -> 10.102.20.56:8081.
+ 134.3  35 | c : Accept TCP: 192.168.0.83:45010 -> 10.102.20.56:8080.
+ 134.5  35 | c : Accept TCP: 192.168.0.83:51392 -> 10.102.20.56:8081.
+ 134.5  35 | c : Accept TCP: 192.168.0.83:45014 -> 10.102.20.56:8080.
+ 134.7  35 | c : Accept TCP: 192.168.0.83:51396 -> 10.102.20.56:8081.
+ 134.7  35 | c : Accept TCP: 192.168.0.83:45018 -> 10.102.20.56:8080.
+ 134.9  35 | c : Accept TCP: 192.168.0.83:51400 -> 10.102.20.56:8081.
+ 134.9  35 | c : Accept TCP: 192.168.0.83:45022 -> 10.102.20.56:8080.
+ 135.1  35 | c : Accept TCP: 192.168.0.83:51404 -> 10.102.20.56:8081.
+ 135.1  35 | c : Accept TCP: 192.168.0.83:45026 -> 10.102.20.56:8080.
+ 135.3  35 | c : Accept TCP: 192.168.0.83:51408 -> 10.102.20.56:8081.
+ 135.3  35 | c : Accept TCP: 192.168.0.83:45030 -> 10.102.20.56:8080.
+ 135.3  35 | c : Accept TCP: 192.168.0.83:51412 -> 10.102.20.56:8081.
+ 135.4  35 | c : Accept TCP: 192.168.0.83:45034 -> 10.102.20.56:8080.
+ 135.4  35 | c : Accept TCP: 192.168.0.83:51416 -> 10.102.20.56:8081.
+ 135.5  35 | c : Accept TCP: 192.168.0.83:45040 -> 10.102.20.56:8080.
+ 135.6  35 | c : Accept TCP: 192.168.0.83:51422 -> 10.102.20.56:8081.
+ 135.8  35 | c : Accept TCP: 192.168.0.83:45044 -> 10.102.20.56:8080.
+ 135.8  35 | c : Accept TCP: 192.168.0.83:51426 -> 10.102.20.56:8081.
+ 135.9  35 | c : Accept TCP: 192.168.0.83:45048 -> 10.102.20.56:8080.
+ 135.9  35 | c : Accept TCP: 192.168.0.83:51430 -> 10.102.20.56:8081.
+ 136.2  35 | c : Accept TCP: 192.168.0.83:45052 -> 10.102.20.56:8080.
+ 136.2  35 | c : Accept TCP: 192.168.0.83:51434 -> 10.102.20.56:8081.
+ 136.3  35 | c : Accept TCP: 192.168.0.83:45056 -> 10.102.20.56:8080.
+ 136.3  35 | c : Accept TCP: 192.168.0.83:51438 -> 10.102.20.56:8081.
+ 136.5  35 | c : Accept TCP: 192.168.0.83:45060 -> 10.102.20.56:8080.
+ 136.5  35 | c : Accept TCP: 192.168.0.83:51442 -> 10.102.20.56:8081.
+ 136.7  35 | c : Accept TCP: 192.168.0.83:45064 -> 10.102.20.56:8080.
+ 136.7  35 | c : Accept TCP: 192.168.0.83:51446 -> 10.102.20.56:8081.
+ 136.9  35 | c : Accept TCP: 192.168.0.83:45068 -> 10.102.20.56:8080.
+ 136.9  35 | c : Accept TCP: 192.168.0.83:51450 -> 10.102.20.56:8081.
+ 137.0  35 | c : Accept TCP: 192.168.0.83:45072 -> 10.102.20.56:8080.
+ 137.0  35 | c : Accept TCP: 192.168.0.83:51454 -> 10.102.20.56:8081.
+ 137.0  35 | c : Accept TCP: 192.168.0.83:45076 -> 10.102.20.56:8080.
+ 137.2  35 | c : Accept TCP: 192.168.0.83:51458 -> 10.102.20.56:8081.
+ 137.2  35 | c : Accept TCP: 192.168.0.83:45080 -> 10.102.20.56:8080.
+ 137.4  35 | c : Accept TCP: 192.168.0.83:51462 -> 10.102.20.56:8081.
+ 137.4  35 | c : Accept TCP: 192.168.0.83:45084 -> 10.102.20.56:8080.
+ 137.5  35 | c : Accept TCP: 192.168.0.83:51466 -> 10.102.20.56:8081.
+ 137.5  35 | c : Accept TCP: 192.168.0.83:45088 -> 10.102.20.56:8080.
+ 137.8  35 | c : Accept TCP: 192.168.0.83:51470 -> 10.102.20.56:8081.
+ 137.8  35 | c : Accept TCP: 192.168.0.83:45092 -> 10.102.20.56:8080.
+ 138.0  35 | c : Accept TCP: 192.168.0.83:51474 -> 10.102.20.56:8081.
+ 138.0  35 | c : Accept TCP: 192.168.0.83:45096 -> 10.102.20.56:8080.
+ 138.3  35 | c : Accept TCP: 192.168.0.83:51478 -> 10.102.20.56:8081.
+ 138.3  35 | c : Accept TCP: 192.168.0.83:45100 -> 10.102.20.56:8080.
+ 138.4  35 | c : Accept TCP: 192.168.0.83:51482 -> 10.102.20.56:8081.
+ 138.5  35 | c : Accept TCP: 192.168.0.83:45104 -> 10.102.20.56:8080.
+ 138.7  35 | c : Accept TCP: 192.168.0.83:51486 -> 10.102.20.56:8081.
+ 138.7  35 | c : Accept TCP: 192.168.0.83:45108 -> 10.102.20.56:8080.
+ 139.0  35 | c : Accept TCP: 192.168.0.83:51490 -> 10.102.20.56:8081.
+ 139.0  35 | c : Accept TCP: 192.168.0.83:45112 -> 10.102.20.56:8080.
+ 139.2  35 | c : Accept TCP: 192.168.0.83:51494 -> 10.102.20.56:8081.
+ 139.2  35 | c : Accept TCP: 192.168.0.83:45116 -> 10.102.20.56:8080.
+ 139.5  35 | c : Accept TCP: 192.168.0.83:51498 -> 10.102.20.56:8081.
+ 139.5  35 | c : Accept TCP: 192.168.0.83:45120 -> 10.102.20.56:8080.
+ 139.8  35 | c : Accept TCP: 192.168.0.83:51502 -> 10.102.20.56:8081.
+ 139.8  35 | c : Accept TCP: 192.168.0.83:45124 -> 10.102.20.56:8080.
+ 140.0  35 | c : Accept TCP: 192.168.0.83:51506 -> 10.102.20.56:8081.
+ 140.0  35 | c : Accept TCP: 192.168.0.83:45128 -> 10.102.20.56:8080.
+ 140.3  35 | c : Accept TCP: 192.168.0.83:51510 -> 10.102.20.56:8081.
+ 140.3  35 | c : Accept TCP: 192.168.0.83:45132 -> 10.102.20.56:8080.
+ 140.5  35 | c : Accept TCP: 192.168.0.83:51514 -> 10.102.20.56:8081.
+ 140.5  35 | c : Accept TCP: 192.168.0.83:45136 -> 10.102.20.56:8080.
+ 140.6  35 | c : Accept TCP: 192.168.0.83:51518 -> 10.102.20.56:8081.
+ 140.6  35 | c : Accept TCP: 192.168.0.83:45140 -> 10.102.20.56:8080.
+ 140.9  35 | c : Accept TCP: 192.168.0.83:51522 -> 10.102.20.56:8081.
+ 140.9  35 | c : Accept TCP: 192.168.0.83:45144 -> 10.102.20.56:8080.
+ 141.1  35 | c : Accept TCP: 192.168.0.83:51526 -> 10.102.20.56:8081.
+ 141.1  35 | c : Accept TCP: 192.168.0.83:45148 -> 10.102.20.56:8080.
+ 141.3  35 | c : Accept TCP: 192.168.0.83:51530 -> 10.102.20.56:8081.
+ 141.3  35 | c : Accept TCP: 192.168.0.83:45152 -> 10.102.20.56:8080.
+ 141.5  35 | c : Accept TCP: 192.168.0.83:51534 -> 10.102.20.56:8081.
+ 141.5  35 | c : Accept TCP: 192.168.0.83:45156 -> 10.102.20.56:8080.
+ 141.8  35 | c : Accept TCP: 192.168.0.83:51538 -> 10.102.20.56:8081.
+ 141.8  35 | c : Accept TCP: 192.168.0.83:45160 -> 10.102.20.56:8080.
+ 141.9  35 | c : Accept TCP: 192.168.0.83:51542 -> 10.102.20.56:8081.
+ 142.0  35 | c : Accept TCP: 192.168.0.83:45164 -> 10.102.20.56:8080.
+ 142.2  35 | c : Accept TCP: 192.168.0.83:51546 -> 10.102.20.56:8081.
+ 142.3  35 | c : Accept TCP: 192.168.0.83:45168 -> 10.102.20.56:8080.
+ 142.5  35 | c : Accept TCP: 192.168.0.83:51550 -> 10.102.20.56:8081.
+ 142.5  35 | c : Accept TCP: 192.168.0.83:45172 -> 10.102.20.56:8080.
+ 142.6  35 | c : Accept TCP: 192.168.0.83:51554 -> 10.102.20.56:8081.
+ 142.6  35 | c : Accept TCP: 192.168.0.83:45176 -> 10.102.20.56:8080.
+ 142.8  35 | c : Accept TCP: 192.168.0.83:51558 -> 10.102.20.56:8081.
+ 142.8  35 | c : Accept TCP: 192.168.0.83:45180 -> 10.102.20.56:8080.
+ 142.8 TEL | (proxy checking local liveness)
+ 142.8  27 | 2019-08-06T15:50:59+0000 [Poll#info] Checkpoint
+ 143.0  35 | c : Accept TCP: 192.168.0.83:51564 -> 10.102.20.56:8081.
+ 143.0  35 | c : Accept TCP: 192.168.0.83:45186 -> 10.102.20.56:8080.
+ 143.2  35 | c : Accept TCP: 192.168.0.83:51568 -> 10.102.20.56:8081.
+ 143.2  35 | c : Accept TCP: 192.168.0.83:45190 -> 10.102.20.56:8080.
+ 143.5  35 | c : Accept TCP: 192.168.0.83:51572 -> 10.102.20.56:8081.
+ 143.5  35 | c : Accept TCP: 192.168.0.83:45194 -> 10.102.20.56:8080.
+ 143.6  35 | c : Accept TCP: 192.168.0.83:51576 -> 10.102.20.56:8081.
+ 143.6  35 | c : Accept TCP: 192.168.0.83:45198 -> 10.102.20.56:8080.
+ 143.6  35 | c : Accept TCP: 192.168.0.83:51580 -> 10.102.20.56:8081.
+ 143.7  35 | c : Accept TCP: 192.168.0.83:45202 -> 10.102.20.56:8080.
+ 143.7  35 | c : Accept TCP: 192.168.0.83:51584 -> 10.102.20.56:8081.
+ 143.8  35 | c : Accept TCP: 192.168.0.83:45206 -> 10.102.20.56:8080.
+ 143.8  35 | c : Accept TCP: 192.168.0.83:51588 -> 10.102.20.56:8081.
+ 143.8  35 | c : Accept TCP: 192.168.0.83:45210 -> 10.102.20.56:8080.
+ 144.0  35 | c : Accept TCP: 192.168.0.83:51592 -> 10.102.20.56:8081.
+ 144.0  35 | c : Accept TCP: 192.168.0.83:45214 -> 10.102.20.56:8080.
+ 144.2  35 | c : Accept TCP: 192.168.0.83:51596 -> 10.102.20.56:8081.
+ 144.2  35 | c : Accept TCP: 192.168.0.83:45218 -> 10.102.20.56:8080.
+ 144.6  35 | c : Accept TCP: 192.168.0.83:51600 -> 10.102.20.56:8081.
+ 144.6  35 | c : Accept TCP: 192.168.0.83:45222 -> 10.102.20.56:8080.
+ 144.9  35 | c : Accept TCP: 192.168.0.83:51606 -> 10.102.20.56:8081.
+ 144.9  35 | c : Accept TCP: 192.168.0.83:45228 -> 10.102.20.56:8080.
+ 145.1  35 | c : Accept TCP: 192.168.0.83:51610 -> 10.102.20.56:8081.
+ 145.1  35 | c : Accept TCP: 192.168.0.83:45232 -> 10.102.20.56:8080.
+ 145.4  35 | c : Accept TCP: 192.168.0.83:51614 -> 10.102.20.56:8081.
+ 145.4  35 | c : Accept TCP: 192.168.0.83:45236 -> 10.102.20.56:8080.
+ 145.8  35 | c : Accept TCP: 192.168.0.83:51618 -> 10.102.20.56:8081.
+ 145.8  35 | c : Accept TCP: 192.168.0.83:45240 -> 10.102.20.56:8080.
+ 145.8  35 | c : Accept TCP: 192.168.0.83:51622 -> 10.102.20.56:8081.
+ 146.0  35 | c : Accept TCP: 192.168.0.83:45244 -> 10.102.20.56:8080.
+ 146.0  35 | c : Accept TCP: 192.168.0.83:51626 -> 10.102.20.56:8081.
+ 146.2  35 | c : Accept TCP: 192.168.0.83:45248 -> 10.102.20.56:8080.
+ 146.2  35 | c : Accept TCP: 192.168.0.83:51630 -> 10.102.20.56:8081.
+ 146.5  35 | c : Accept TCP: 192.168.0.83:45252 -> 10.102.20.56:8080.
+ 146.5  35 | c : Accept TCP: 192.168.0.83:51634 -> 10.102.20.56:8081.
+ 146.7  35 | c : Accept TCP: 192.168.0.83:45256 -> 10.102.20.56:8080.
+ 146.7  35 | c : Accept TCP: 192.168.0.83:51638 -> 10.102.20.56:8081.
+ 146.9  35 | c : Accept TCP: 192.168.0.83:45260 -> 10.102.20.56:8080.
+ 146.9  35 | c : Accept TCP: 192.168.0.83:51642 -> 10.102.20.56:8081.
+ 147.0  35 | c : Accept TCP: 192.168.0.83:45264 -> 10.102.20.56:8080.
+ 147.0  35 | c : Accept TCP: 192.168.0.83:51646 -> 10.102.20.56:8081.
+ 147.1  35 | c : Accept TCP: 192.168.0.83:45268 -> 10.102.20.56:8080.
+ 147.1  35 | c : Accept TCP: 192.168.0.83:51650 -> 10.102.20.56:8081.
+ 147.3  35 | c : Accept TCP: 192.168.0.83:45272 -> 10.102.20.56:8080.
+ 147.4  35 | c : Accept TCP: 192.168.0.83:51654 -> 10.102.20.56:8081.
+ 147.7  35 | c : Accept TCP: 192.168.0.83:45276 -> 10.102.20.56:8080.
+ 147.7  35 | c : Accept TCP: 192.168.0.83:51658 -> 10.102.20.56:8081.
+ 147.9  35 | c : Accept TCP: 192.168.0.83:45280 -> 10.102.20.56:8080.
+ 147.9  35 | c : Accept TCP: 192.168.0.83:51662 -> 10.102.20.56:8081.
+ 148.0  35 | c : Accept TCP: 192.168.0.83:45284 -> 10.102.20.56:8080.
+ 148.0  35 | c : Accept TCP: 192.168.0.83:51666 -> 10.102.20.56:8081.
+ 148.3  35 | c : Accept TCP: 192.168.0.83:45288 -> 10.102.20.56:8080.
+ 148.3  35 | c : Accept TCP: 192.168.0.83:51670 -> 10.102.20.56:8081.
+ 148.6  35 | c : Accept TCP: 192.168.0.83:45292 -> 10.102.20.56:8080.
+ 148.6  35 | c : Accept TCP: 192.168.0.83:51674 -> 10.102.20.56:8081.
+ 148.9  35 | c : Accept TCP: 192.168.0.83:45296 -> 10.102.20.56:8080.
+ 148.9  35 | c : Accept TCP: 192.168.0.83:51678 -> 10.102.20.56:8081.
+ 149.2  35 | c : Accept TCP: 192.168.0.83:45300 -> 10.102.20.56:8080.
+ 149.2  35 | c : Accept TCP: 192.168.0.83:51682 -> 10.102.20.56:8081.
+ 149.3  35 | c : Accept TCP: 192.168.0.83:45304 -> 10.102.20.56:8080.
+ 149.3  35 | c : Accept TCP: 192.168.0.83:51686 -> 10.102.20.56:8081.
+ 149.4  35 | c : Accept TCP: 192.168.0.83:45308 -> 10.102.20.56:8080.
+ 149.4  35 | c : Accept TCP: 192.168.0.83:51690 -> 10.102.20.56:8081.
+ 149.5  35 | c : Accept TCP: 192.168.0.83:45312 -> 10.102.20.56:8080.
+ 149.5  35 | c : Accept TCP: 192.168.0.83:51694 -> 10.102.20.56:8081.
+ 149.7  35 | c : Accept TCP: 192.168.0.83:45316 -> 10.102.20.56:8080.
+ 149.7  35 | c : Accept TCP: 192.168.0.83:51698 -> 10.102.20.56:8081.
+ 149.9  35 | c : Accept TCP: 192.168.0.83:45320 -> 10.102.20.56:8080.
+ 149.9  35 | c : Accept TCP: 192.168.0.83:51702 -> 10.102.20.56:8081.
+ 150.1  35 | c : Accept TCP: 192.168.0.83:45324 -> 10.102.20.56:8080.
+ 150.1  35 | c : Accept TCP: 192.168.0.83:51706 -> 10.102.20.56:8081.
+ 150.4 TEL | [73] Running: sudo -n echo -n
+ 150.4 TEL | [73] ran in 0.02 secs.
+ 150.5  35 | c : Accept TCP: 192.168.0.83:45328 -> 10.102.20.56:8080.
+ 150.5  35 | c : Accept TCP: 192.168.0.83:51710 -> 10.102.20.56:8081.
+ 150.6  35 | c : Accept TCP: 192.168.0.83:45332 -> 10.102.20.56:8080.
+ 150.6  35 | c : Accept TCP: 192.168.0.83:51714 -> 10.102.20.56:8081.
+ 150.7  35 | c : Accept TCP: 192.168.0.83:45336 -> 10.102.20.56:8080.
+ 150.7  35 | c : Accept TCP: 192.168.0.83:51718 -> 10.102.20.56:8081.
+ 150.8  35 | c : Accept TCP: 192.168.0.83:45340 -> 10.102.20.56:8080.
+ 150.8  35 | c : Accept TCP: 192.168.0.83:51722 -> 10.102.20.56:8081.
+ 150.9  35 | c : Accept TCP: 192.168.0.83:45344 -> 10.102.20.56:8080.
+ 151.1  35 | c : Accept TCP: 192.168.0.83:51726 -> 10.102.20.56:8081.
+ 151.1  35 | c : Accept TCP: 192.168.0.83:45348 -> 10.102.20.56:8080.
+ 151.1  35 | c : Accept TCP: 192.168.0.83:51730 -> 10.102.20.56:8081.
+ 151.4  35 | c : Accept TCP: 192.168.0.83:45352 -> 10.102.20.56:8080.
+ 151.4  35 | c : Accept TCP: 192.168.0.83:51734 -> 10.102.20.56:8081.
+ 151.7  35 | c : Accept TCP: 192.168.0.83:45356 -> 10.102.20.56:8080.
+ 151.7  35 | c : Accept TCP: 192.168.0.83:51738 -> 10.102.20.56:8081.
+ 151.8  35 | c : Accept TCP: 192.168.0.83:45360 -> 10.102.20.56:8080.
+ 151.8  35 | c : Accept TCP: 192.168.0.83:51742 -> 10.102.20.56:8081.
+ 151.8  35 | c : Accept TCP: 192.168.0.83:45364 -> 10.102.20.56:8080.
+ 151.8  35 | c : Accept TCP: 192.168.0.83:51746 -> 10.102.20.56:8081.
+ 151.9  35 | c : Accept TCP: 192.168.0.83:45368 -> 10.102.20.56:8080.
+ 151.9  35 | c : Accept TCP: 192.168.0.83:51750 -> 10.102.20.56:8081.
+ 152.0  35 | c : Accept TCP: 192.168.0.83:45372 -> 10.102.20.56:8080.
+ 152.0  35 | c : Accept TCP: 192.168.0.83:51754 -> 10.102.20.56:8081.
+ 152.1  35 | c : Accept TCP: 192.168.0.83:45376 -> 10.102.20.56:8080.
+ 152.1  35 | c : Accept TCP: 192.168.0.83:51758 -> 10.102.20.56:8081.
+ 152.2  35 | c : DNS request from ('127.0.0.1', 56654) to None: 45 bytes
+ 152.2  35 | c : Accept TCP: 192.168.0.83:45380 -> 10.102.20.56:8080.
+ 152.2  35 | c : Accept TCP: 192.168.0.83:51762 -> 10.102.20.56:8081.
+ 152.2  27 | 2019-08-06T15:51:09+0000 [stdout#info] A query: b'chat-pa.clients6.google.com'
+ 152.2  27 | 2019-08-06T15:51:09+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 55831
+ 152.2  27 | 2019-08-06T15:51:09+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be278>
+ 152.4  35 | c : Accept TCP: 192.168.0.83:45384 -> 10.102.20.56:8080.
+ 152.4  35 | c : Accept TCP: 192.168.0.83:51766 -> 10.102.20.56:8081.
+ 152.9  27 | 2019-08-06T15:51:09+0000 [-] (UDP Port 55831 Closed)
+ 152.9  27 | 2019-08-06T15:51:09+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be278>
+ 152.9  35 | c : Accept TCP: 192.168.0.83:45388 -> 10.102.20.56:8080.
+ 152.9  35 | c : Accept TCP: 192.168.0.83:51770 -> 10.102.20.56:8081.
+ 153.0  35 | c : Accept TCP: 192.168.0.83:45392 -> 10.102.20.56:8080.
+ 153.0  35 | c : DNS request from ('127.0.0.1', 50733) to None: 45 bytes
+ 153.0  35 | c : Accept TCP: 192.168.0.83:51774 -> 10.102.20.56:8081.
+ 153.2  35 | c : Accept TCP: 192.168.0.83:45396 -> 10.102.20.56:8080.
+ 153.2  27 | 2019-08-06T15:51:10+0000 [stdout#info] AAAA query, sending back A instead: b'chat-pa.clients6.google.com'
+ 153.2  27 | 2019-08-06T15:51:10+0000 [stdout#info] A query: b'chat-pa.clients6.google.com'
+ 153.7  27 | 2019-08-06T15:51:10+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 21134
+ 153.7  27 | 2019-08-06T15:51:10+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864bea58>
+ 153.8  27 | 2019-08-06T15:51:10+0000 [-] (UDP Port 21134 Closed)
+ 153.8  27 | 2019-08-06T15:51:10+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864bea58>
+ 154.0  35 | c : Accept TCP: 192.168.0.83:51778 -> 10.102.20.56:8081.
+ 154.2  35 | c : Accept TCP: 192.168.0.83:45400 -> 10.102.20.56:8080.
+ 154.2  35 | c : Accept TCP: 192.168.0.83:51782 -> 10.102.20.56:8081.
+ 154.3  35 | c : Accept TCP: 192.168.0.83:45404 -> 10.102.20.56:8080.
+ 154.3  35 | c : Accept TCP: 192.168.0.83:51786 -> 10.102.20.56:8081.
+ 154.5  35 | c : Accept TCP: 192.168.0.83:45408 -> 10.102.20.56:8080.
+ 154.5  35 | c : Accept TCP: 192.168.0.83:51790 -> 10.102.20.56:8081.
+ 154.6  35 | c : Accept TCP: 192.168.0.83:45412 -> 10.102.20.56:8080.
+ 154.6  35 | c : Accept TCP: 192.168.0.83:51794 -> 10.102.20.56:8081.
+ 154.7  35 | c : Accept TCP: 192.168.0.83:45416 -> 10.102.20.56:8080.
+ 154.7  35 | c : Accept TCP: 192.168.0.83:51798 -> 10.102.20.56:8081.
+ 154.8  35 | c : Accept TCP: 192.168.0.83:45420 -> 10.102.20.56:8080.
+ 154.8  35 | c : Accept TCP: 192.168.0.83:51802 -> 10.102.20.56:8081.
+ 154.9  35 | c : Accept TCP: 192.168.0.83:45424 -> 10.102.20.56:8080.
+ 154.9  35 | c : Accept TCP: 192.168.0.83:51806 -> 10.102.20.56:8081.
+ 155.0  35 | c : Accept TCP: 192.168.0.83:45428 -> 10.102.20.56:8080.
+ 155.0  35 | c : Accept TCP: 192.168.0.83:51810 -> 10.102.20.56:8081.
+ 155.2  35 | c : Accept TCP: 192.168.0.83:45432 -> 10.102.20.56:8080.
+ 155.2  35 | c : Accept TCP: 192.168.0.83:51814 -> 10.102.20.56:8081.
+ 155.5  35 | c : Accept TCP: 192.168.0.83:45436 -> 10.102.20.56:8080.
+ 155.5  35 | c : Accept TCP: 192.168.0.83:51818 -> 10.102.20.56:8081.
+ 155.5  35 | c : Accept TCP: 192.168.0.83:45440 -> 10.102.20.56:8080.
+ 155.5  35 | c : Accept TCP: 192.168.0.83:51822 -> 10.102.20.56:8081.
+ 155.6  35 | c : Accept TCP: 192.168.0.83:45444 -> 10.102.20.56:8080.
+ 155.6  35 | c : Accept TCP: 192.168.0.83:51826 -> 10.102.20.56:8081.
+ 155.8  35 | c : Accept TCP: 192.168.0.83:45448 -> 10.102.20.56:8080.
+ 155.8  35 | c : Accept TCP: 192.168.0.83:51830 -> 10.102.20.56:8081.
+ 155.9  35 | c : Accept TCP: 192.168.0.83:45452 -> 10.102.20.56:8080.
+ 155.9  35 | c : Accept TCP: 192.168.0.83:51834 -> 10.102.20.56:8081.
+ 156.2  35 | c : Accept TCP: 192.168.0.83:45456 -> 10.102.20.56:8080.
+ 156.2  35 | c : Accept TCP: 192.168.0.83:51838 -> 10.102.20.56:8081.
+ 156.4  35 | c : Accept TCP: 192.168.0.83:45460 -> 10.102.20.56:8080.
+ 156.4  35 | c : Accept TCP: 192.168.0.83:51842 -> 10.102.20.56:8081.
+ 156.8  35 | c : Accept TCP: 192.168.0.83:45464 -> 10.102.20.56:8080.
+ 156.8  35 | c : Accept TCP: 192.168.0.83:51846 -> 10.102.20.56:8081.
+ 156.9  35 | c : Accept TCP: 192.168.0.83:45468 -> 10.102.20.56:8080.
+ 156.9  35 | c : Accept TCP: 192.168.0.83:51850 -> 10.102.20.56:8081.
+ 157.1  35 | c : Accept TCP: 192.168.0.83:45472 -> 10.102.20.56:8080.
+ 157.1  35 | c : Accept TCP: 192.168.0.83:51854 -> 10.102.20.56:8081.
+ 157.4  35 | c : Accept TCP: 192.168.0.83:45476 -> 10.102.20.56:8080.
+ 157.4  35 | c : Accept TCP: 192.168.0.83:51858 -> 10.102.20.56:8081.
+ 157.8  35 | c : Accept TCP: 192.168.0.83:45480 -> 10.102.20.56:8080.
+ 157.8  35 | c : Accept TCP: 192.168.0.83:51862 -> 10.102.20.56:8081.
+ 158.0  35 | c : Accept TCP: 192.168.0.83:45484 -> 10.102.20.56:8080.
+ 158.0  35 | c : Accept TCP: 192.168.0.83:51866 -> 10.102.20.56:8081.
+ 158.2  35 | c : Accept TCP: 192.168.0.83:45488 -> 10.102.20.56:8080.
+ 158.2  35 | c : Accept TCP: 192.168.0.83:51870 -> 10.102.20.56:8081.
+ 158.4  35 | c : Accept TCP: 192.168.0.83:45492 -> 10.102.20.56:8080.
+ 158.4  35 | c : Accept TCP: 192.168.0.83:51874 -> 10.102.20.56:8081.
+ 158.6  35 | c : Accept TCP: 192.168.0.83:45496 -> 10.102.20.56:8080.
+ 158.6  35 | c : Accept TCP: 192.168.0.83:51878 -> 10.102.20.56:8081.
+ 158.9  35 | c : Accept TCP: 192.168.0.83:45500 -> 10.102.20.56:8080.
+ 158.9  35 | c : Accept TCP: 192.168.0.83:51882 -> 10.102.20.56:8081.
+ 159.1  35 | c : Accept TCP: 192.168.0.83:45504 -> 10.102.20.56:8080.
+ 159.1  35 | c : Accept TCP: 192.168.0.83:51886 -> 10.102.20.56:8081.
+ 159.5  35 | c : Accept TCP: 192.168.0.83:45508 -> 10.102.20.56:8080.
+ 159.5  35 | c : Accept TCP: 192.168.0.83:51890 -> 10.102.20.56:8081.
+ 159.7  35 | c : Accept TCP: 192.168.0.83:45512 -> 10.102.20.56:8080.
+ 159.7  35 | c : Accept TCP: 192.168.0.83:51894 -> 10.102.20.56:8081.
+ 160.1  35 | c : Accept TCP: 192.168.0.83:45516 -> 10.102.20.56:8080.
+ 160.1  35 | c : Accept TCP: 192.168.0.83:51898 -> 10.102.20.56:8081.
+ 160.5  35 | c : Accept TCP: 192.168.0.83:45520 -> 10.102.20.56:8080.
+ 160.5  35 | c : Accept TCP: 192.168.0.83:51902 -> 10.102.20.56:8081.
+ 160.8  35 | c : Accept TCP: 192.168.0.83:45524 -> 10.102.20.56:8080.
+ 160.8  35 | c : Accept TCP: 192.168.0.83:51906 -> 10.102.20.56:8081.
+ 160.9  35 | c : Accept TCP: 192.168.0.83:45528 -> 10.102.20.56:8080.
+ 160.9  35 | c : Accept TCP: 192.168.0.83:51910 -> 10.102.20.56:8081.
+ 161.0  35 | c : Accept TCP: 192.168.0.83:45532 -> 10.102.20.56:8080.
+ 161.0  35 | c : Accept TCP: 192.168.0.83:51914 -> 10.102.20.56:8081.
+ 161.1  35 | c : Accept TCP: 192.168.0.83:45536 -> 10.102.20.56:8080.
+ 161.1  35 | c : Accept TCP: 192.168.0.83:51918 -> 10.102.20.56:8081.
+ 161.2  35 | c : Accept TCP: 192.168.0.83:45540 -> 10.102.20.56:8080.
+ 161.2  35 | c : Accept TCP: 192.168.0.83:51922 -> 10.102.20.56:8081.
+ 161.3  35 | c : Accept TCP: 192.168.0.83:45544 -> 10.102.20.56:8080.
+ 161.3  35 | c : Accept TCP: 192.168.0.83:51926 -> 10.102.20.56:8081.
+ 161.4  35 | c : Accept TCP: 192.168.0.83:45548 -> 10.102.20.56:8080.
+ 161.4  35 | c : Accept TCP: 192.168.0.83:51930 -> 10.102.20.56:8081.
+ 161.5  35 | c : Accept TCP: 192.168.0.83:45552 -> 10.102.20.56:8080.
+ 161.5  35 | c : Accept TCP: 192.168.0.83:51934 -> 10.102.20.56:8081.
+ 161.9  35 | c : Accept TCP: 192.168.0.83:45556 -> 10.102.20.56:8080.
+ 161.9  35 | c : Accept TCP: 192.168.0.83:51938 -> 10.102.20.56:8081.
+ 162.2  35 | c : Accept TCP: 192.168.0.83:45560 -> 10.102.20.56:8080.
+ 162.2  35 | c : Accept TCP: 192.168.0.83:51942 -> 10.102.20.56:8081.
+ 162.6  35 | c : Accept TCP: 192.168.0.83:45564 -> 10.102.20.56:8080.
+ 162.6  35 | c : Accept TCP: 192.168.0.83:51946 -> 10.102.20.56:8081.
+ 162.9  35 | c : Accept TCP: 192.168.0.83:45568 -> 10.102.20.56:8080.
+ 162.9  35 | c : Accept TCP: 192.168.0.83:51950 -> 10.102.20.56:8081.
+ 163.0  35 | c : Accept TCP: 192.168.0.83:45572 -> 10.102.20.56:8080.
+ 163.0  35 | c : Accept TCP: 192.168.0.83:51954 -> 10.102.20.56:8081.
+ 163.2  35 | c : Accept TCP: 192.168.0.83:45576 -> 10.102.20.56:8080.
+ 163.2  35 | c : Accept TCP: 192.168.0.83:51958 -> 10.102.20.56:8081.
+ 163.3  35 | c : Accept TCP: 192.168.0.83:45580 -> 10.102.20.56:8080.
+ 163.3  35 | c : Accept TCP: 192.168.0.83:51962 -> 10.102.20.56:8081.
+ 163.4  35 | c : Accept TCP: 192.168.0.83:45584 -> 10.102.20.56:8080.
+ 163.4  35 | c : Accept TCP: 192.168.0.83:51966 -> 10.102.20.56:8081.
+ 163.5  35 | c : Accept TCP: 192.168.0.83:45588 -> 10.102.20.56:8080.
+ 163.5  35 | c : Accept TCP: 192.168.0.83:51970 -> 10.102.20.56:8081.
+ 163.6  35 | c : Accept TCP: 192.168.0.83:45592 -> 10.102.20.56:8080.
+ 163.6  35 | c : Accept TCP: 192.168.0.83:51974 -> 10.102.20.56:8081.
+ 163.7  35 | c : Accept TCP: 192.168.0.83:45596 -> 10.102.20.56:8080.
+ 163.7  35 | c : Accept TCP: 192.168.0.83:51978 -> 10.102.20.56:8081.
+ 164.2  35 | c : Accept TCP: 192.168.0.83:45600 -> 10.102.20.56:8080.
+ 164.2  35 | c : Accept TCP: 192.168.0.83:51982 -> 10.102.20.56:8081.
+ 164.3  35 | c : Accept TCP: 192.168.0.83:45604 -> 10.102.20.56:8080.
+ 164.3  35 | c : Accept TCP: 192.168.0.83:51986 -> 10.102.20.56:8081.
+ 164.5  35 | c : Accept TCP: 192.168.0.83:45608 -> 10.102.20.56:8080.
+ 164.5  35 | c : Accept TCP: 192.168.0.83:51990 -> 10.102.20.56:8081.
+ 164.6  35 | c : Accept TCP: 192.168.0.83:45612 -> 10.102.20.56:8080.
+ 164.6  35 | c : Accept TCP: 192.168.0.83:51994 -> 10.102.20.56:8081.
+ 164.8  35 | c : Accept TCP: 192.168.0.83:45616 -> 10.102.20.56:8080.
+ 164.8  35 | c : Accept TCP: 192.168.0.83:51998 -> 10.102.20.56:8081.
+ 165.1  35 | c : Accept TCP: 192.168.0.83:45620 -> 10.102.20.56:8080.
+ 165.1  35 | c : Accept TCP: 192.168.0.83:52002 -> 10.102.20.56:8081.
+ 165.4  35 | c : Accept TCP: 192.168.0.83:45624 -> 10.102.20.56:8080.
+ 165.4  35 | c : Accept TCP: 192.168.0.83:52006 -> 10.102.20.56:8081.
+ 165.5  35 | c : Accept TCP: 192.168.0.83:45628 -> 10.102.20.56:8080.
+ 165.6  35 | c : Accept TCP: 192.168.0.83:52010 -> 10.102.20.56:8081.
+ 165.7  35 | c : Accept TCP: 192.168.0.83:45632 -> 10.102.20.56:8080.
+ 165.7  35 | c : Accept TCP: 192.168.0.83:52014 -> 10.102.20.56:8081.
+ 165.8  35 | c : Accept TCP: 192.168.0.83:45636 -> 10.102.20.56:8080.
+ 165.8  35 | c : Accept TCP: 192.168.0.83:52018 -> 10.102.20.56:8081.
+ 166.0  35 | c : Accept TCP: 192.168.0.83:45640 -> 10.102.20.56:8080.
+ 166.0  35 | c : Accept TCP: 192.168.0.83:52022 -> 10.102.20.56:8081.
+ 166.1  35 | c : Accept TCP: 192.168.0.83:45644 -> 10.102.20.56:8080.
+ 166.1  35 | c : Accept TCP: 192.168.0.83:52026 -> 10.102.20.56:8081.
+ 166.2  35 | c : Accept TCP: 192.168.0.83:45648 -> 10.102.20.56:8080.
+ 166.2  35 | c : Accept TCP: 192.168.0.83:52030 -> 10.102.20.56:8081.
+ 166.3  35 | c : Accept TCP: 192.168.0.83:45652 -> 10.102.20.56:8080.
+ 166.3  35 | c : Accept TCP: 192.168.0.83:52034 -> 10.102.20.56:8081.
+ 166.4  35 | c : Accept TCP: 192.168.0.83:45656 -> 10.102.20.56:8080.
+ 166.4  35 | c : Accept TCP: 192.168.0.83:52038 -> 10.102.20.56:8081.
+ 166.5  35 | c : Accept TCP: 192.168.0.83:45660 -> 10.102.20.56:8080.
+ 166.6  35 | c : Accept TCP: 192.168.0.83:52042 -> 10.102.20.56:8081.
+ 166.7  35 | c : Accept TCP: 192.168.0.83:45664 -> 10.102.20.56:8080.
+ 166.7  35 | c : Accept TCP: 192.168.0.83:52046 -> 10.102.20.56:8081.
+ 166.8  35 | c : Accept TCP: 192.168.0.83:45668 -> 10.102.20.56:8080.
+ 166.8  35 | c : Accept TCP: 192.168.0.83:52050 -> 10.102.20.56:8081.
+ 166.9  35 | c : Accept TCP: 192.168.0.83:45672 -> 10.102.20.56:8080.
+ 166.9  35 | c : Accept TCP: 192.168.0.83:52054 -> 10.102.20.56:8081.
+ 167.0  35 | c : Accept TCP: 192.168.0.83:45676 -> 10.102.20.56:8080.
+ 167.0  35 | c : Accept TCP: 192.168.0.83:52058 -> 10.102.20.56:8081.
+ 167.1  35 | c : Accept TCP: 192.168.0.83:45680 -> 10.102.20.56:8080.
+ 167.1  35 | c : Accept TCP: 192.168.0.83:52062 -> 10.102.20.56:8081.
+ 167.2  35 | c : Accept TCP: 192.168.0.83:45684 -> 10.102.20.56:8080.
+ 167.2  35 | c : Accept TCP: 192.168.0.83:52066 -> 10.102.20.56:8081.
+ 167.4  35 | c : Accept TCP: 192.168.0.83:45688 -> 10.102.20.56:8080.
+ 167.4  35 | c : Accept TCP: 192.168.0.83:52070 -> 10.102.20.56:8081.
+ 167.5  35 | c : Accept TCP: 192.168.0.83:45692 -> 10.102.20.56:8080.
+ 167.5  35 | c : Accept TCP: 192.168.0.83:52074 -> 10.102.20.56:8081.
+ 167.6  35 | c : Accept TCP: 192.168.0.83:45696 -> 10.102.20.56:8080.
+ 167.6  35 | c : Accept TCP: 192.168.0.83:52078 -> 10.102.20.56:8081.
+ 167.7  35 | c : Accept TCP: 192.168.0.83:45700 -> 10.102.20.56:8080.
+ 167.7  35 | c : Accept TCP: 192.168.0.83:52082 -> 10.102.20.56:8081.
+ 167.8  35 | c : Accept TCP: 192.168.0.83:45704 -> 10.102.20.56:8080.
+ 167.8  35 | c : Accept TCP: 192.168.0.83:52086 -> 10.102.20.56:8081.
+ 167.9  35 | c : Accept TCP: 192.168.0.83:45708 -> 10.102.20.56:8080.
+ 167.9  35 | c : Accept TCP: 192.168.0.83:52090 -> 10.102.20.56:8081.
+ 168.1  35 | c : Accept TCP: 192.168.0.83:45712 -> 10.102.20.56:8080.
+ 168.1  35 | c : Accept TCP: 192.168.0.83:52094 -> 10.102.20.56:8081.
+ 168.2  35 | c : Accept TCP: 192.168.0.83:45716 -> 10.102.20.56:8080.
+ 168.2  35 | c : Accept TCP: 192.168.0.83:52098 -> 10.102.20.56:8081.
+ 168.3  35 | c : Accept TCP: 192.168.0.83:45720 -> 10.102.20.56:8080.
+ 168.3  35 | c : Accept TCP: 192.168.0.83:52102 -> 10.102.20.56:8081.
+ 168.5  35 | c : Accept TCP: 192.168.0.83:45724 -> 10.102.20.56:8080.
+ 168.5  35 | c : Accept TCP: 192.168.0.83:52106 -> 10.102.20.56:8081.
+ 168.9  35 | c : Accept TCP: 192.168.0.83:45728 -> 10.102.20.56:8080.
+ 168.9  35 | c : Accept TCP: 192.168.0.83:52110 -> 10.102.20.56:8081.
+ 169.1  35 | c : Accept TCP: 192.168.0.83:45732 -> 10.102.20.56:8080.
+ 169.1  35 | c : Accept TCP: 192.168.0.83:52114 -> 10.102.20.56:8081.
+ 169.4  35 | c : Accept TCP: 192.168.0.83:45736 -> 10.102.20.56:8080.
+ 169.4  35 | c : Accept TCP: 192.168.0.83:52118 -> 10.102.20.56:8081.
+ 169.8  35 | c : Accept TCP: 192.168.0.83:45740 -> 10.102.20.56:8080.
+ 169.8  35 | c : Accept TCP: 192.168.0.83:52122 -> 10.102.20.56:8081.
+ 170.2  35 | c : Accept TCP: 192.168.0.83:45744 -> 10.102.20.56:8080.
+ 170.2  35 | c : Accept TCP: 192.168.0.83:52126 -> 10.102.20.56:8081.
+ 170.5  35 | c : Accept TCP: 192.168.0.83:45748 -> 10.102.20.56:8080.
+ 170.5  35 | c : Accept TCP: 192.168.0.83:52130 -> 10.102.20.56:8081.
+ 171.0  35 | c : DNS request from ('127.0.0.1', 47376) to None: 43 bytes
+ 171.0  35 | c : DNS request from ('127.0.0.1', 47376) to None: 43 bytes
+ 171.0  35 | c : Accept TCP: 192.168.0.83:45752 -> 10.102.20.56:8080.
+ 171.0  35 | c : Accept TCP: 192.168.0.83:52134 -> 10.102.20.56:8081.
+ 171.0  27 | 2019-08-06T15:51:27+0000 [stdout#info] A query: b'vortex.data.microsoft.com'
+ 171.0  27 | 2019-08-06T15:51:27+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 18445
+ 171.0  27 | 2019-08-06T15:51:27+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be278>
+ 171.0  27 | 2019-08-06T15:51:27+0000 [stdout#info] AAAA query, sending back A instead: b'vortex.data.microsoft.com'
+ 171.0  27 | 2019-08-06T15:51:27+0000 [stdout#info] A query: b'vortex.data.microsoft.com'
+ 171.2  27 | 2019-08-06T15:51:28+0000 [-] (UDP Port 18445 Closed)
+ 171.2  27 | 2019-08-06T15:51:28+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be278>
+ 171.3  35 | c : DNS request from ('127.0.0.1', 46975) to None: 37 bytes
+ 171.3  35 | c : Accept TCP: 192.168.0.83:45756 -> 10.102.20.56:8080.
+ 171.3  35 | c : Accept TCP: 192.168.0.83:52138 -> 10.102.20.56:8081.
+ 171.9  35 | c : Accept TCP: 192.168.0.83:45760 -> 10.102.20.56:8080.
+ 171.9  35 | c : Accept TCP: 192.168.0.83:52142 -> 10.102.20.56:8081.
+ 171.9  27 | 2019-08-06T15:51:28+0000 [stdout#info] A query: b'clients4.google.com'
+ 171.9  27 | 2019-08-06T15:51:28+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 13072
+ 171.9  27 | 2019-08-06T15:51:28+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be940>
+ 172.0  27 | 2019-08-06T15:51:28+0000 [-] (UDP Port 13072 Closed)
+ 172.0  27 | 2019-08-06T15:51:28+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be940>
+ 172.3  35 | c : Accept TCP: 192.168.0.83:45766 -> 10.102.20.56:8080.
+ 172.3  35 | c : Accept TCP: 192.168.0.83:52148 -> 10.102.20.56:8081.
+ 172.8  35 | c : DNS request from ('127.0.0.1', 58963) to None: 43 bytes
+ 172.9  35 | c : Accept TCP: 192.168.0.83:45772 -> 10.102.20.56:8080.
+ 172.9  27 | 2019-08-06T15:51:29+0000 [stdout#info] A query: b'vortex.data.microsoft.com'
+ 172.9  27 | 2019-08-06T15:51:29+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 64316
+ 172.9  35 | c : Accept TCP: 192.168.0.83:52154 -> 10.102.20.56:8081.
+ 172.9  35 | c : DNS request from ('127.0.0.1', 57210) to None: 37 bytes
+ 173.0 TEL | (proxy checking local liveness)
+ 173.0  27 | 2019-08-06T15:51:29+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864c32e8>
+ 173.0  27 | 2019-08-06T15:51:29+0000 [Poll#info] Checkpoint
+ 173.1  27 | 2019-08-06T15:51:29+0000 [-] (UDP Port 64316 Closed)
+ 173.1  27 | 2019-08-06T15:51:29+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864c32e8>
+ 173.5  35 | c : Accept TCP: 192.168.0.83:45776 -> 10.102.20.56:8080.
+ 173.5  35 | c : Accept TCP: 192.168.0.83:52158 -> 10.102.20.56:8081.
+ 173.5  27 | 2019-08-06T15:51:30+0000 [stdout#info] AAAA query, sending back A instead: b'clients4.google.com'
+ 173.5  27 | 2019-08-06T15:51:30+0000 [stdout#info] A query: b'clients4.google.com'
+ 173.5  27 | 2019-08-06T15:51:30+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 58973
+ 173.5  27 | 2019-08-06T15:51:30+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864beef0>
+ 173.6  35 | c : DNS request from ('127.0.0.1', 57432) to None: 52 bytes
+ 173.6  35 | c : DNS request from ('127.0.0.1', 57432) to None: 52 bytes
+ 173.6  27 | 2019-08-06T15:51:30+0000 [-] (UDP Port 58973 Closed)
+ 173.6  27 | 2019-08-06T15:51:30+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864beef0>
+ 173.6  35 | c : Accept TCP: 192.168.0.83:45780 -> 10.102.20.56:8080.
+ 173.7  27 | 2019-08-06T15:51:30+0000 [stdout#info] A query: b'oauthaccountmanager.googleapis.com'
+ 173.7  27 | 2019-08-06T15:51:30+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 47738
+ 173.7  27 | 2019-08-06T15:51:30+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be2e8>
+ 173.7  27 | 2019-08-06T15:51:30+0000 [stdout#info] AAAA query, sending back A instead: b'oauthaccountmanager.googleapis.com'
+ 173.7  27 | 2019-08-06T15:51:30+0000 [stdout#info] A query: b'oauthaccountmanager.googleapis.com'
+ 173.7  35 | c : Accept TCP: 192.168.0.83:52162 -> 10.102.20.56:8081.
+ 173.7  35 | c : Accept TCP: 192.168.0.83:45784 -> 10.102.20.56:8080.
+ 173.7  35 | c : DNS request from ('127.0.0.1', 33288) to None: 43 bytes
+ 173.7  27 | 2019-08-06T15:51:30+0000 [-] (UDP Port 47738 Closed)
+ 173.8  27 | 2019-08-06T15:51:30+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be2e8>
+ 174.1  35 | c : Accept TCP: 192.168.0.83:52166 -> 10.102.20.56:8081.
+ 174.1  27 | 2019-08-06T15:51:30+0000 [stdout#info] AAAA query, sending back A instead: b'vortex.data.microsoft.com'
+ 174.1  35 | c : Accept TCP: 192.168.0.83:45788 -> 10.102.20.56:8080.
+ 174.2  27 | 2019-08-06T15:51:31+0000 [stdout#info] A query: b'vortex.data.microsoft.com'
+ 174.2  27 | 2019-08-06T15:51:31+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 44341
+ 174.2  27 | 2019-08-06T15:51:31+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864bef98>
+ 174.3  27 | 2019-08-06T15:51:31+0000 [-] (UDP Port 44341 Closed)
+ 174.3  27 | 2019-08-06T15:51:31+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864bef98>
+ 174.7  35 | c : Accept TCP: 192.168.0.83:52170 -> 10.102.20.56:8081.
+ 174.7  35 | c : Accept TCP: 192.168.0.83:45792 -> 10.102.20.56:8080.
+ 174.8  35 | c : Accept TCP: 192.168.0.83:52174 -> 10.102.20.56:8081.
+ 174.8  35 | c : Accept TCP: 192.168.0.83:45796 -> 10.102.20.56:8080.
+ 175.6  35 | c : Accept TCP: 192.168.0.83:52178 -> 10.102.20.56:8081.
+ 175.6  35 | c : Accept TCP: 192.168.0.83:45800 -> 10.102.20.56:8080.
+ 176.2  35 | c : Accept TCP: 192.168.0.83:52184 -> 10.102.20.56:8081.
+ 176.2  35 | c : Accept TCP: 192.168.0.83:45806 -> 10.102.20.56:8080.
+ 176.3  35 | c : DNS request from ('127.0.0.1', 53010) to None: 38 bytes
+ 176.3  35 | c : DNS request from ('127.0.0.1', 53010) to None: 38 bytes
+ 176.5  35 | c : Accept TCP: 192.168.0.83:52188 -> 10.102.20.56:8081.
+ 176.5  27 | 2019-08-06T15:51:33+0000 [stdout#info] A query: b'static.asm.skype.com'
+ 176.5  35 | c : Accept TCP: 192.168.0.83:45810 -> 10.102.20.56:8080.
+ 176.6  27 | 2019-08-06T15:51:33+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 38839
+ 176.6  27 | 2019-08-06T15:51:33+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be630>
+ 176.6  27 | 2019-08-06T15:51:33+0000 [stdout#info] AAAA query, sending back A instead: b'static.asm.skype.com'
+ 176.6  27 | 2019-08-06T15:51:33+0000 [stdout#info] A query: b'static.asm.skype.com'
+ 176.7  27 | 2019-08-06T15:51:33+0000 [-] (UDP Port 38839 Closed)
+ 176.7  27 | 2019-08-06T15:51:33+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be630>
+ 177.2  35 | c : Accept TCP: 192.168.0.83:52192 -> 10.102.20.56:8081.
+ 177.2  35 | c : Accept TCP: 192.168.0.83:45814 -> 10.102.20.56:8080.
+ 177.3  35 | c : Accept TCP: 192.168.0.83:52196 -> 10.102.20.56:8081.
+ 177.3  35 | c : Accept TCP: 192.168.0.83:45818 -> 10.102.20.56:8080.
+ 177.7  35 | c : DNS request from ('127.0.0.1', 34262) to None: 51 bytes
+ 177.7  35 | c : DNS request from ('127.0.0.1', 34262) to None: 51 bytes
+ 177.9  35 | c : Accept TCP: 192.168.0.83:52206 -> 10.102.20.56:8081.
+ 177.9  35 | c : Accept TCP: 192.168.0.83:45828 -> 10.102.20.56:8080.
+ 178.0  27 | 2019-08-06T15:51:34+0000 [stdout#info] A query: b'static-asm.secure.skypeassets.com'
+ 178.0  27 | 2019-08-06T15:51:34+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 41341
+ 178.0  27 | 2019-08-06T15:51:34+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be9e8>
+ 178.0  27 | 2019-08-06T15:51:34+0000 [stdout#info] AAAA query, sending back A instead: b'static-asm.secure.skypeassets.com'
+ 178.0  27 | 2019-08-06T15:51:34+0000 [stdout#info] A query: b'static-asm.secure.skypeassets.com'
+ 178.1  27 | 2019-08-06T15:51:34+0000 [-] (UDP Port 41341 Closed)
+ 178.1  27 | 2019-08-06T15:51:34+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be9e8>
+ 178.4  35 | c : Accept TCP: 192.168.0.83:52210 -> 10.102.20.56:8081.
+ 178.4  35 | c : Accept TCP: 192.168.0.83:45832 -> 10.102.20.56:8080.
+ 178.9  35 | c : Accept TCP: 192.168.0.83:52214 -> 10.102.20.56:8081.
+ 178.9  35 | c : Accept TCP: 192.168.0.83:45836 -> 10.102.20.56:8080.
+ 179.8  35 | c : Accept TCP: 192.168.0.83:52222 -> 10.102.20.56:8081.
+ 179.8  35 | c : Accept TCP: 192.168.0.83:45844 -> 10.102.20.56:8080.
+ 179.9  35 | c : Accept TCP: 192.168.0.83:52226 -> 10.102.20.56:8081.
+ 179.9  35 | c : Accept TCP: 192.168.0.83:45848 -> 10.102.20.56:8080.
+ 180.4  35 | c : Accept TCP: 192.168.0.83:52230 -> 10.102.20.56:8081.
+ 180.4  35 | c : Accept TCP: 192.168.0.83:45852 -> 10.102.20.56:8080.
+ 180.4 TEL | [74] Running: sudo -n echo -n
+ 180.4 TEL | [74] ran in 0.01 secs.
+ 180.9  35 | c : Accept TCP: 192.168.0.83:52234 -> 10.102.20.56:8081.
+ 180.9  35 | c : Accept TCP: 192.168.0.83:45856 -> 10.102.20.56:8080.
+ 181.4  35 | c : Accept TCP: 192.168.0.83:52238 -> 10.102.20.56:8081.
+ 181.4  35 | c : Accept TCP: 192.168.0.83:45860 -> 10.102.20.56:8080.
+ 182.0  35 | c : Accept TCP: 192.168.0.83:52242 -> 10.102.20.56:8081.
+ 182.0  35 | c : Accept TCP: 192.168.0.83:45864 -> 10.102.20.56:8080.
+ 182.5  35 | c : Accept TCP: 192.168.0.83:52246 -> 10.102.20.56:8081.
+ 182.5  35 | c : Accept TCP: 192.168.0.83:45868 -> 10.102.20.56:8080.
+ 182.9  35 | c : Accept TCP: 192.168.0.83:52250 -> 10.102.20.56:8081.
+ 182.9  35 | c : Accept TCP: 192.168.0.83:45872 -> 10.102.20.56:8080.
+ 183.4  35 | c : Accept TCP: 192.168.0.83:52254 -> 10.102.20.56:8081.
+ 183.4  35 | c : Accept TCP: 192.168.0.83:45876 -> 10.102.20.56:8080.
+ 183.6  35 | c : Accept TCP: 192.168.0.83:52258 -> 10.102.20.56:8081.
+ 183.6  35 | c : Accept TCP: 192.168.0.83:45880 -> 10.102.20.56:8080.
+ 183.7  35 | c : Accept TCP: 192.168.0.83:52262 -> 10.102.20.56:8081.
+ 183.7  35 | c : Accept TCP: 192.168.0.83:45884 -> 10.102.20.56:8080.
+ 184.0  35 | c : Accept TCP: 192.168.0.83:52266 -> 10.102.20.56:8081.
+ 184.0  35 | c : Accept TCP: 192.168.0.83:45888 -> 10.102.20.56:8080.
+ 184.3  35 | c : Accept TCP: 192.168.0.83:52270 -> 10.102.20.56:8081.
+ 184.3  35 | c : Accept TCP: 192.168.0.83:45892 -> 10.102.20.56:8080.
+ 184.7  35 | c : Accept TCP: 192.168.0.83:52274 -> 10.102.20.56:8081.
+ 184.7  35 | c : Accept TCP: 192.168.0.83:45896 -> 10.102.20.56:8080.
+ 185.2  35 | c : Accept TCP: 192.168.0.83:52278 -> 10.102.20.56:8081.
+ 185.2  35 | c : Accept TCP: 192.168.0.83:45900 -> 10.102.20.56:8080.
+ 185.6  35 | c : Accept TCP: 192.168.0.83:52282 -> 10.102.20.56:8081.
+ 185.6  35 | c : Accept TCP: 192.168.0.83:45904 -> 10.102.20.56:8080.
+ 185.9  35 | c : Accept TCP: 192.168.0.83:52286 -> 10.102.20.56:8081.
+ 185.9  35 | c : Accept TCP: 192.168.0.83:45908 -> 10.102.20.56:8080.
+ 186.3  35 | c : Accept TCP: 192.168.0.83:52290 -> 10.102.20.56:8081.
+ 186.3  35 | c : Accept TCP: 192.168.0.83:45912 -> 10.102.20.56:8080.
+ 186.6  35 | c : Accept TCP: 192.168.0.83:52294 -> 10.102.20.56:8081.
+ 186.6  35 | c : Accept TCP: 192.168.0.83:45916 -> 10.102.20.56:8080.
+ 187.0  35 | c : Accept TCP: 192.168.0.83:52298 -> 10.102.20.56:8081.
+ 187.0  35 | c : Accept TCP: 192.168.0.83:45920 -> 10.102.20.56:8080.
+ 187.5  35 | c : Accept TCP: 192.168.0.83:52302 -> 10.102.20.56:8081.
+ 187.5  35 | c : Accept TCP: 192.168.0.83:45924 -> 10.102.20.56:8080.
+ 187.8  35 | c : Accept TCP: 192.168.0.83:52306 -> 10.102.20.56:8081.
+ 187.9  35 | c : Accept TCP: 192.168.0.83:45928 -> 10.102.20.56:8080.
+ 188.4  35 | c : Accept TCP: 192.168.0.83:52310 -> 10.102.20.56:8081.
+ 188.4  35 | c : Accept TCP: 192.168.0.83:45932 -> 10.102.20.56:8080.
+ 189.0  35 | c : Accept TCP: 192.168.0.83:52314 -> 10.102.20.56:8081.
+ 189.0  35 | c : Accept TCP: 192.168.0.83:45936 -> 10.102.20.56:8080.
+ 189.6  35 | c : Accept TCP: 192.168.0.83:52318 -> 10.102.20.56:8081.
+ 189.6  35 | c : Accept TCP: 192.168.0.83:45940 -> 10.102.20.56:8080.
+ 189.9  35 | c : Accept TCP: 192.168.0.83:52322 -> 10.102.20.56:8081.
+ 190.0  35 | c : Accept TCP: 192.168.0.83:45944 -> 10.102.20.56:8080.
+ 190.2  35 | c : Accept TCP: 192.168.0.83:52326 -> 10.102.20.56:8081.
+ 190.2  35 | c : Accept TCP: 192.168.0.83:45948 -> 10.102.20.56:8080.
+ 190.3  35 | c : Accept TCP: 192.168.0.83:52330 -> 10.102.20.56:8081.
+ 190.3  35 | c : Accept TCP: 192.168.0.83:45952 -> 10.102.20.56:8080.
+ 190.8  35 | c : Accept TCP: 192.168.0.83:52334 -> 10.102.20.56:8081.
+ 190.8  35 | c : Accept TCP: 192.168.0.83:45956 -> 10.102.20.56:8080.
+ 191.5  35 | c : Accept TCP: 192.168.0.83:52338 -> 10.102.20.56:8081.
+ 191.5  35 | c : Accept TCP: 192.168.0.83:45960 -> 10.102.20.56:8080.
+ 192.0  35 | c : Accept TCP: 192.168.0.83:52342 -> 10.102.20.56:8081.
+ 192.0  35 | c : Accept TCP: 192.168.0.83:45964 -> 10.102.20.56:8080.
+ 192.6  35 | c : Accept TCP: 192.168.0.83:52346 -> 10.102.20.56:8081.
+ 192.6  35 | c : Accept TCP: 192.168.0.83:45968 -> 10.102.20.56:8080.
+ 192.9  35 | c : Accept TCP: 192.168.0.83:52350 -> 10.102.20.56:8081.
+ 192.9  35 | c : Accept TCP: 192.168.0.83:45972 -> 10.102.20.56:8080.
+ 193.3  35 | c : Accept TCP: 192.168.0.83:52354 -> 10.102.20.56:8081.
+ 193.3  35 | c : Accept TCP: 192.168.0.83:45976 -> 10.102.20.56:8080.
+ 193.5  35 | c : Accept TCP: 192.168.0.83:52358 -> 10.102.20.56:8081.
+ 193.5  35 | c : Accept TCP: 192.168.0.83:45980 -> 10.102.20.56:8080.
+ 193.8  35 | c : Accept TCP: 192.168.0.83:52362 -> 10.102.20.56:8081.
+ 193.8  35 | c : Accept TCP: 192.168.0.83:45984 -> 10.102.20.56:8080.
+ 194.1  35 | c : Accept TCP: 192.168.0.83:52366 -> 10.102.20.56:8081.
+ 194.1  35 | c : Accept TCP: 192.168.0.83:45988 -> 10.102.20.56:8080.
+ 194.7  35 | c : Accept TCP: 192.168.0.83:52370 -> 10.102.20.56:8081.
+ 194.8  35 | c : Accept TCP: 192.168.0.83:45992 -> 10.102.20.56:8080.
+ 195.2  35 | c : Accept TCP: 192.168.0.83:52374 -> 10.102.20.56:8081.
+ 195.2  35 | c : Accept TCP: 192.168.0.83:45996 -> 10.102.20.56:8080.
+ 195.8  35 | c : Accept TCP: 192.168.0.83:52378 -> 10.102.20.56:8081.
+ 195.9  35 | c : Accept TCP: 192.168.0.83:46000 -> 10.102.20.56:8080.
+ 196.1  35 | c : Accept TCP: 192.168.0.83:52382 -> 10.102.20.56:8081.
+ 196.1  35 | c : Accept TCP: 192.168.0.83:46004 -> 10.102.20.56:8080.
+ 196.6  35 | c : Accept TCP: 192.168.0.83:52386 -> 10.102.20.56:8081.
+ 196.7  35 | c : Accept TCP: 192.168.0.83:46008 -> 10.102.20.56:8080.
+ 197.0  35 | c : Accept TCP: 192.168.0.83:52390 -> 10.102.20.56:8081.
+ 197.0  35 | c : Accept TCP: 192.168.0.83:46012 -> 10.102.20.56:8080.
+ 197.3  35 | c : Accept TCP: 192.168.0.83:52394 -> 10.102.20.56:8081.
+ 197.3  35 | c : Accept TCP: 192.168.0.83:46016 -> 10.102.20.56:8080.
+ 197.9  35 | c : Accept TCP: 192.168.0.83:52398 -> 10.102.20.56:8081.
+ 197.9  35 | c : Accept TCP: 192.168.0.83:46020 -> 10.102.20.56:8080.
+ 198.1  35 | c : Accept TCP: 192.168.0.83:52402 -> 10.102.20.56:8081.
+ 198.1  35 | c : Accept TCP: 192.168.0.83:46024 -> 10.102.20.56:8080.
+ 198.4  35 | c : Accept TCP: 192.168.0.83:52406 -> 10.102.20.56:8081.
+ 198.4  35 | c : Accept TCP: 192.168.0.83:46028 -> 10.102.20.56:8080.
+ 199.1  35 | c : Accept TCP: 192.168.0.83:52410 -> 10.102.20.56:8081.
+ 199.1  35 | c : Accept TCP: 192.168.0.83:46032 -> 10.102.20.56:8080.
+ 199.8  35 | c : Accept TCP: 192.168.0.83:52414 -> 10.102.20.56:8081.
+ 199.8  35 | c : Accept TCP: 192.168.0.83:46036 -> 10.102.20.56:8080.
+ 200.5  35 | c : Accept TCP: 192.168.0.83:52418 -> 10.102.20.56:8081.
+ 200.5  35 | c : Accept TCP: 192.168.0.83:46040 -> 10.102.20.56:8080.
+ 201.1  35 | c : Accept TCP: 192.168.0.83:52422 -> 10.102.20.56:8081.
+ 201.1  35 | c : Accept TCP: 192.168.0.83:46044 -> 10.102.20.56:8080.
+ 201.8  35 | c : Accept TCP: 192.168.0.83:52426 -> 10.102.20.56:8081.
+ 201.8  35 | c : Accept TCP: 192.168.0.83:46048 -> 10.102.20.56:8080.
+ 202.2  35 | c : Accept TCP: 192.168.0.83:52430 -> 10.102.20.56:8081.
+ 202.2  35 | c : Accept TCP: 192.168.0.83:46052 -> 10.102.20.56:8080.
+ 202.7  35 | c : Accept TCP: 192.168.0.83:52434 -> 10.102.20.56:8081.
+ 202.7  35 | c : Accept TCP: 192.168.0.83:46056 -> 10.102.20.56:8080.
+ 202.9 TEL | (proxy checking local liveness)
+ 203.0  27 | 2019-08-06T15:51:59+0000 [Poll#info] Checkpoint
+ 203.3  35 | c : Accept TCP: 192.168.0.83:52440 -> 10.102.20.56:8081.
+ 203.3  35 | c : Accept TCP: 192.168.0.83:46062 -> 10.102.20.56:8080.
+ 203.6  35 | c : Accept TCP: 192.168.0.83:52444 -> 10.102.20.56:8081.
+ 203.6  35 | c : Accept TCP: 192.168.0.83:46066 -> 10.102.20.56:8080.
+ 203.7  35 | c : Accept TCP: 192.168.0.83:52448 -> 10.102.20.56:8081.
+ 203.7  35 | c : Accept TCP: 192.168.0.83:46070 -> 10.102.20.56:8080.
+ 204.3  35 | c : Accept TCP: 192.168.0.83:52452 -> 10.102.20.56:8081.
+ 204.3  35 | c : Accept TCP: 192.168.0.83:46074 -> 10.102.20.56:8080.
+ 205.0  35 | c : Accept TCP: 192.168.0.83:52456 -> 10.102.20.56:8081.
+ 205.0  35 | c : Accept TCP: 192.168.0.83:46078 -> 10.102.20.56:8080.
+ 205.6  35 | c : Accept TCP: 192.168.0.83:52460 -> 10.102.20.56:8081.
+ 205.6  35 | c : Accept TCP: 192.168.0.83:46082 -> 10.102.20.56:8080.
+ 206.1  35 | c : Accept TCP: 192.168.0.83:52464 -> 10.102.20.56:8081.
+ 206.1  35 | c : Accept TCP: 192.168.0.83:46086 -> 10.102.20.56:8080.
+ 206.5  35 | c : Accept TCP: 192.168.0.83:52468 -> 10.102.20.56:8081.
+ 206.5  35 | c : Accept TCP: 192.168.0.83:46090 -> 10.102.20.56:8080.
+ 206.9  35 | c : Accept TCP: 192.168.0.83:52472 -> 10.102.20.56:8081.
+ 206.9  35 | c : Accept TCP: 192.168.0.83:46094 -> 10.102.20.56:8080.
+ 207.4  35 | c : Accept TCP: 192.168.0.83:52476 -> 10.102.20.56:8081.
+ 207.4  35 | c : Accept TCP: 192.168.0.83:46098 -> 10.102.20.56:8080.
+ 207.8  35 | c : Accept TCP: 192.168.0.83:52480 -> 10.102.20.56:8081.
+ 207.8  35 | c : Accept TCP: 192.168.0.83:46102 -> 10.102.20.56:8080.
+ 208.5  35 | c : Accept TCP: 192.168.0.83:52486 -> 10.102.20.56:8081.
+ 208.5  35 | c : Accept TCP: 192.168.0.83:46108 -> 10.102.20.56:8080.
+ 209.0  35 | c : Accept TCP: 192.168.0.83:52490 -> 10.102.20.56:8081.
+ 209.0  35 | c : Accept TCP: 192.168.0.83:46112 -> 10.102.20.56:8080.
+ 209.5  35 | c : Accept TCP: 192.168.0.83:52494 -> 10.102.20.56:8081.
+ 209.5  35 | c : Accept TCP: 192.168.0.83:46116 -> 10.102.20.56:8080.
+ 210.2  35 | c : Accept TCP: 192.168.0.83:52498 -> 10.102.20.56:8081.
+ 210.2  35 | c : Accept TCP: 192.168.0.83:46120 -> 10.102.20.56:8080.
+ 210.5 TEL | [75] Running: sudo -n echo -n
+ 210.5 TEL | [75] ran in 0.01 secs.
+ 210.6  35 | c : Accept TCP: 192.168.0.83:52502 -> 10.102.20.56:8081.
+ 210.6  35 | c : Accept TCP: 192.168.0.83:46124 -> 10.102.20.56:8080.
+ 211.1  35 | c : Accept TCP: 192.168.0.83:52506 -> 10.102.20.56:8081.
+ 211.1  35 | c : Accept TCP: 192.168.0.83:46128 -> 10.102.20.56:8080.
+ 211.3  35 | c : Accept TCP: 192.168.0.83:52510 -> 10.102.20.56:8081.
+ 211.3  35 | c : Accept TCP: 192.168.0.83:46132 -> 10.102.20.56:8080.
+ 211.4  35 | c : Accept TCP: 192.168.0.83:52514 -> 10.102.20.56:8081.
+ 211.4  35 | c : Accept TCP: 192.168.0.83:46136 -> 10.102.20.56:8080.
+ 211.6  35 | c : Accept TCP: 192.168.0.83:52518 -> 10.102.20.56:8081.
+ 211.6  35 | c : Accept TCP: 192.168.0.83:46140 -> 10.102.20.56:8080.
+ 212.2  35 | c : Accept TCP: 192.168.0.83:52522 -> 10.102.20.56:8081.
+ 212.2  35 | c : Accept TCP: 192.168.0.83:46144 -> 10.102.20.56:8080.
+ 213.1  35 | c : Accept TCP: 192.168.0.83:52526 -> 10.102.20.56:8081.
+ 213.1  35 | c : Accept TCP: 192.168.0.83:46148 -> 10.102.20.56:8080.
+ 213.3  35 | c : Accept TCP: 192.168.0.83:52530 -> 10.102.20.56:8081.
+ 213.3  35 | c : Accept TCP: 192.168.0.83:46152 -> 10.102.20.56:8080.
+ 213.5  35 | c : Accept TCP: 192.168.0.83:52534 -> 10.102.20.56:8081.
+ 213.5  35 | c : Accept TCP: 192.168.0.83:46156 -> 10.102.20.56:8080.
+ 213.7  35 | c : Accept TCP: 192.168.0.83:52538 -> 10.102.20.56:8081.
+ 213.7  35 | c : Accept TCP: 192.168.0.83:46160 -> 10.102.20.56:8080.
+ 214.0  35 | c : Accept TCP: 192.168.0.83:52542 -> 10.102.20.56:8081.
+ 214.0  35 | c : Accept TCP: 192.168.0.83:46164 -> 10.102.20.56:8080.
+ 214.1  35 | c : Accept TCP: 192.168.0.83:52546 -> 10.102.20.56:8081.
+ 214.1  35 | c : Accept TCP: 192.168.0.83:46168 -> 10.102.20.56:8080.
+ 214.5  35 | c : Accept TCP: 192.168.0.83:52550 -> 10.102.20.56:8081.
+ 214.5  35 | c : Accept TCP: 192.168.0.83:46172 -> 10.102.20.56:8080.
+ 214.7  35 | c : Accept TCP: 192.168.0.83:52554 -> 10.102.20.56:8081.
+ 214.7  35 | c : Accept TCP: 192.168.0.83:46176 -> 10.102.20.56:8080.
+ 214.9  35 | c : Accept TCP: 192.168.0.83:52558 -> 10.102.20.56:8081.
+ 214.9  35 | c : Accept TCP: 192.168.0.83:46180 -> 10.102.20.56:8080.
+ 215.1  35 | c : Accept TCP: 192.168.0.83:52562 -> 10.102.20.56:8081.
+ 215.1  35 | c : Accept TCP: 192.168.0.83:46184 -> 10.102.20.56:8080.
+ 215.9  35 | c : Accept TCP: 192.168.0.83:52566 -> 10.102.20.56:8081.
+ 215.9  35 | c : Accept TCP: 192.168.0.83:46188 -> 10.102.20.56:8080.
+ 216.3  35 | c : Accept TCP: 192.168.0.83:52570 -> 10.102.20.56:8081.
+ 216.3  35 | c : Accept TCP: 192.168.0.83:46192 -> 10.102.20.56:8080.
+ 216.9  35 | c : Accept TCP: 192.168.0.83:52574 -> 10.102.20.56:8081.
+ 216.9  35 | c : Accept TCP: 192.168.0.83:46196 -> 10.102.20.56:8080.
+ 217.4  35 | c : Accept TCP: 192.168.0.83:52578 -> 10.102.20.56:8081.
+ 217.4  35 | c : Accept TCP: 192.168.0.83:46200 -> 10.102.20.56:8080.
+ 217.8  35 | c : Accept TCP: 192.168.0.83:52582 -> 10.102.20.56:8081.
+ 217.8  35 | c : Accept TCP: 192.168.0.83:46204 -> 10.102.20.56:8080.
+ 218.3  35 | c : Accept TCP: 192.168.0.83:52586 -> 10.102.20.56:8081.
+ 218.3  35 | c : Accept TCP: 192.168.0.83:46208 -> 10.102.20.56:8080.
+ 219.1  35 | c : Accept TCP: 192.168.0.83:52590 -> 10.102.20.56:8081.
+ 219.1  35 | c : Accept TCP: 192.168.0.83:46212 -> 10.102.20.56:8080.
+ 219.8  35 | c : Accept TCP: 192.168.0.83:52594 -> 10.102.20.56:8081.
+ 219.8  35 | c : Accept TCP: 192.168.0.83:46216 -> 10.102.20.56:8080.
+ 220.3  35 | c : Accept TCP: 192.168.0.83:52598 -> 10.102.20.56:8081.
+ 220.3  35 | c : Accept TCP: 192.168.0.83:46220 -> 10.102.20.56:8080.
+ 220.8  35 | c : Accept TCP: 192.168.0.83:52602 -> 10.102.20.56:8081.
+ 220.8  35 | c : Accept TCP: 192.168.0.83:46224 -> 10.102.20.56:8080.
+ 221.5  35 | c : Accept TCP: 192.168.0.83:52606 -> 10.102.20.56:8081.
+ 221.5  35 | c : Accept TCP: 192.168.0.83:46228 -> 10.102.20.56:8080.
+ 222.1  35 | c : Accept TCP: 192.168.0.83:52610 -> 10.102.20.56:8081.
+ 222.1  35 | c : Accept TCP: 192.168.0.83:46232 -> 10.102.20.56:8080.
+ 222.7  35 | c : Accept TCP: 192.168.0.83:52614 -> 10.102.20.56:8081.
+ 222.7  35 | c : Accept TCP: 192.168.0.83:46236 -> 10.102.20.56:8080.
+ 223.5  35 | c : Accept TCP: 192.168.0.83:52618 -> 10.102.20.56:8081.
+ 223.5  35 | c : Accept TCP: 192.168.0.83:46240 -> 10.102.20.56:8080.
+ 223.6  35 | c : Accept TCP: 192.168.0.83:52622 -> 10.102.20.56:8081.
+ 223.7  35 | c : Accept TCP: 192.168.0.83:46244 -> 10.102.20.56:8080.
+ 223.8  35 | c : Accept TCP: 192.168.0.83:52626 -> 10.102.20.56:8081.
+ 223.8  35 | c : Accept TCP: 192.168.0.83:46248 -> 10.102.20.56:8080.
+ 224.2  35 | c : Accept TCP: 192.168.0.83:52630 -> 10.102.20.56:8081.
+ 224.2  35 | c : Accept TCP: 192.168.0.83:46252 -> 10.102.20.56:8080.
+ 224.9  35 | c : Accept TCP: 192.168.0.83:52634 -> 10.102.20.56:8081.
+ 224.9  35 | c : Accept TCP: 192.168.0.83:46256 -> 10.102.20.56:8080.
+ 225.6  35 | c : Accept TCP: 192.168.0.83:52638 -> 10.102.20.56:8081.
+ 225.6  35 | c : Accept TCP: 192.168.0.83:46260 -> 10.102.20.56:8080.
+ 226.1  35 | c : Accept TCP: 192.168.0.83:52642 -> 10.102.20.56:8081.
+ 226.1  35 | c : Accept TCP: 192.168.0.83:46264 -> 10.102.20.56:8080.
+ 226.6  35 | c : Accept TCP: 192.168.0.83:52646 -> 10.102.20.56:8081.
+ 226.6  35 | c : Accept TCP: 192.168.0.83:46268 -> 10.102.20.56:8080.
+ 227.3  35 | c : Accept TCP: 192.168.0.83:52650 -> 10.102.20.56:8081.
+ 227.3  35 | c : Accept TCP: 192.168.0.83:46272 -> 10.102.20.56:8080.
+ 227.7  35 | c : Accept TCP: 192.168.0.83:52654 -> 10.102.20.56:8081.
+ 227.7  35 | c : Accept TCP: 192.168.0.83:46276 -> 10.102.20.56:8080.
+ 227.8  35 | c : Accept TCP: 192.168.0.83:52658 -> 10.102.20.56:8081.
+ 227.8  35 | c : Accept TCP: 192.168.0.83:46280 -> 10.102.20.56:8080.
+ 228.0  35 | c : Accept TCP: 192.168.0.83:52662 -> 10.102.20.56:8081.
+ 228.0  35 | c : Accept TCP: 192.168.0.83:46284 -> 10.102.20.56:8080.
+ 228.6  35 | c : Accept TCP: 192.168.0.83:52666 -> 10.102.20.56:8081.
+ 228.6  35 | c : Accept TCP: 192.168.0.83:46288 -> 10.102.20.56:8080.
+ 229.2  35 | c : Accept TCP: 192.168.0.83:52670 -> 10.102.20.56:8081.
+ 229.2  35 | c : Accept TCP: 192.168.0.83:46292 -> 10.102.20.56:8080.
+ 229.7  35 | c : Accept TCP: 192.168.0.83:52676 -> 10.102.20.56:8081.
+ 229.7  35 | c : Accept TCP: 192.168.0.83:46298 -> 10.102.20.56:8080.
+ 229.9  35 | c : Accept TCP: 192.168.0.83:52680 -> 10.102.20.56:8081.
+ 229.9  35 | c : Accept TCP: 192.168.0.83:46302 -> 10.102.20.56:8080.
+ 230.3  35 | c : Accept TCP: 192.168.0.83:52684 -> 10.102.20.56:8081.
+ 230.3  35 | c : Accept TCP: 192.168.0.83:46306 -> 10.102.20.56:8080.
+ 230.7  35 | c : Accept TCP: 192.168.0.83:52688 -> 10.102.20.56:8081.
+ 230.7  35 | c : Accept TCP: 192.168.0.83:46310 -> 10.102.20.56:8080.
+ 231.5  35 | c : Accept TCP: 192.168.0.83:52692 -> 10.102.20.56:8081.
+ 231.6  35 | c : Accept TCP: 192.168.0.83:46314 -> 10.102.20.56:8080.
+ 232.0  35 | c : Accept TCP: 192.168.0.83:52696 -> 10.102.20.56:8081.
+ 232.0  35 | c : Accept TCP: 192.168.0.83:46318 -> 10.102.20.56:8080.
+ 232.8  35 | c : Accept TCP: 192.168.0.83:52700 -> 10.102.20.56:8081.
+ 232.9  35 | c : Accept TCP: 192.168.0.83:46324 -> 10.102.20.56:8080.
+ 232.9 TEL | (proxy checking local liveness)
+ 233.0  27 | 2019-08-06T15:52:29+0000 [Poll#info] Checkpoint
+ 233.5  35 | c : Accept TCP: 192.168.0.83:52706 -> 10.102.20.56:8081.
+ 233.5  35 | c : Accept TCP: 192.168.0.83:46328 -> 10.102.20.56:8080.
+ 233.7  35 | c : DNS request from ('127.0.0.1', 57785) to None: 33 bytes
+ 233.7  35 | c : DNS request from ('127.0.0.1', 57785) to None: 33 bytes
+ 233.7  35 | c : Accept TCP: 192.168.0.83:52710 -> 10.102.20.56:8081.
+ 233.7  35 | c : Accept TCP: 192.168.0.83:46332 -> 10.102.20.56:8080.
+ 233.7  27 | 2019-08-06T15:52:30+0000 [stdout#info] A query: b'ssl.gstatic.com'
+ 233.7  27 | 2019-08-06T15:52:30+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 10985
+ 233.7  27 | 2019-08-06T15:52:30+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be9e8>
+ 233.7  27 | 2019-08-06T15:52:30+0000 [stdout#info] AAAA query, sending back A instead: b'ssl.gstatic.com'
+ 233.7  27 | 2019-08-06T15:52:30+0000 [stdout#info] A query: b'ssl.gstatic.com'
+ 233.8  27 | 2019-08-06T15:52:30+0000 [-] (UDP Port 10985 Closed)
+ 233.8  27 | 2019-08-06T15:52:30+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864be9e8>
+ 234.3  35 | c : Accept TCP: 192.168.0.83:52714 -> 10.102.20.56:8081.
+ 234.3  35 | c : Accept TCP: 192.168.0.83:46336 -> 10.102.20.56:8080.
+ 234.4  35 | c : DNS request from ('127.0.0.1', 36338) to None: 33 bytes
+ 234.4  35 | c : DNS request from ('127.0.0.1', 36338) to None: 33 bytes
+ 234.6  35 | c : Accept TCP: 192.168.0.83:52718 -> 10.102.20.56:8081.
+ 234.6  27 | 2019-08-06T15:52:31+0000 [stdout#info] A query: b'play.google.com'
+ 234.6  27 | 2019-08-06T15:52:31+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 42010
+ 234.6  27 | 2019-08-06T15:52:31+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864bec50>
+ 234.6  35 | c : Accept TCP: 192.168.0.83:46340 -> 10.102.20.56:8080.
+ 234.7  35 | c : Accept TCP: 192.168.0.83:52722 -> 10.102.20.56:8081.
+ 234.7  27 | 2019-08-06T15:52:31+0000 [stdout#info] AAAA query, sending back A instead: b'play.google.com'
+ 234.7  35 | c : Accept TCP: 192.168.0.83:46344 -> 10.102.20.56:8080.
+ 234.7  27 | 2019-08-06T15:52:31+0000 [stdout#info] A query: b'play.google.com'
+ 234.8  27 | 2019-08-06T15:52:31+0000 [-] (UDP Port 42010 Closed)
+ 234.8  27 | 2019-08-06T15:52:31+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864bec50>
+ 235.0  35 | c : DNS request from ('127.0.0.1', 40850) to None: 33 bytes
+ 235.0  35 | c : DNS request from ('127.0.0.1', 40850) to None: 33 bytes
+ 235.2  35 | c : Accept TCP: 192.168.0.83:52726 -> 10.102.20.56:8081.
+ 235.2  27 | 2019-08-06T15:52:32+0000 [stdout#info] A query: b'docs.google.com'
+ 235.2  35 | c : Accept TCP: 192.168.0.83:46348 -> 10.102.20.56:8080.
+ 235.2  27 | 2019-08-06T15:52:32+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 22483
+ 235.2  27 | 2019-08-06T15:52:32+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864beeb8>
+ 235.3  27 | 2019-08-06T15:52:32+0000 [stdout#info] AAAA query, sending back A instead: b'docs.google.com'
+ 235.3  27 | 2019-08-06T15:52:32+0000 [stdout#info] A query: b'docs.google.com'
+ 235.3  27 | 2019-08-06T15:52:32+0000 [-] (UDP Port 22483 Closed)
+ 235.3  27 | 2019-08-06T15:52:32+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864beeb8>
+ 235.8  35 | c : Accept TCP: 192.168.0.83:52730 -> 10.102.20.56:8081.
+ 235.8  35 | c : Accept TCP: 192.168.0.83:46352 -> 10.102.20.56:8080.
+ 237.0  35 | c : Accept TCP: 192.168.0.83:52734 -> 10.102.20.56:8081.
+ 237.0  35 | c : Accept TCP: 192.168.0.83:46356 -> 10.102.20.56:8080.
+ 238.0  35 | c : Accept TCP: 192.168.0.83:52738 -> 10.102.20.56:8081.
+ 238.0  35 | c : Accept TCP: 192.168.0.83:46360 -> 10.102.20.56:8080.
+ 238.5  35 | c : Accept TCP: 192.168.0.83:52742 -> 10.102.20.56:8081.
+ 238.5  35 | c : Accept TCP: 192.168.0.83:46364 -> 10.102.20.56:8080.
+ 239.1  35 | c : Accept TCP: 192.168.0.83:52746 -> 10.102.20.56:8081.
+ 239.1  35 | c : Accept TCP: 192.168.0.83:46368 -> 10.102.20.56:8080.
+ 239.5  35 | c : Accept TCP: 192.168.0.83:52750 -> 10.102.20.56:8081.
+ 239.5  35 | c : Accept TCP: 192.168.0.83:46372 -> 10.102.20.56:8080.
+ 240.0  35 | c : DNS request from ('127.0.0.1', 38099) to None: 47 bytes
+ 240.0  35 | c : DNS request from ('127.0.0.1', 38099) to None: 47 bytes
+ 240.1  35 | c : Accept TCP: 192.168.0.83:52754 -> 10.102.20.56:8081.
+ 240.1  35 | c : Accept TCP: 192.168.0.83:46376 -> 10.102.20.56:8080.
+ 240.1  27 | 2019-08-06T15:52:36+0000 [stdout#info] A query: b'd3cv4a9a9wh0bt.cloudfront.net'
+ 240.1  27 | 2019-08-06T15:52:36+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 6413
+ 240.1  27 | 2019-08-06T15:52:36+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864bec18>
+ 240.1  27 | 2019-08-06T15:52:36+0000 [stdout#info] AAAA query, sending back A instead: b'd3cv4a9a9wh0bt.cloudfront.net'
+ 240.1  27 | 2019-08-06T15:52:36+0000 [stdout#info] A query: b'd3cv4a9a9wh0bt.cloudfront.net'
+ 240.3  27 | 2019-08-06T15:52:37+0000 [-] (UDP Port 6413 Closed)
+ 240.3  27 | 2019-08-06T15:52:37+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864bec18>
+ 240.5 TEL | [76] Running: sudo -n echo -n
+ 240.5 TEL | [76] ran in 0.02 secs.
+ 240.7  35 | c : Accept TCP: 192.168.0.83:52758 -> 10.102.20.56:8081.
+ 240.7  35 | c : Accept TCP: 192.168.0.83:46380 -> 10.102.20.56:8080.
+ 241.2  35 | c : Accept TCP: 192.168.0.83:52762 -> 10.102.20.56:8081.
+ 241.2  35 | c : Accept TCP: 192.168.0.83:46384 -> 10.102.20.56:8080.
+ 241.9  35 | c : Accept TCP: 192.168.0.83:52768 -> 10.102.20.56:8081.
+ 241.9  35 | c : Accept TCP: 192.168.0.83:46390 -> 10.102.20.56:8080.
+ 242.7  35 | c : Accept TCP: 192.168.0.83:52772 -> 10.102.20.56:8081.
+ 242.7  35 | c : Accept TCP: 192.168.0.83:46394 -> 10.102.20.56:8080.
+ 243.2  35 | c : Accept TCP: 192.168.0.83:52776 -> 10.102.20.56:8081.
+ 243.2  35 | c : Accept TCP: 192.168.0.83:46398 -> 10.102.20.56:8080.
+ 243.6  35 | c : Accept TCP: 192.168.0.83:52780 -> 10.102.20.56:8081.
+ 243.6  35 | c : Accept TCP: 192.168.0.83:46402 -> 10.102.20.56:8080.
+ 244.1  35 | c : Accept TCP: 192.168.0.83:52784 -> 10.102.20.56:8081.
+ 244.1  35 | c : Accept TCP: 192.168.0.83:46406 -> 10.102.20.56:8080.
+ 245.0  35 | c : Accept TCP: 192.168.0.83:52788 -> 10.102.20.56:8081.
+ 245.0  35 | c : Accept TCP: 192.168.0.83:46410 -> 10.102.20.56:8080.
+ 245.8  35 | c : Accept TCP: 192.168.0.83:52792 -> 10.102.20.56:8081.
+ 245.8  35 | c : Accept TCP: 192.168.0.83:46414 -> 10.102.20.56:8080.
+ 246.4  35 | c : Accept TCP: 192.168.0.83:52796 -> 10.102.20.56:8081.
+ 246.4  35 | c : Accept TCP: 192.168.0.83:46418 -> 10.102.20.56:8080.
+ 247.2  35 | c : Accept TCP: 192.168.0.83:52800 -> 10.102.20.56:8081.
+ 247.2  35 | c : Accept TCP: 192.168.0.83:46422 -> 10.102.20.56:8080.
+ 247.7  35 | c : Accept TCP: 192.168.0.83:52804 -> 10.102.20.56:8081.
+ 247.7  35 | c : Accept TCP: 192.168.0.83:46426 -> 10.102.20.56:8080.
+ 248.2  35 | c : Accept TCP: 192.168.0.83:52808 -> 10.102.20.56:8081.
+ 248.2  35 | c : Accept TCP: 192.168.0.83:46430 -> 10.102.20.56:8080.
+ 249.2  35 | c : Accept TCP: 192.168.0.83:52812 -> 10.102.20.56:8081.
+ 249.2  35 | c : Accept TCP: 192.168.0.83:46434 -> 10.102.20.56:8080.
+ 249.6  35 | c : Accept TCP: 192.168.0.83:52816 -> 10.102.20.56:8081.
+ 249.6  35 | c : Accept TCP: 192.168.0.83:46438 -> 10.102.20.56:8080.
+ 250.1  35 | c : Accept TCP: 192.168.0.83:52820 -> 10.102.20.56:8081.
+ 250.1  35 | c : Accept TCP: 192.168.0.83:46442 -> 10.102.20.56:8080.
+ 250.8  35 | c : Accept TCP: 192.168.0.83:52824 -> 10.102.20.56:8081.
+ 250.8  35 | c : Accept TCP: 192.168.0.83:46446 -> 10.102.20.56:8080.
+ 251.6  35 | c : Accept TCP: 192.168.0.83:52828 -> 10.102.20.56:8081.
+ 251.6  35 | c : Accept TCP: 192.168.0.83:46450 -> 10.102.20.56:8080.
+ 252.4  35 | c : Accept TCP: 192.168.0.83:52832 -> 10.102.20.56:8081.
+ 252.4  35 | c : Accept TCP: 192.168.0.83:46454 -> 10.102.20.56:8080.
+ 253.1  35 | c : Accept TCP: 192.168.0.83:52836 -> 10.102.20.56:8081.
+ 253.1  35 | c : Accept TCP: 192.168.0.83:46458 -> 10.102.20.56:8080.
+ 253.7  35 | c : Accept TCP: 192.168.0.83:52840 -> 10.102.20.56:8081.
+ 253.7  35 | c : Accept TCP: 192.168.0.83:46462 -> 10.102.20.56:8080.
+ 254.2  35 | c : Accept TCP: 192.168.0.83:52844 -> 10.102.20.56:8081.
+ 254.2  35 | c : Accept TCP: 192.168.0.83:46466 -> 10.102.20.56:8080.
+ 254.9  35 | c : Accept TCP: 192.168.0.83:52848 -> 10.102.20.56:8081.
+ 254.9  35 | c : Accept TCP: 192.168.0.83:46470 -> 10.102.20.56:8080.
+ 255.8  35 | c : Accept TCP: 192.168.0.83:52852 -> 10.102.20.56:8081.
+ 255.8  35 | c : Accept TCP: 192.168.0.83:46474 -> 10.102.20.56:8080.
+ 256.4  35 | c : Accept TCP: 192.168.0.83:52856 -> 10.102.20.56:8081.
+ 256.4  35 | c : Accept TCP: 192.168.0.83:46478 -> 10.102.20.56:8080.
+ 257.3  35 | c : Accept TCP: 192.168.0.83:52860 -> 10.102.20.56:8081.
+ 257.3  35 | c : Accept TCP: 192.168.0.83:46482 -> 10.102.20.56:8080.
+ 257.8  35 | c : Accept TCP: 192.168.0.83:52864 -> 10.102.20.56:8081.
+ 257.9  35 | c : Accept TCP: 192.168.0.83:46486 -> 10.102.20.56:8080.
+ 258.2  35 | c : Accept TCP: 192.168.0.83:52868 -> 10.102.20.56:8081.
+ 258.2  35 | c : Accept TCP: 192.168.0.83:46490 -> 10.102.20.56:8080.
+ 258.7  35 | c : Accept TCP: 192.168.0.83:52872 -> 10.102.20.56:8081.
+ 258.8  35 | c : Accept TCP: 192.168.0.83:46494 -> 10.102.20.56:8080.
+ 259.4  35 | c : Accept TCP: 192.168.0.83:52876 -> 10.102.20.56:8081.
+ 259.4  35 | c : Accept TCP: 192.168.0.83:46498 -> 10.102.20.56:8080.
+ 260.0  35 | c : Accept TCP: 192.168.0.83:52880 -> 10.102.20.56:8081.
+ 260.0  35 | c : Accept TCP: 192.168.0.83:46502 -> 10.102.20.56:8080.
+ 260.8  35 | c : Accept TCP: 192.168.0.83:52884 -> 10.102.20.56:8081.
+ 260.8  35 | c : Accept TCP: 192.168.0.83:46506 -> 10.102.20.56:8080.
+ 261.6  35 | c : Accept TCP: 192.168.0.83:52888 -> 10.102.20.56:8081.
+ 261.7  35 | c : Accept TCP: 192.168.0.83:46510 -> 10.102.20.56:8080.
+ 262.0  35 | c : Accept TCP: 192.168.0.83:52892 -> 10.102.20.56:8081.
+ 262.0  35 | c : Accept TCP: 192.168.0.83:46514 -> 10.102.20.56:8080.
+ 262.4  35 | c : Accept TCP: 192.168.0.83:52896 -> 10.102.20.56:8081.
+ 262.4  35 | c : Accept TCP: 192.168.0.83:46518 -> 10.102.20.56:8080.
+ 262.8 TEL | (proxy checking local liveness)
+ 262.8  27 | 2019-08-06T15:52:59+0000 [Poll#info] Checkpoint
+ 262.9  35 | c : Accept TCP: 192.168.0.83:52902 -> 10.102.20.56:8081.
+ 262.9  35 | c : Accept TCP: 192.168.0.83:46524 -> 10.102.20.56:8080.
+ 263.3  35 | c : Accept TCP: 192.168.0.83:52906 -> 10.102.20.56:8081.
+ 263.3  35 | c : Accept TCP: 192.168.0.83:46528 -> 10.102.20.56:8080.
+ 263.6  35 | c : Accept TCP: 192.168.0.83:52910 -> 10.102.20.56:8081.
+ 263.6  35 | c : Accept TCP: 192.168.0.83:46532 -> 10.102.20.56:8080.
+ 264.5  35 | c : Accept TCP: 192.168.0.83:52914 -> 10.102.20.56:8081.
+ 264.5  35 | c : Accept TCP: 192.168.0.83:46536 -> 10.102.20.56:8080.
+ 265.3  35 | c : Accept TCP: 192.168.0.83:52918 -> 10.102.20.56:8081.
+ 265.3  35 | c : Accept TCP: 192.168.0.83:46540 -> 10.102.20.56:8080.
+ 265.7  35 | c : Accept TCP: 192.168.0.83:52922 -> 10.102.20.56:8081.
+ 265.7  35 | c : Accept TCP: 192.168.0.83:46544 -> 10.102.20.56:8080.
+ 266.2  35 | c : Accept TCP: 192.168.0.83:52926 -> 10.102.20.56:8081.
+ 266.2  35 | c : Accept TCP: 192.168.0.83:46548 -> 10.102.20.56:8080.
+ 266.9  35 | c : Accept TCP: 192.168.0.83:52930 -> 10.102.20.56:8081.
+ 266.9  35 | c : Accept TCP: 192.168.0.83:46552 -> 10.102.20.56:8080.
+ 267.8  35 | c : Accept TCP: 192.168.0.83:52934 -> 10.102.20.56:8081.
+ 267.8  35 | c : Accept TCP: 192.168.0.83:46556 -> 10.102.20.56:8080.
+ 268.6  35 | c : Accept TCP: 192.168.0.83:52938 -> 10.102.20.56:8081.
+ 268.6  35 | c : Accept TCP: 192.168.0.83:46560 -> 10.102.20.56:8080.
+ 269.3  35 | c : Accept TCP: 192.168.0.83:52942 -> 10.102.20.56:8081.
+ 269.3  35 | c : Accept TCP: 192.168.0.83:46564 -> 10.102.20.56:8080.
+ 270.3  35 | c : Accept TCP: 192.168.0.83:52946 -> 10.102.20.56:8081.
+ 270.3  35 | c : Accept TCP: 192.168.0.83:46568 -> 10.102.20.56:8080.
+ 270.5 TEL | [77] Running: sudo -n echo -n
+ 270.6 TEL | [77] ran in 0.02 secs.
+ 271.6  35 | c : Accept TCP: 192.168.0.83:52958 -> 10.102.20.56:8081.
+ 271.6  35 | c : Accept TCP: 192.168.0.83:46580 -> 10.102.20.56:8080.
+ 271.9  35 | c : Accept TCP: 192.168.0.83:52962 -> 10.102.20.56:8081.
+ 271.9  35 | c : Accept TCP: 192.168.0.83:46584 -> 10.102.20.56:8080.
+ 272.1  35 | c : Accept TCP: 192.168.0.83:52966 -> 10.102.20.56:8081.
+ 272.1  35 | c : Accept TCP: 192.168.0.83:46588 -> 10.102.20.56:8080.
+ 272.3  35 | c : Accept TCP: 192.168.0.83:52970 -> 10.102.20.56:8081.
+ 272.3  35 | c : Accept TCP: 192.168.0.83:46592 -> 10.102.20.56:8080.
+ 272.8  35 | c : Accept TCP: 192.168.0.83:52974 -> 10.102.20.56:8081.
+ 272.8  35 | c : Accept TCP: 192.168.0.83:46596 -> 10.102.20.56:8080.
+ 273.1  35 | c : Accept TCP: 192.168.0.83:52978 -> 10.102.20.56:8081.
+ 273.1  35 | c : Accept TCP: 192.168.0.83:46600 -> 10.102.20.56:8080.
+ 273.3  35 | c : Accept TCP: 192.168.0.83:52982 -> 10.102.20.56:8081.
+ 273.3  35 | c : Accept TCP: 192.168.0.83:46604 -> 10.102.20.56:8080.
+ 273.6  35 | c : Accept TCP: 192.168.0.83:52986 -> 10.102.20.56:8081.
+ 273.6  35 | c : Accept TCP: 192.168.0.83:46608 -> 10.102.20.56:8080.
+ 274.5  35 | c : Accept TCP: 192.168.0.83:52990 -> 10.102.20.56:8081.
+ 274.5  35 | c : Accept TCP: 192.168.0.83:46612 -> 10.102.20.56:8080.
+ 275.0  35 | c : Accept TCP: 192.168.0.83:52994 -> 10.102.20.56:8081.
+ 275.0  35 | c : Accept TCP: 192.168.0.83:46616 -> 10.102.20.56:8080.
+ 275.2  35 | c : Accept TCP: 192.168.0.83:52998 -> 10.102.20.56:8081.
+ 275.2  35 | c : Accept TCP: 192.168.0.83:46620 -> 10.102.20.56:8080.
+ 275.6  35 | c : Accept TCP: 192.168.0.83:53002 -> 10.102.20.56:8081.
+ 275.6  35 | c : Accept TCP: 192.168.0.83:46624 -> 10.102.20.56:8080.
+ 275.8  35 | c : Accept TCP: 192.168.0.83:53006 -> 10.102.20.56:8081.
+ 275.8  35 | c : Accept TCP: 192.168.0.83:46628 -> 10.102.20.56:8080.
+ 276.1  35 | c : Accept TCP: 192.168.0.83:53010 -> 10.102.20.56:8081.
+ 276.6  35 | c : Accept TCP: 192.168.0.83:46632 -> 10.102.20.56:8080.
+ 276.9  35 | c : Accept TCP: 192.168.0.83:53014 -> 10.102.20.56:8081.
+ 277.0  35 | c : Accept TCP: 192.168.0.83:46636 -> 10.102.20.56:8080.
+ 277.7  35 | c : Accept TCP: 192.168.0.83:53018 -> 10.102.20.56:8081.
+ 277.7  35 | c : Accept TCP: 192.168.0.83:46640 -> 10.102.20.56:8080.
+ 278.1  35 | c : Accept TCP: 192.168.0.83:53022 -> 10.102.20.56:8081.
+ 278.1  35 | c : Accept TCP: 192.168.0.83:46644 -> 10.102.20.56:8080.
+ 278.4  35 | c : Accept TCP: 192.168.0.83:53026 -> 10.102.20.56:8081.
+ 278.4  35 | c : Accept TCP: 192.168.0.83:46648 -> 10.102.20.56:8080.
+ 279.4  35 | c : Accept TCP: 192.168.0.83:53030 -> 10.102.20.56:8081.
+ 279.4  35 | c : Accept TCP: 192.168.0.83:46652 -> 10.102.20.56:8080.
+ 280.0  35 | c : Accept TCP: 192.168.0.83:53034 -> 10.102.20.56:8081.
+ 280.0  35 | c : Rejected incoming connection: too many open files!
+ 280.7  35 | c : Rejected incoming connection: too many open files!
+ 293.1 TEL | (proxy checking local liveness)
+ 293.2  27 | 2019-08-06T15:53:29+0000 [Poll#info] Checkpoint
+ 300.6 TEL | [78] Running: sudo -n echo -n
+ 300.6 TEL | [78] ran in 0.01 secs.
+ 318.5  35 | c : SW#947:192.168.0.83:52872: deleting (2029 remain)
+ 318.5  35 | c : SW'unknown':Mux#986: deleting (2028 remain)
+ 318.5  35 | c : SW#949:192.168.0.83:52876: deleting (2027 remain)
+ 318.5  35 | c : SW'unknown':Mux#988: deleting (2026 remain)
+ 319.0  35 | c : SW#951:192.168.0.83:52880: deleting (2025 remain)
+ 319.0  35 | c : SW'unknown':Mux#990: deleting (2024 remain)
+ 319.9  35 | c : SW#943:192.168.0.83:52864: deleting (2023 remain)
+ 319.9  35 | c : SW'unknown':Mux#982: deleting (2022 remain)
+ 319.9  35 | c : SW#953:192.168.0.83:52884: deleting (2021 remain)
+ 319.9  35 | c : SW'unknown':Mux#992: deleting (2020 remain)
+ 320.5  35 |  s: SW'unknown':Mux#988: deleting (2029 remain)
+ 320.5  35 |  s: SW#951:10.102.20.56:8081: deleting (2028 remain)
+ 320.5  35 |  s: SW'unknown':Mux#982: deleting (2027 remain)
+ 320.6  35 |  s: SW#945:10.102.20.56:8081: deleting (2026 remain)
+ 321.0  35 | c : SW#941:192.168.0.83:52860: deleting (2019 remain)
+ 321.0  35 | c : SW'unknown':Mux#980: deleting (2018 remain)
+ 321.0  35 | c : SW#955:192.168.0.83:52888: deleting (2017 remain)
+ 321.0  35 | c : SW'unknown':Mux#994: deleting (2016 remain)
+ 321.4  35 |  s: SW'unknown':Mux#990: deleting (2025 remain)
+ 321.4  35 |  s: SW#953:10.102.20.56:8081: deleting (2024 remain)
+ 321.4  35 |  s: SW'unknown':Mux#980: deleting (2023 remain)
+ 321.4  35 |  s: SW#943:10.102.20.56:8081: deleting (2022 remain)
+ 322.1  35 | c : SW#939:192.168.0.83:52856: deleting (2015 remain)
+ 322.1  35 | c : SW'unknown':Mux#978: deleting (2014 remain)
+ 322.9 TEL | (proxy checking local liveness)
+ 322.9  27 | 2019-08-06T15:53:59+0000 [Poll#info] Checkpoint
+ 323.0  35 |  s: SW'unknown':Mux#992: deleting (2021 remain)
+ 323.0  35 |  s: SW#955:10.102.20.56:8081: deleting (2020 remain)
+ 323.0  35 |  s: SW'unknown':Mux#978: deleting (2019 remain)
+ 323.0  35 |  s: SW#941:10.102.20.56:8081: deleting (2018 remain)
+ 323.5  35 | c : SW#937:192.168.0.83:52852: deleting (2013 remain)
+ 323.5  35 | c : SW'unknown':Mux#976: deleting (2012 remain)
+ 323.5  35 | c : SW#959:192.168.0.83:52896: deleting (2011 remain)
+ 323.5  35 | c : SW'unknown':Mux#998: deleting (2010 remain)
+ 323.8  35 | c : SW#935:192.168.0.83:52848: deleting (2009 remain)
+ 323.8  35 | c : SW'unknown':Mux#974: deleting (2008 remain)
+ 323.8  35 | c : SW#961:192.168.0.83:52902: deleting (2007 remain)
+ 323.8  35 | c : SW'unknown':Mux#1000: deleting (2006 remain)
+ 325.2  35 | c : SW#963:192.168.0.83:52906: deleting (2005 remain)
+ 325.2  35 | c : SW'unknown':Mux#1002: deleting (2004 remain)
+ 326.1  35 | c : SW#931:192.168.0.83:52840: deleting (2003 remain)
+ 326.1  35 | c : SW'unknown':Mux#970: deleting (2002 remain)
+ 326.1  35 | c : SW#965:192.168.0.83:52910: deleting (2001 remain)
+ 326.1  35 | c : SW'unknown':Mux#1004: deleting (2000 remain)
+ 327.3  35 | c : SW#929:192.168.0.83:52836: deleting (1999 remain)
+ 327.3  35 | c : SW'unknown':Mux#968: deleting (1998 remain)
+ 327.3  35 | c : SW#967:192.168.0.83:52914: deleting (1997 remain)
+ 327.3  35 | c : SW'unknown':Mux#1006: deleting (1996 remain)
+ 328.3  35 | c : SW#924:192.168.0.83:46446: deleting (1995 remain)
+ 328.3  35 | c : SW'unknown':Mux#963: deleting (1994 remain)
+ 328.3  35 | c : SW#969:192.168.0.83:52918: deleting (1993 remain)
+ 328.3  35 | c : SW'unknown':Mux#1008: deleting (1992 remain)
+ 329.5  35 | c : SW#922:192.168.0.83:46442: deleting (1991 remain)
+ 329.5  35 | c : SW'unknown':Mux#961: deleting (1990 remain)
+ 329.5  35 | c : SW#926:192.168.0.83:46450: deleting (1989 remain)
+ 329.5  35 | c : SW'unknown':Mux#965: deleting (1988 remain)
+ 329.5  35 | c : SW#971:192.168.0.83:52922: deleting (1987 remain)
+ 329.5  35 | c : SW'unknown':Mux#1010: deleting (1986 remain)
+ 329.7  35 |  s: SW'unknown':Mux#1006: deleting (2017 remain)
+ 329.7  35 |  s: SW#969:10.102.20.56:8081: deleting (2016 remain)
+ 329.7  35 |  s: SW'unknown':Mux#964: deleting (2015 remain)
+ 329.7  35 |  s: SW#927:10.102.20.56:8081: deleting (2014 remain)
+ 329.7  35 |  s: SW'unknown':Mux#961: deleting (2013 remain)
+ 329.7  35 |  s: SW#924:10.102.20.56:8080: deleting (2012 remain)
+ 330.3  35 | c : SW#923:192.168.0.83:52824: deleting (1985 remain)
+ 330.3  35 | c : SW'unknown':Mux#962: deleting (1984 remain)
+ 330.3  35 | c : SW#920:192.168.0.83:46438: deleting (1983 remain)
+ 330.3  35 | c : SW'unknown':Mux#959: deleting (1982 remain)
+ 330.6  35 |  s: SW'unknown':Mux#1008: deleting (2011 remain)
+ 330.6  35 |  s: SW#971:10.102.20.56:8081: deleting (2010 remain)
+ 330.6  35 |  s: SW'unknown':Mux#963: deleting (2009 remain)
+ 330.6  35 |  s: SW#926:10.102.20.56:8080: deleting (2008 remain)
+ 330.6  35 |  s: SW'unknown':Mux#962: deleting (2007 remain)
+ 330.6  35 |  s: SW#925:10.102.20.56:8081: deleting (2006 remain)
+ 330.6  35 |  s: SW'unknown':Mux#959: deleting (2005 remain)
+ 330.6  35 |  s: SW#922:10.102.20.56:8080: deleting (2004 remain)
+ 330.6 TEL | [79] Running: sudo -n echo -n
+ 330.7 TEL | [79] ran in 0.02 secs.
+ 330.9  35 | c : SW#921:192.168.0.83:52820: deleting (1981 remain)
+ 330.9  35 | c : SW'unknown':Mux#960: deleting (1980 remain)
+ 330.9  35 | c : SW#930:192.168.0.83:46458: deleting (1979 remain)
+ 330.9  35 | c : SW'unknown':Mux#969: deleting (1978 remain)
+ 331.4  35 | c : SW#919:192.168.0.83:52816: deleting (1977 remain)
+ 331.4  35 | c : SW'unknown':Mux#958: deleting (1976 remain)
+ 331.5  35 | c : SW#973:192.168.0.83:52926: deleting (1975 remain)
+ 331.5  35 | c : SW'unknown':Mux#1012: deleting (1974 remain)
+ 331.5  35 | c : SW#928:192.168.0.83:46454: deleting (1973 remain)
+ 331.5  35 | c : SW'unknown':Mux#967: deleting (1972 remain)
+ 331.5  35 | c : SW#975:192.168.0.83:52930: deleting (1971 remain)
+ 331.5  35 | c : SW'unknown':Mux#1014: deleting (1970 remain)
+ 331.5  35 | c : SW#932:192.168.0.83:46462: deleting (1969 remain)
+ 331.5  35 | c : SW'unknown':Mux#971: deleting (1968 remain)
+ 331.5  35 | c : SW#977:192.168.0.83:52934: deleting (1967 remain)
+ 331.5  35 | c : SW'unknown':Mux#1016: deleting (1966 remain)
+ 331.9  35 | c : SW#917:192.168.0.83:52812: deleting (1965 remain)
+ 331.9  35 | c : SW'unknown':Mux#956: deleting (1964 remain)
+ 331.9  35 | c : SW#914:192.168.0.83:46426: deleting (1963 remain)
+ 331.9  35 | c : SW'unknown':Mux#953: deleting (1962 remain)
+ 331.9  35 | c : SW#979:192.168.0.83:52938: deleting (1961 remain)
+ 331.9  35 | c : SW'unknown':Mux#1018: deleting (1960 remain)
+ 332.2  35 | c : SW#915:192.168.0.83:52808: deleting (1959 remain)
+ 332.2  35 | c : SW'unknown':Mux#954: deleting (1958 remain)
+ 332.2  35 | c : SW#981:192.168.0.83:52942: deleting (1957 remain)
+ 332.2  35 | c : SW'unknown':Mux#1020: deleting (1956 remain)
+ 332.3  35 |  s: SW'unknown':Mux#1016: deleting (2003 remain)
+ 332.3  35 |  s: SW#979:10.102.20.56:8081: deleting (2002 remain)
+ 332.3  35 |  s: SW'unknown':Mux#971: deleting (2001 remain)
+ 332.3  35 |  s: SW#934:10.102.20.56:8080: deleting (2000 remain)
+ 332.3  35 |  s: SW'unknown':Mux#954: deleting (1999 remain)
+ 332.3  35 |  s: SW#917:10.102.20.56:8081: deleting (1998 remain)
+ 332.3  35 |  s: SW'unknown':Mux#951: deleting (1997 remain)
+ 332.3  35 |  s: SW#914:10.102.20.56:8080: deleting (1996 remain)
+ 333.0  35 | c : SW#913:192.168.0.83:52804: deleting (1955 remain)
+ 333.0  35 | c : SW'unknown':Mux#952: deleting (1954 remain)
+ 333.0  35 | c : SW#910:192.168.0.83:46418: deleting (1953 remain)
+ 333.0  35 | c : SW'unknown':Mux#949: deleting (1952 remain)
+ 333.0  35 | c : SW#983:192.168.0.83:52946: deleting (1951 remain)
+ 333.0  35 | c : SW'unknown':Mux#1022: deleting (1950 remain)
+ 333.0  35 | c : SW#938:192.168.0.83:46474: deleting (1949 remain)
+ 333.0  35 | c : SW'unknown':Mux#977: deleting (1948 remain)
+ 333.1  35 |  s: SW'unknown':Mux#1018: deleting (1995 remain)
+ 333.1  35 |  s: SW#981:10.102.20.56:8081: deleting (1994 remain)
+ 333.1  35 |  s: SW'unknown':Mux#973: deleting (1993 remain)
+ 333.1  35 |  s: SW#936:10.102.20.56:8080: deleting (1992 remain)
+ 333.1  35 |  s: SW'unknown':Mux#952: deleting (1991 remain)
+ 333.1  35 |  s: SW#915:10.102.20.56:8081: deleting (1990 remain)
+ 333.1  35 |  s: SW'unknown':Mux#949: deleting (1989 remain)
+ 333.1  35 |  s: SW#912:10.102.20.56:8080: deleting (1988 remain)
+ 333.3  35 | c : SW#911:192.168.0.83:52800: deleting (1947 remain)
+ 333.3  35 | c : SW'unknown':Mux#950: deleting (1946 remain)
+ 333.3  35 | c : SW#908:192.168.0.83:46414: deleting (1945 remain)
+ 333.3  35 | c : SW'unknown':Mux#947: deleting (1944 remain)
+ 333.4  35 | c : SW#940:192.168.0.83:46478: deleting (1943 remain)
+ 333.4  35 | c : SW'unknown':Mux#979: deleting (1942 remain)
+ 333.4  35 | c : SW#985:192.168.0.83:52958: deleting (1941 remain)
+ 333.4  35 | c : SW'unknown':Mux#1024: deleting (1940 remain)
+ 333.7  35 | c : SW#906:192.168.0.83:46410: deleting (1939 remain)
+ 333.7  35 | c : SW'unknown':Mux#945: deleting (1938 remain)
+ 334.0  35 | c : SW#987:192.168.0.83:52962: deleting (1937 remain)
+ 334.0  35 | c : SW'unknown':Mux#1026: deleting (1936 remain)
+ 334.0  35 | c : SW#942:192.168.0.83:46482: deleting (1935 remain)
+ 334.0  35 | c : SW'unknown':Mux#981: deleting (1934 remain)
+ 334.0  35 | c : SW#909:192.168.0.83:52796: deleting (1933 remain)
+ 334.0  35 | c : SW'unknown':Mux#948: deleting (1932 remain)
+ 334.0  35 | c : SW#989:192.168.0.83:52966: deleting (1931 remain)
+ 334.0  35 | c : SW'unknown':Mux#1028: deleting (1930 remain)
+ 334.2  35 | c : SW#991:192.168.0.83:52970: deleting (1929 remain)
+ 334.2  35 | c : SW'unknown':Mux#1030: deleting (1928 remain)
+ 334.2  35 | c : SW#946:192.168.0.83:46490: deleting (1927 remain)
+ 334.2  35 | c : SW'unknown':Mux#985: deleting (1926 remain)
+ 334.4  35 |  s: SW'unknown':Mux#1026: deleting (1987 remain)
+ 334.4  35 |  s: SW#989:10.102.20.56:8081: deleting (1986 remain)
+ 334.4  35 |  s: SW'unknown':Mux#981: deleting (1985 remain)
+ 334.4  35 |  s: SW#944:10.102.20.56:8080: deleting (1984 remain)
+ 334.4  35 |  s: SW'unknown':Mux#946: deleting (1983 remain)
+ 334.4  35 |  s: SW#909:10.102.20.56:8081: deleting (1982 remain)
+ 334.4  35 |  s: SW'unknown':Mux#941: deleting (1981 remain)
+ 334.4  35 |  s: SW#904:10.102.20.56:8080: deleting (1980 remain)
+ 334.5  35 | c : SW#907:192.168.0.83:52792: deleting (1925 remain)
+ 334.5  35 | c : SW'unknown':Mux#946: deleting (1924 remain)
+ 334.8  35 |  s: SW'unknown':Mux#1028: deleting (1979 remain)
+ 334.8  35 |  s: SW#991:10.102.20.56:8081: deleting (1978 remain)
+ 334.8  35 |  s: SW'unknown':Mux#983: deleting (1977 remain)
+ 334.8  35 |  s: SW#946:10.102.20.56:8080: deleting (1976 remain)
+ 334.8  35 |  s: SW'unknown':Mux#939: deleting (1975 remain)
+ 334.8  35 |  s: SW#902:10.102.20.56:8080: deleting (1974 remain)
+ 334.8  35 |  s: SW'unknown':Mux#1030: deleting (1973 remain)
+ 334.8  35 |  s: SW#993:10.102.20.56:8081: deleting (1972 remain)
+ 334.8  35 |  s: SW'unknown':Mux#985: deleting (1971 remain)
+ 334.8  35 |  s: SW#948:10.102.20.56:8080: deleting (1970 remain)
+ 334.8  35 |  s: SW'unknown':Mux#944: deleting (1969 remain)
+ 334.8  35 |  s: SW#907:10.102.20.56:8081: deleting (1968 remain)
+ 334.8  35 |  s: SW'unknown':Mux#937: deleting (1967 remain)
+ 334.8  35 |  s: SW#900:10.102.20.56:8080: deleting (1966 remain)
+ 335.0  35 | c : SW#905:192.168.0.83:52788: deleting (1923 remain)
+ 335.0  35 | c : SW'unknown':Mux#944: deleting (1922 remain)
+ 335.0  35 | c : SW#995:192.168.0.83:52978: deleting (1921 remain)
+ 335.0  35 | c : SW'unknown':Mux#1034: deleting (1920 remain)
+ 335.7  35 | c : SW#903:192.168.0.83:52784: deleting (1919 remain)
+ 335.7  35 | c : SW'unknown':Mux#942: deleting (1918 remain)
+ 335.7  35 | c : SW#896:192.168.0.83:46390: deleting (1917 remain)
+ 335.7  35 | c : SW'unknown':Mux#935: deleting (1916 remain)
+ 335.7  35 | c : SW#948:192.168.0.83:46494: deleting (1915 remain)
+ 335.7  35 | c : SW'unknown':Mux#987: deleting (1914 remain)
+ 335.9  35 |  s: SW'unknown':Mux#1032: deleting (1965 remain)
+ 335.9  35 |  s: SW#995:10.102.20.56:8081: deleting (1964 remain)
+ 335.9  35 |  s: SW'unknown':Mux#987: deleting (1963 remain)
+ 335.9  35 |  s: SW#950:10.102.20.56:8080: deleting (1962 remain)
+ 335.9  35 |  s: SW'unknown':Mux#942: deleting (1961 remain)
+ 335.9  35 |  s: SW#905:10.102.20.56:8081: deleting (1960 remain)
+ 335.9  35 |  s: SW'unknown':Mux#935: deleting (1959 remain)
+ 335.9  35 |  s: SW#899:10.102.20.56:8080: deleting (1958 remain)
+ 336.7  35 | c : SW#954:192.168.0.83:46506: deleting (1913 remain)
+ 336.7  35 | c : SW'unknown':Mux#993: deleting (1912 remain)
+ 336.9  35 |  s: SW'unknown':Mux#989: deleting (1957 remain)
+ 336.9  35 |  s: SW#952:10.102.20.56:8080: deleting (1956 remain)
+ 336.9  35 |  s: SW'unknown':Mux#940: deleting (1955 remain)
+ 336.9  35 |  s: SW#903:10.102.20.56:8081: deleting (1954 remain)
+ 336.9  35 |  s: SW'unknown':Mux#933: deleting (1953 remain)
+ 336.9  35 |  s: SW#897:10.102.20.56:8080: deleting (1952 remain)
+ 337.7  35 | c : SW#899:192.168.0.83:52776: deleting (1911 remain)
+ 337.7  35 | c : SW'unknown':Mux#938: deleting (1910 remain)
+ 337.7  35 | c : SW#892:192.168.0.83:46380: deleting (1909 remain)
+ 337.7  35 | c : SW'unknown':Mux#931: deleting (1908 remain)
+ 337.7  35 | c : SW#999:192.168.0.83:52986: deleting (1907 remain)
+ 337.7  35 | c : SW'unknown':Mux#1038: deleting (1906 remain)
+ 337.9  35 |  s: SW'unknown':Mux#1034: deleting (1951 remain)
+ 337.9  35 |  s: SW#997:10.102.20.56:8081: deleting (1950 remain)
+ 337.9  35 |  s: SW'unknown':Mux#991: deleting (1949 remain)
+ 337.9  35 |  s: SW#954:10.102.20.56:8080: deleting (1948 remain)
+ 337.9  35 |  s: SW'unknown':Mux#938: deleting (1947 remain)
+ 338.0  35 |  s: SW#901:10.102.20.56:8081: deleting (1946 remain)
+ 338.0  35 |  s: SW'unknown':Mux#931: deleting (1945 remain)
+ 338.0  35 |  s: SW#895:10.102.20.56:8080: deleting (1944 remain)
+ 338.8  35 | c : SW#897:192.168.0.83:52772: deleting (1905 remain)
+ 338.8  35 | c : SW'unknown':Mux#936: deleting (1904 remain)
+ 338.8  35 | c : SW#890:192.168.0.83:46376: deleting (1903 remain)
+ 338.8  35 | c : SW'unknown':Mux#929: deleting (1902 remain)
+ 338.9  35 | c : SW#958:192.168.0.83:46514: deleting (1901 remain)
+ 338.9  35 | c : SW'unknown':Mux#997: deleting (1900 remain)
+ 338.9  35 | c : SW#1001:192.168.0.83:52990: deleting (1899 remain)
+ 338.9  35 | c : SW'unknown':Mux#1040: deleting (1898 remain)
+ 339.8  35 | c : SW#888:192.168.0.83:46372: deleting (1897 remain)
+ 339.8  35 | c : SW'unknown':Mux#925: deleting (1896 remain)
+ 339.8  35 | c : SW#960:192.168.0.83:46518: deleting (1895 remain)
+ 339.8  35 | c : SW'unknown':Mux#999: deleting (1894 remain)
+ 340.5  35 |  s: SW'unknown':Mux#995: deleting (1943 remain)
+ 340.5  35 |  s: SW#958:10.102.20.56:8080: deleting (1942 remain)
+ 340.6  35 |  s: SW'unknown':Mux#934: deleting (1941 remain)
+ 340.6  35 |  s: SW#898:10.102.20.56:8081: deleting (1940 remain)
+ 340.6  35 |  s: SW'unknown':Mux#925: deleting (1939 remain)
+ 340.6  35 |  s: SW#889:10.102.20.56:8080: deleting (1938 remain)
+ 341.3  35 | c : SW#893:192.168.0.83:52762: deleting (1893 remain)
+ 341.3  35 | c : SW'unknown':Mux#932: deleting (1892 remain)
+ 341.3  35 | c : SW#962:192.168.0.83:46524: deleting (1891 remain)
+ 341.3  35 | c : SW'unknown':Mux#1001: deleting (1890 remain)
+ 341.6  35 | c : SW#1003:192.168.0.83:52994: deleting (1889 remain)
+ 341.6  35 | c : SW'unknown':Mux#1042: deleting (1888 remain)
+ 341.6  35 | c : SW#1005:192.168.0.83:52998: deleting (1887 remain)
+ 341.6  35 | c : SW'unknown':Mux#1044: deleting (1886 remain)
+ 342.6  35 | c : SW#884:192.168.0.83:46364: deleting (1885 remain)
+ 342.6  35 | c : SW'unknown':Mux#921: deleting (1884 remain)
+ 342.6  35 | c : SW#964:192.168.0.83:46528: deleting (1883 remain)
+ 342.6  35 | c : SW'unknown':Mux#1003: deleting (1882 remain)
+ 343.1  35 | c : SW#889:192.168.0.83:52754: deleting (1881 remain)
+ 343.1  35 | c : SW'unknown':Mux#928: deleting (1880 remain)
+ 343.1  35 | c : SW#882:192.168.0.83:46360: deleting (1879 remain)
+ 343.1  35 | c : SW'unknown':Mux#919: deleting (1878 remain)
+ 343.1  35 | c : SW#1007:192.168.0.83:53002: deleting (1877 remain)
+ 343.1  35 | c : SW'unknown':Mux#1046: deleting (1876 remain)
+ 343.2  35 | c : SW#966:192.168.0.83:46532: deleting (1875 remain)
+ 343.2  35 | c : SW'unknown':Mux#1005: deleting (1874 remain)
+ 343.2  35 | c : SW#1009:192.168.0.83:53006: deleting (1873 remain)
+ 343.2  35 | c : SW'unknown':Mux#1048: deleting (1872 remain)
+ 343.7  35 | c : SW#887:192.168.0.83:52750: deleting (1871 remain)
+ 343.7  35 | c : SW'unknown':Mux#924: deleting (1870 remain)
+ 343.7  35 | c : SW#880:192.168.0.83:46356: deleting (1869 remain)
+ 343.7  35 | c : SW'unknown':Mux#917: deleting (1868 remain)
+ 344.0  35 |  s: SW'unknown':Mux#1046: deleting (1937 remain)
+ 344.0  35 |  s: SW#1009:10.102.20.56:8081: deleting (1936 remain)
+ 344.0  35 |  s: SW'unknown':Mux#1003: deleting (1935 remain)
+ 344.0  35 |  s: SW#966:10.102.20.56:8080: deleting (1934 remain)
+ 344.1  35 |  s: SW'unknown':Mux#924: deleting (1933 remain)
+ 344.1  35 |  s: SW#888:10.102.20.56:8081: deleting (1932 remain)
+ 344.1  35 |  s: SW'unknown':Mux#917: deleting (1931 remain)
+ 344.1  35 |  s: SW#881:10.102.20.56:8080: deleting (1930 remain)
+ 344.3  35 | c : SW#878:192.168.0.83:46352: deleting (1867 remain)
+ 344.3  35 | c : SW'unknown':Mux#915: deleting (1866 remain)
+ 344.3  35 | c : SW#885:192.168.0.83:52746: deleting (1865 remain)
+ 344.3  35 | c : SW'unknown':Mux#922: deleting (1864 remain)
+ 345.0  35 |  s: SW'unknown':Mux#1048: deleting (1929 remain)
+ 345.0  35 |  s: SW#1011:10.102.20.56:8081: deleting (1928 remain)
+ 345.0  35 |  s: SW'unknown':Mux#1005: deleting (1927 remain)
+ 345.0  35 |  s: SW#968:10.102.20.56:8080: deleting (1926 remain)
+ 345.0  35 |  s: SW'unknown':Mux#922: deleting (1925 remain)
+ 345.0  35 |  s: SW#886:10.102.20.56:8081: deleting (1924 remain)
+ 345.0  35 |  s: SW'unknown':Mux#915: deleting (1923 remain)
+ 345.0  35 |  s: SW#879:10.102.20.56:8080: deleting (1922 remain)
+ 345.7  35 | c : SW#883:192.168.0.83:52742: deleting (1863 remain)
+ 345.7  35 | c : SW'unknown':Mux#920: deleting (1862 remain)
+ 345.7  35 | c : SW#876:192.168.0.83:46348: deleting (1861 remain)
+ 345.7  35 | c : SW'unknown':Mux#913: deleting (1860 remain)
+ 345.7  35 | c : SW#1013:192.168.0.83:53014: deleting (1859 remain)
+ 345.7  35 | c : SW'unknown':Mux#1052: deleting (1858 remain)
+ 345.7  35 | c : SW#970:192.168.0.83:46540: deleting (1857 remain)
+ 345.7  35 | c : SW'unknown':Mux#1009: deleting (1856 remain)
+ 345.7  35 | c : SW#1015:192.168.0.83:53018: deleting (1855 remain)
+ 345.7  35 | c : SW'unknown':Mux#1054: deleting (1854 remain)
+ 346.6  35 | c : SW#881:192.168.0.83:52738: deleting (1853 remain)
+ 346.6  35 | c : SW'unknown':Mux#918: deleting (1852 remain)
+ 346.6  35 | c : SW#874:192.168.0.83:46344: deleting (1851 remain)
+ 346.6  35 | c : SW'unknown':Mux#909: deleting (1850 remain)
+ 346.6  35 | c : SW#974:192.168.0.83:46548: deleting (1849 remain)
+ 346.6  35 | c : SW'unknown':Mux#1013: deleting (1848 remain)
+ 347.4  35 |  s: SW'unknown':Mux#1052: deleting (1921 remain)
+ 347.4  35 |  s: SW#1015:10.102.20.56:8081: deleting (1920 remain)
+ 347.4  35 |  s: SW'unknown':Mux#1009: deleting (1919 remain)
+ 347.4  35 |  s: SW#972:10.102.20.56:8080: deleting (1918 remain)
+ 347.4  35 |  s: SW'unknown':Mux#918: deleting (1917 remain)
+ 347.4  35 |  s: SW#882:10.102.20.56:8081: deleting (1916 remain)
+ 347.4  35 |  s: SW'unknown':Mux#909: deleting (1915 remain)
+ 347.4  35 |  s: SW#875:10.102.20.56:8080: deleting (1914 remain)
+ 348.5  35 |  s: SW'unknown':Mux#1054: deleting (1913 remain)
+ 348.5  35 |  s: SW#1017:10.102.20.56:8081: deleting (1912 remain)
+ 348.6  35 |  s: SW'unknown':Mux#1011: deleting (1911 remain)
+ 348.6  35 |  s: SW#974:10.102.20.56:8080: deleting (1910 remain)
+ 348.6  35 |  s: SW'unknown':Mux#907: deleting (1909 remain)
+ 348.6  35 |  s: SW#873:10.102.20.56:8080: deleting (1908 remain)
+ 348.9  35 | c : SW#870:192.168.0.83:46336: deleting (1847 remain)
+ 348.9  35 | c : SW'unknown':Mux#903: deleting (1846 remain)
+ 348.9  35 | c : SW#1019:192.168.0.83:53026: deleting (1845 remain)
+ 348.9  35 | c : SW'unknown':Mux#1058: deleting (1844 remain)
+ 349.3  35 | c : SW#972:192.168.0.83:46544: deleting (1843 remain)
+ 349.3  35 | c : SW'unknown':Mux#1011: deleting (1842 remain)
+ 349.3  35 | c : SW#978:192.168.0.83:46556: deleting (1841 remain)
+ 349.3  35 | c : SW'unknown':Mux#1017: deleting (1840 remain)
+ 349.3  35 | c : SW#1021:192.168.0.83:53030: deleting (1839 remain)
+ 349.3  35 | c : SW'unknown':Mux#1060: deleting (1838 remain)
+ 349.6  35 |  s: SW'unknown':Mux#1056: deleting (1907 remain)
+ 349.6  35 |  s: SW#1019:10.102.20.56:8081: deleting (1906 remain)
+ 349.6  35 |  s: SW'unknown':Mux#1013: deleting (1905 remain)
+ 349.6  35 |  s: SW#976:10.102.20.56:8080: deleting (1904 remain)
+ 349.6  35 |  s: SW'unknown':Mux#903: deleting (1903 remain)
+ 349.7  35 |  s: SW#869:10.102.20.56:8080: deleting (1902 remain)
+ 350.0  35 | c : SW#868:192.168.0.83:46332: deleting (1837 remain)
+ 350.0  35 | c : SW'unknown':Mux#901: deleting (1836 remain)
+ 350.1  35 | c : SW#980:192.168.0.83:46560: deleting (1835 remain)
+ 350.1  35 | c : SW'unknown':Mux#1019: deleting (1834 remain)
+ 350.9  35 |  s: SW'unknown':Mux#1058: deleting (1901 remain)
+ 350.9  35 |  s: SW#1021:10.102.20.56:8081: deleting (1900 remain)
+ 350.9  35 |  s: SW'unknown':Mux#1015: deleting (1899 remain)
+ 350.9  35 |  s: SW#978:10.102.20.56:8080: deleting (1898 remain)
+ 350.9  35 |  s: SW'unknown':Mux#901: deleting (1897 remain)
+ 350.9  35 |  s: SW#867:10.102.20.56:8080: deleting (1896 remain)
+ 351.3  35 | c : SW#866:192.168.0.83:46328: deleting (1833 remain)
+ 351.3  35 | c : SW'unknown':Mux#897: deleting (1832 remain)
+ 352.3  35 |  s: SW'unknown':Mux#1060: deleting (1895 remain)
+ 352.3  35 |  s: SW#1023:10.102.20.56:8081: deleting (1894 remain)
+ 352.3  35 |  s: SW'unknown':Mux#1017: deleting (1893 remain)
+ 352.3  35 |  s: SW#980:10.102.20.56:8080: deleting (1892 remain)
+ 352.3  35 |  s: SW'unknown':Mux#897: deleting (1891 remain)
+ 352.3  35 |  s: SW#864:10.102.20.56:8080: deleting (1890 remain)
+ 352.6  35 | c : SW#864:192.168.0.83:46324: deleting (1831 remain)
+ 352.6  35 | c : SW'unknown':Mux#895: deleting (1830 remain)
+ 352.6  35 | c : SW#982:192.168.0.83:46564: deleting (1829 remain)
+ 352.6  35 | c : SW'unknown':Mux#1021: deleting (1828 remain)
+ 353.2 TEL | (proxy checking local liveness)
+ 353.2  27 | 2019-08-06T15:54:30+0000 [Poll#info] Checkpoint
+ 353.5  35 |  s: SW'unknown':Mux#1019: deleting (1889 remain)
+ 353.5  35 |  s: SW#982:10.102.20.56:8080: deleting (1888 remain)
+ 353.5  35 |  s: SW'unknown':Mux#895: deleting (1887 remain)
+ 353.5  35 |  s: SW#862:10.102.20.56:8080: deleting (1886 remain)
+ 353.5  35 | c : SW#862:192.168.0.83:46318: deleting (1827 remain)
+ 353.5  35 | c : SW'unknown':Mux#893: deleting (1826 remain)
+ 353.8  35 | c : SW#860:192.168.0.83:46314: deleting (1825 remain)
+ 353.8  35 | c : SW'unknown':Mux#891: deleting (1824 remain)
+ 353.8  35 |  s: SW'unknown':Mux#1021: deleting (1885 remain)
+ 353.8  35 |  s: SW#984:10.102.20.56:8080: deleting (1884 remain)
+ 353.8  35 |  s: SW'unknown':Mux#893: deleting (1883 remain)
+ 353.8  35 |  s: SW#860:10.102.20.56:8080: deleting (1882 remain)
+ 353.8  35 | c : SW#984:192.168.0.83:46568: deleting (1823 remain)
+ 353.8  35 | c : SW'unknown':Mux#1023: deleting (1822 remain)
+ 353.8  35 | c : SW#986:192.168.0.83:46580: deleting (1821 remain)
+ 353.8  35 | c : SW'unknown':Mux#1025: deleting (1820 remain)
+ 353.9  35 |  s: SW'unknown':Mux#1023: deleting (1881 remain)
+ 353.9  35 |  s: SW#986:10.102.20.56:8080: deleting (1880 remain)
+ 353.9  35 |  s: SW'unknown':Mux#891: deleting (1879 remain)
+ 353.9  35 |  s: SW#858:10.102.20.56:8080: deleting (1878 remain)
+ 354.9  35 | c : SW#858:192.168.0.83:46310: deleting (1819 remain)
+ 354.9  35 | c : SW'unknown':Mux#889: deleting (1818 remain)
+ 355.2  35 |  s: SW'unknown':Mux#1025: deleting (1877 remain)
+ 355.2  35 |  s: SW#988:10.102.20.56:8080: deleting (1876 remain)
+ 355.2  35 |  s: SW'unknown':Mux#889: deleting (1875 remain)
+ 355.2  35 |  s: SW#856:10.102.20.56:8080: deleting (1874 remain)
+ 355.9  35 | c : SW#856:192.168.0.83:46306: deleting (1817 remain)
+ 355.9  35 | c : SW'unknown':Mux#887: deleting (1816 remain)
+ 356.1  35 | c : SW#992:192.168.0.83:46592: deleting (1815 remain)
+ 356.1  35 | c : SW'unknown':Mux#1031: deleting (1814 remain)
+ 356.9  35 | c : SW#854:192.168.0.83:46302: deleting (1813 remain)
+ 356.9  35 | c : SW'unknown':Mux#885: deleting (1812 remain)
+ 358.4  35 |  s: SW'unknown':Mux#1031: deleting (1873 remain)
+ 358.4  35 |  s: SW#994:10.102.20.56:8080: deleting (1872 remain)
+ 358.4  35 |  s: SW'unknown':Mux#1033: deleting (1871 remain)
+ 358.4  35 |  s: SW#996:10.102.20.56:8080: deleting (1870 remain)
+ 360.0  35 |  s: SW'unknown':Mux#1035: deleting (1869 remain)
+ 360.0  35 |  s: SW#998:10.102.20.56:8080: deleting (1868 remain)
+ 360.0  35 |  s: SW'unknown':Mux#1037: deleting (1867 remain)
+ 360.0  35 |  s: SW#1000:10.102.20.56:8080: deleting (1866 remain)
+ 360.3  35 | c : SW#994:192.168.0.83:46596: deleting (1811 remain)
+ 360.3  35 | c : SW'unknown':Mux#1033: deleting (1810 remain)
+ 360.3  35 | c : SW#996:192.168.0.83:46600: deleting (1809 remain)
+ 360.3  35 | c : SW'unknown':Mux#1035: deleting (1808 remain)
+ 360.3  35 | c : SW#1000:192.168.0.83:46608: deleting (1807 remain)
+ 360.3  35 | c : SW'unknown':Mux#1039: deleting (1806 remain)
+ 360.3  35 | c : SW#1002:192.168.0.83:46612: deleting (1805 remain)
+ 360.3  35 | c : SW'unknown':Mux#1041: deleting (1804 remain)
+ 360.7 TEL | [80] Running: sudo -n echo -n
+ 360.7 TEL | [80] ran in 0.02 secs.
+ 361.6  35 |  s: SW'unknown':Mux#1039: deleting (1865 remain)
+ 361.6  35 |  s: SW#1002:10.102.20.56:8080: deleting (1864 remain)
+ 361.6  35 |  s: SW'unknown':Mux#1041: deleting (1863 remain)
+ 361.6  35 |  s: SW#1004:10.102.20.56:8080: deleting (1862 remain)
+ 363.2  35 |  s: SW'unknown':Mux#1045: deleting (1861 remain)
+ 363.2  35 |  s: SW#1008:10.102.20.56:8080: deleting (1860 remain)
+ 363.8  35 |  s: SW'unknown':Mux#1047: deleting (1859 remain)
+ 363.8  35 |  s: SW#1010:10.102.20.56:8080: deleting (1858 remain)
+ 363.8  35 |  s: SW'unknown':Mux#1049: deleting (1857 remain)
+ 363.8  35 |  s: SW#1012:10.102.20.56:8080: deleting (1856 remain)
+ 365.5  35 |  s: SW'unknown':Mux#1053: deleting (1855 remain)
+ 365.5  35 |  s: SW#1016:10.102.20.56:8080: deleting (1854 remain)
+ 366.1  35 |  s: SW'unknown':Mux#1055: deleting (1853 remain)
+ 366.1  35 |  s: SW#1018:10.102.20.56:8080: deleting (1852 remain)
+ 367.1  35 |  s: SW'unknown':Mux#1057: deleting (1851 remain)
+ 367.1  35 |  s: SW#1020:10.102.20.56:8080: deleting (1850 remain)
+ 382.8 TEL | (proxy checking local liveness)
+ 382.8  27 | 2019-08-06T15:54:59+0000 [Poll#info] Checkpoint
+ 390.7 TEL | [81] Running: sudo -n echo -n
+ 390.8 TEL | [81] ran in 0.02 secs.
+ 390.9  35 | c : DNS request from ('127.0.0.1', 51759) to None: 37 bytes
+ 390.9  35 | c : DNS request from ('127.0.0.1', 51759) to None: 37 bytes
+ 391.0  27 | 2019-08-06T15:55:07+0000 [stdout#info] A query: b'www.telepresence.io'
+ 391.1  27 | 2019-08-06T15:55:07+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 56090
+ 391.1  27 | 2019-08-06T15:55:07+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd198>
+ 391.3  27 | 2019-08-06T15:55:08+0000 [stdout#info] AAAA query, sending back A instead: b'www.telepresence.io'
+ 391.3  27 | 2019-08-06T15:55:08+0000 [stdout#info] A query: b'www.telepresence.io'
+ 391.4  27 | 2019-08-06T15:55:08+0000 [-] (UDP Port 56090 Closed)
+ 391.4  27 | 2019-08-06T15:55:08+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd198>
+ 391.7  35 |  s: SW'unknown':Mux#1059: deleting (1849 remain)
+ 391.7  35 |  s: SW#1022:10.102.20.56:8080: deleting (1848 remain)
+ 392.2  35 | c : DNS request from ('127.0.0.1', 48954) to None: 42 bytes
+ 392.2  35 | c : DNS request from ('127.0.0.1', 48954) to None: 42 bytes
+ 392.3  27 | 2019-08-06T15:55:09+0000 [stdout#info] A query: b'api.mousegesturesapi.com'
+ 392.3  27 | 2019-08-06T15:55:09+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 40383
+ 392.3  27 | 2019-08-06T15:55:09+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd2b0>
+ 392.3  27 | 2019-08-06T15:55:09+0000 [stdout#info] AAAA query, sending back A instead: b'api.mousegesturesapi.com'
+ 392.3  27 | 2019-08-06T15:55:09+0000 [stdout#info] A query: b'api.mousegesturesapi.com'
+ 392.4  27 | 2019-08-06T15:55:09+0000 [-] (UDP Port 40383 Closed)
+ 392.4  27 | 2019-08-06T15:55:09+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd2b0>
+ 392.9  35 | c : DNS request from ('127.0.0.1', 43543) to None: 40 bytes
+ 392.9  35 | c : DNS request from ('127.0.0.1', 43543) to None: 40 bytes
+ 393.4  27 | 2019-08-06T15:55:10+0000 [stdout#info] A query: b'1.0.0.127.in-addr.arpa'
+ 393.4  27 | 2019-08-06T15:55:10+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 5214
+ 393.4  27 | 2019-08-06T15:55:10+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd198>
+ 393.4  27 | 2019-08-06T15:55:10+0000 [stdout#info] AAAA query, sending back A instead: b'1.0.0.127.in-addr.arpa'
+ 393.4  27 | 2019-08-06T15:55:10+0000 [stdout#info] A query: b'1.0.0.127.in-addr.arpa'
+ 393.5  27 | 2019-08-06T15:55:10+0000 [-] (UDP Port 5214 Closed)
+ 393.5  27 | 2019-08-06T15:55:10+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd198>
+ 394.1  35 | c : DNS request from ('127.0.0.1', 33494) to None: 40 bytes
+ 394.1  35 | c : DNS request from ('127.0.0.1', 33494) to None: 40 bytes
+ 394.6  27 | 2019-08-06T15:55:11+0000 [stdout#info] A query: b'1.0.0.127.in-addr.arpa'
+ 394.6  27 | 2019-08-06T15:55:11+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 38012
+ 394.6  27 | 2019-08-06T15:55:11+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd550>
+ 394.6  27 | 2019-08-06T15:55:11+0000 [stdout#info] AAAA query, sending back A instead: b'1.0.0.127.in-addr.arpa'
+ 394.6  27 | 2019-08-06T15:55:11+0000 [stdout#info] A query: b'1.0.0.127.in-addr.arpa'
+ 394.7  27 | 2019-08-06T15:55:11+0000 [-] (UDP Port 38012 Closed)
+ 394.7  27 | 2019-08-06T15:55:11+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd550>
+ 403.2  35 | c : DNS request from ('127.0.0.1', 51622) to None: 37 bytes
+ 403.2  35 | c : DNS request from ('127.0.0.1', 51622) to None: 37 bytes
+ 403.2  27 | 2019-08-06T15:55:20+0000 [stdout#info] A query: b'clients4.google.com'
+ 403.2  27 | 2019-08-06T15:55:20+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 27625
+ 403.2  27 | 2019-08-06T15:55:20+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd2b0>
+ 403.2  27 | 2019-08-06T15:55:20+0000 [-] (UDP Port 27625 Closed)
+ 403.2  27 | 2019-08-06T15:55:20+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd2b0>
+ 403.6  27 | 2019-08-06T15:55:20+0000 [stdout#info] AAAA query, sending back A instead: b'clients4.google.com'
+ 403.6  27 | 2019-08-06T15:55:20+0000 [stdout#info] A query: b'clients4.google.com'
+ 403.6  27 | 2019-08-06T15:55:20+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 58960
+ 403.6  27 | 2019-08-06T15:55:20+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd470>
+ 403.7  27 | 2019-08-06T15:55:20+0000 [-] (UDP Port 58960 Closed)
+ 403.7  27 | 2019-08-06T15:55:20+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd470>
+ 412.8 TEL | (proxy checking local liveness)
+ 412.8  27 | 2019-08-06T15:55:29+0000 [Poll#info] Checkpoint
+ 417.3  35 | c : DNS request from ('127.0.0.1', 49912) to None: 38 bytes
+ 417.3  35 | c : DNS request from ('127.0.0.1', 49912) to None: 38 bytes
+ 417.3  27 | 2019-08-06T15:55:34+0000 [stdout#info] A query: b'static.asm.skype.com'
+ 417.4  27 | 2019-08-06T15:55:34+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 49810
+ 417.4  27 | 2019-08-06T15:55:34+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd9b0>
+ 417.5  27 | 2019-08-06T15:55:34+0000 [-] (UDP Port 49810 Closed)
+ 417.5  27 | 2019-08-06T15:55:34+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd9b0>
+ 417.9  27 | 2019-08-06T15:55:34+0000 [stdout#info] AAAA query, sending back A instead: b'static.asm.skype.com'
+ 417.9  27 | 2019-08-06T15:55:34+0000 [stdout#info] A query: b'static.asm.skype.com'
+ 417.9  27 | 2019-08-06T15:55:34+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 14557
+ 417.9  27 | 2019-08-06T15:55:34+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd940>
+ 418.0  27 | 2019-08-06T15:55:34+0000 [-] (UDP Port 14557 Closed)
+ 418.0  27 | 2019-08-06T15:55:34+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd940>
+ 419.6  35 | c : DNS request from ('127.0.0.1', 32775) to None: 51 bytes
+ 419.6  35 | c : DNS request from ('127.0.0.1', 32775) to None: 51 bytes
+ 419.7  27 | 2019-08-06T15:55:36+0000 [stdout#info] A query: b'static-asm.secure.skypeassets.com'
+ 419.7  27 | 2019-08-06T15:55:36+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 25843
+ 419.7  27 | 2019-08-06T15:55:36+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd940>
+ 419.8  27 | 2019-08-06T15:55:36+0000 [stdout#info] AAAA query, sending back A instead: b'static-asm.secure.skypeassets.com'
+ 419.8  27 | 2019-08-06T15:55:36+0000 [stdout#info] A query: b'static-asm.secure.skypeassets.com'
+ 419.9  27 | 2019-08-06T15:55:36+0000 [-] (UDP Port 25843 Closed)
+ 419.9  27 | 2019-08-06T15:55:36+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd940>
+ 420.8 TEL | [82] Running: sudo -n echo -n
+ 420.8 TEL | [82] ran in 0.02 secs.
+ 422.9 TEL | END SPAN runner.py:682(wait_for_exit)  395.3s
+ 422.9 TEL | Main process (bash --norc)
+ 422.9 TEL |  exited with code 130.
+ 422.9 >>> | Your process exited with return code 130.
+ 422.9 TEL | EXITING successful session.
+ 422.9 >>> | Exit cleanup in progress
+ 422.9 TEL | (Cleanup) Terminate local process
+ 422.9 TEL | (Cleanup) Kill BG process [35] sshuttle
+ 423.0  35 | >> iptables -t nat -D OUTPUT -j sshuttle-12300
+ 423.0  35 | >> iptables -t nat -D PREROUTING -j sshuttle-12300
+ 423.0  35 | >> iptables -t nat -F sshuttle-12300
+ 423.0  35 | >> iptables -t nat -X sshuttle-12300
+ 423.0 TEL | (Cleanup) Unmount remote filesystem
+ 423.0 TEL | [83] Running: fusermount -z -u /tmp/tel-00tqntia/fs
+ 423.0 TEL | [83] ran in 0.01 secs.
+ 423.0 TEL | (Cleanup) Kill BG process [32] SSH port forward (socks and proxy poll)
+ 423.0 TEL | [32] SSH port forward (socks and proxy poll): exit 0
+ 423.0 TEL | (Cleanup) Kill Web server for proxy poll
+ 423.3 TEL | (Cleanup) Kill BG process [31] SSH port forward (exposed ports)
+ 423.3 TEL | [31] SSH port forward (exposed ports): exit 0
+ 423.3 TEL | (Cleanup) Kill BG process [28] kubectl port-forward
+ 423.3  35 | Connection to 127.0.0.1 closed by remote host.
+ 423.3 TEL | [28] kubectl port-forward: exit -15
+ 423.3 TEL | [35] sshuttle: exit -15
+ 423.3 TEL | (Cleanup) Kill BG process [27] kubectl logs
+ 423.3 TEL | [27] kubectl logs: exit -15
+ 423.3 TEL | Background process (kubectl logs) exited with return code -15. Command was:
+ 423.3 TEL |   kubectl --context minikube --namespace default logs -f new-service-8f65f5d7d-fk2xf --container new-service --tail=10
+ 423.3 TEL | 
+ 423.3 TEL | Recent output was:
+ 423.3 TEL |   2019-08-06T15:55:34+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd940>
+ 423.3 TEL |   2019-08-06T15:55:34+0000 [-] (UDP Port 14557 Closed)
+ 423.3 TEL |   2019-08-06T15:55:34+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd940>
+ 423.3 TEL |   2019-08-06T15:55:36+0000 [stdout#info] A query: b'static-asm.secure.skypeassets.com'
+ 423.3 TEL |   2019-08-06T15:55:36+0000 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 25843
+ 423.3 TEL |   2019-08-06T15:55:36+0000 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd940>
+ 423.3 TEL |   2019-08-06T15:55:36+0000 [stdout#info] AAAA query, sending back A instead: b'static-asm.secure.skypeassets.com'
+ 423.3 TEL |   2019-08-06T15:55:36+0000 [stdout#info] A query: b'static-asm.secure.skypeassets.com'
+ 423.3 TEL |   2019-08-06T15:55:36+0000 [-] (UDP Port 25843 Closed)
+ 423.3 TEL |   2019-08-06T15:55:36+0000 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f9c864cd940>
+ 423.3 TEL | (Cleanup) Delete new deployment
+ 423.3 >>> | Cleaning up Deployment new-service
+ 423.3 TEL | [84] Running: kubectl --context minikube --namespace default delete --ignore-not-found svc,deploy --selector=telepresence=1ab2c1237b13443dae91ea7c5b2f016e
+ 423.5  84 | service "new-service" deleted
+ 423.6  84 | deployment.extensions "new-service" deleted
+ 423.6 TEL | [84] ran in 0.28 secs.
+ 423.6 TEL | (Cleanup) Kill sudo privileges holder
+ 423.6 TEL | (Cleanup) Stop time tracking
+ 423.6 TEL | END SPAN main.py:40(main)  423.6s
+ 423.6 TEL | SPAN SUMMARY:
+ 423.6 TEL |  423.6s main.py:40(main)
+ 423.6 TEL |    0.2s   startup.py:74(__init__)
+ 423.6 TEL |    0.0s     2 kubectl version --short
+ 423.6 TEL |    0.0s     3 kubectl config current-context
+ 423.6 TEL |    0.0s     4 kubectl config view -o json
+ 423.6 TEL |    0.0s     5 kubectl --context minikube get ns default
+ 423.6 TEL |    0.0s   6 ssh -V
+ 423.6 TEL |    0.0s   7 sudo -n echo -n
+ 423.6 TEL |    0.0s   8 sudo iptables --list
+ 423.6 TEL |    0.0s   9 kubectl --context minikube --namespace default get pods telepresence-connectiv
+ 423.6 TEL |    0.4s   deployment.py:97(create_new_deployment)
+ 423.6 TEL |    0.1s     10 kubectl --context minikube --namespace default delete --ignore-not-found svc,
+ 423.6 TEL |    0.3s     11 kubectl --context minikube --namespace default run --restart=Always --limits=
+ 423.6 TEL |    4.1s   remote.py:151(get_remote_info)
+ 423.6 TEL |    0.1s     remote.py:78(get_deployment_json)
+ 423.6 TEL |    0.1s       12 kubectl --context minikube --namespace default get deployment -o json --selec
+ 423.6 TEL |    0.1s     13 kubectl --context minikube --namespace default get pod -o json --selector=tel
+ 423.6 TEL |    3.9s     remote.py:113(wait_for_pod)
+ 423.6 TEL |    0.1s       14 kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-
+ 423.6 TEL |    0.1s       15 kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-
+ 423.6 TEL |    0.0s       16 kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-
+ 423.6 TEL |    0.0s       17 kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-
+ 423.6 TEL |    0.1s       18 kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-
+ 423.6 TEL |    0.1s       19 kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-
+ 423.6 TEL |    0.1s       20 kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-
+ 423.6 TEL |    0.1s       21 kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-
+ 423.6 TEL |    0.1s       22 kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-
+ 423.6 TEL |    0.1s       23 kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-
+ 423.6 TEL |    0.1s       24 kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-
+ 423.6 TEL |    0.1s       25 kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-
+ 423.6 TEL |    0.1s       26 kubectl --context minikube --namespace default get pod new-service-8f65f5d7d-
+ 423.6 TEL |    1.1s   connect.py:36(connect)
+ 423.6 TEL |    0.0s     29 ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q
+ 423.6 TEL |    0.8s     30 ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q
+ 423.6 TEL |    3.9s   remote_env.py:28(get_remote_env)
+ 423.6 TEL |    3.9s     33 kubectl --context minikube --namespace default exec new-service-8f65f5d7d-fk2
+ 423.6 TEL |    0.8s   mount.py:32(mount_remote_volumes)
+ 423.6 TEL |    0.8s     34 sshfs -p 43739 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/
+ 423.6 TEL |   16.3s   vpn.py:264(connect_sshuttle)
+ 423.6 TEL |    0.0s     vpn.py:74(get_proxy_cidrs)
+ 423.6 TEL |   16.3s     vpn.py:287(connect_sshuttle,sshuttle-wait)
+ 423.6 TEL |    0.1s       36 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-0")'
+ 423.6 TEL |    0.1s       37 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-0.a.sanity
+ 423.6 TEL |    0.1s       38 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-1")'
+ 423.6 TEL |    0.1s       39 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-1.a.sanity
+ 423.6 TEL |    0.1s       40 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-2")'
+ 423.6 TEL |    0.1s       41 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-2.a.sanity
+ 423.6 TEL |    0.1s       42 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-3")'
+ 423.6 TEL |    0.1s       43 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-3.a.sanity
+ 423.6 TEL |    0.2s       44 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-4")'
+ 423.6 TEL |    0.1s       45 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-4.a.sanity
+ 423.6 TEL |    0.2s       46 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-5")'
+ 423.6 TEL |    0.1s       47 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-5.a.sanity
+ 423.6 TEL |    0.1s       48 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-6")'
+ 423.6 TEL |    0.1s       49 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-6.a.sanity
+ 423.6 TEL |    0.1s       50 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-7")'
+ 423.6 TEL |    0.1s       51 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-7.a.sanity
+ 423.6 TEL |    0.1s       52 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-8")'
+ 423.6 TEL |    0.1s       53 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-8.a.sanity
+ 423.6 TEL |    0.1s       54 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-9")'
+ 423.6 TEL |    0.1s       55 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-9.a.sanity
+ 423.6 TEL |    0.1s       56 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-10")'
+ 423.6 TEL |    0.1s       57 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-10.a.sanit
+ 423.6 TEL |    0.1s       58 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-11")'
+ 423.6 TEL |    0.1s       59 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-11.a.sanit
+ 423.6 TEL |    5.0s       60 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-12")'
+ 423.6 TEL |    1.0s       61 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-12.a.sanit
+ 423.6 TEL |    5.0s       62 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-13")'
+ 423.6 TEL |    0.1s       63 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-13.a.sanit
+ 423.6 TEL |    0.2s       64 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-14")'
+ 423.6 TEL |    0.2s       65 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-14.a.sanit
+ 423.6 TEL |    0.1s       66 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-15")'
+ 423.6 TEL |    0.1s       67 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-15.a.sanit
+ 423.6 TEL |    0.1s       68 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-16")'
+ 423.6 TEL |  395.3s   runner.py:682(wait_for_exit)
+ 423.6 TEL |    0.0s     69 sudo -n echo -n
+ 423.6 TEL |    0.0s     70 sudo -n echo -n
+ 423.6 TEL |    0.0s     71 sudo -n echo -n
+ 423.6 TEL |    0.0s     72 sudo -n echo -n
+ 423.6 TEL |    0.0s     73 sudo -n echo -n
+ 423.6 TEL |    0.0s     74 sudo -n echo -n
+ 423.6 TEL |    0.0s     75 sudo -n echo -n
+ 423.6 TEL |    0.0s     76 sudo -n echo -n
+ 423.6 TEL |    0.0s     77 sudo -n echo -n
+ 423.6 TEL |    0.0s     78 sudo -n echo -n
+ 423.6 TEL |    0.0s     79 sudo -n echo -n
+ 423.6 TEL |    0.0s     80 sudo -n echo -n
+ 423.6 TEL |    0.0s     81 sudo -n echo -n
+ 423.6 TEL |    0.0s     82 sudo -n echo -n
+ 423.6 TEL |    0.0s   83 fusermount -z -u /tmp/tel-00tqntia/fs
+ 423.6 TEL |    0.3s   84 kubectl --context minikube --namespace default delete --ignore-not-found svc,
+ 423.6 TEL | (Cleanup) Remove temporary directory
+ 423.6 TEL | (Cleanup) Save caches
+ 423.8 TEL | (sudo privileges holder thread exiting)

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: listings
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: service
+      name: listings
+  template:
+    metadata:
+      labels:
+        type: service
+        name: listings
+    spec:
+      containers:
+      - name: listings
+        image: listings-service
+        # imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: gcp-service-account-volume
+          mountPath: "/etc/app/secrets"
+          readOnly: true
+      volumes:
+      - name: gcp-service-account-volume
+        secret:
+          secretName: gcp-service-account
+          items:
+          - key: gcp-service-account.json
+            path: gcp-service-account.json    
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: listings
+spec:
+  type: LoadBalancer
+  selector:
+    type: service
+    name: listings
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080

@@ -1,0 +1,37 @@
+apiVersion: skaffold/v1beta13
+kind: Config
+build:
+  tagPolicy:
+    gitCommit: {}  
+  artifacts:
+  - image: listings-service
+    context: ./listings
+  - image: notifications-service
+    context: ./notifications
+  # local:
+  #   useDockerCLI: true  
+deploy:
+  kubectl:
+    manifests:
+      - ./listings/deployment.yaml
+      - ./listings/db.yaml
+      - ./notifications/deployment.yaml
+      - ./notifications/db.yaml
+      - ./ingress.yaml
+# portForward:
+#   - resourceType: deployment
+#     resourceName: listings
+#     port: 8080 
+#     localPort: 9000
+#   - resourceType: deployment
+#     resourceName: notifications
+#     port: 8080 
+#     localPort: 9001
+#   - resourceType: pod
+#     resourceName: listings-db
+#     port: 27017
+#     localPort: 27017
+#   - resourceType: pod
+#     resourceName: notifications-db
+#     port: 27017
+#     localPort: 27018
