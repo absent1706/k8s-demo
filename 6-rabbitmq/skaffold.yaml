@@ -1,0 +1,40 @@
+apiVersion: skaffold/v1beta13
+kind: Config
+build:
+  tagPolicy:
+    gitCommit: {}  
+  artifacts:
+  - image: listings-service
+    context: ./services/listings
+  - image: notifications-service
+    context: ./services/notifications
+#  - image: megaphone-service
+#    context: ./services/megaphone
+deploy:
+  kubectl:
+    manifests:
+      - ./services/listings/deployment.yaml
+      - ./services/listings/db.yaml
+      - ./services/notifications/deployment.yaml
+      - ./services/notifications/db.yaml
+#      - ./services/megaphone/deployment.yaml
+      - ./services/ingress.yaml
+      - ./services/rabbitmq.yaml
+      - ./config.yaml
+# portForward:
+#   - resourceType: deployment
+#     resourceName: listings
+#     port: 8080 
+#     localPort: 9000
+#   - resourceType: deployment
+#     resourceName: notifications
+#     port: 8080 
+#     localPort: 9001
+#   - resourceType: pod
+#     resourceName: listings-db
+#     port: 27017
+#     localPort: 27017
+#   - resourceType: pod
+#     resourceName: notifications-db
+#     port: 27017
+#     localPort: 27018

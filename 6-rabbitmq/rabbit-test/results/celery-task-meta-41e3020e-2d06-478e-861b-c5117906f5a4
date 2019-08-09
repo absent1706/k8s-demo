@@ -1,0 +1,1 @@
+{"status": "FAILURE", "result": {"exc_type": "WorkerLostError", "exc_message": ["Worker exited prematurely: exitcode 0."], "exc_module": "billiard.exceptions"}, "traceback": null, "children": [], "task_id": "41e3020e-2d06-478e-861b-c5117906f5a4", "date_done": "2019-08-08T13:33:10.766445"}

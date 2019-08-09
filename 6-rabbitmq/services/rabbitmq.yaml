@@ -1,0 +1,87 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: rabbitmq-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 100M
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/sda1/data/rabbitmq"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rabbitmq-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: rabbitmq
+  name: rabbitmq
+spec:
+  replicas: 1
+#  strategy:
+#    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+      - image: rabbitmq:3.7-management
+        name: rabbitmq
+#        env:
+#        - name: RABBITMQ_DEFAULT_USER
+#          value: user
+#        - name: RABBITMQ_DEFAULT_PASS
+#          value: password
+        ports:
+        - containerPort: 5672
+        - containerPort: 15672
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/lib/rabbitmq
+          name: rabbitmq-data
+      restartPolicy: Always
+      volumes:
+      - name: rabbitmq-data
+        persistentVolumeClaim:
+          claimName: rabbitmq-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+spec:
+  type: ClusterIP
+  ports:
+  - name: "5672"
+    port: 5672
+    targetPort: 5672
+  selector:
+    app: rabbitmq
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-ui
+spec:
+  type: LoadBalancer
+  ports:
+  - name: "15672"
+    port: 15672
+    targetPort: 15672
+  selector:
+    app: rabbitmq

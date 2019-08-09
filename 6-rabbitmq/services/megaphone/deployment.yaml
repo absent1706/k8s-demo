@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: megaphone
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: megaphone
+  template:
+    metadata:
+      labels:
+        app: megaphone
+    spec:
+      containers:
+      - name: megaphone
+        image: megaphone-service
+#        imagePullPolicy: Never
+        volumeMounts:
+        - name: gcp-service-account-volume
+          mountPath: "/etc/app/secrets"
+          readOnly: true
+        - name: config-volume
+          mountPath: "etc/app/config"
+          readOnly: true
+      volumes:
+      - name: gcp-service-account-volume
+        secret:
+          secretName: gcp-service-account
+          items:
+          - key: gcp-service-account.json
+            path: gcp-service-account.json    
+      - name: config-volume
+        configMap:
+          name: main-config     
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: megaphone
+#spec:
+#  type: ClusterIP
+#  selector:
+#    app: megaphone
+#  ports:
+#    - protocol: TCP
+#      port: 80
+#      targetPort: 8080

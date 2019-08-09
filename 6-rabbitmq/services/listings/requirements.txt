@@ -1,0 +1,6 @@
+flask
+gunicorn
+pymongo
+celery
+
+google-python-cloud-debugger

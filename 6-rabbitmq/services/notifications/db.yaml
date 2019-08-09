@@ -1,0 +1,59 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: notifications-db-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 100M
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/sda1/data/notifications/db"
+---    
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: notifications-db-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100M
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notifications-db
+spec:
+  selector:
+    role: notifications-db
+  type: ClusterIP
+  ports:
+  - port: 27017
+    targetPort: 27017
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: notifications-db
+  labels:
+    role: notifications-db  
+spec:
+  volumes:
+    - name: notifications-db-storage
+      persistentVolumeClaim:
+        claimName: notifications-db-claim
+  containers:
+    - name: notifications-db-pod
+      image: mongo
+      ports:
+        - containerPort: 27017
+          name: "db-port"
+      volumeMounts:
+        - mountPath: "/data/db"
+          name: notifications-db-storage

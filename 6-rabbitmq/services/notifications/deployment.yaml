@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notifications
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: notifications
+  template:
+    metadata:
+      labels:
+        app: notifications
+    spec:
+      containers:
+      - name: notifications
+        image: notifications-service
+        # imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: gcp-service-account-volume
+          mountPath: "/etc/app/secrets"
+          readOnly: true
+      volumes:
+      - name: gcp-service-account-volume
+        secret:
+          secretName: gcp-service-account
+          items:
+          - key: gcp-service-account.json
+            path: gcp-service-account.json            
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notifications
+spec:
+  type: LoadBalancer
+  selector:
+    app: notifications
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
