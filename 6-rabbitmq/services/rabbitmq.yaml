@@ -16,49 +16,41 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: rabbitmq-data
+  name: rabbitmq-claim
 spec:
+  storageClassName: manual
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 100Mi
+      storage: 100M
+  volumeName: "rabbitmq-volume"
 ---
-apiVersion: extensions/v1beta1
-kind: Deployment
+kind: Pod
+apiVersion: v1
 metadata:
+  name: rabbitmq
   labels:
     app: rabbitmq
-  name: rabbitmq
 spec:
-  replicas: 1
-#  strategy:
-#    type: Recreate
-  template:
-    metadata:
-      labels:
-        app: rabbitmq
-    spec:
-      containers:
-      - image: rabbitmq:3.7-management
-        name: rabbitmq
+  containers:
+  - image: rabbitmq:3.7-management
+    name: rabbitmq
 #        env:
 #        - name: RABBITMQ_DEFAULT_USER
 #          value: user
 #        - name: RABBITMQ_DEFAULT_PASS
 #          value: password
-        ports:
-        - containerPort: 5672
-        - containerPort: 15672
-        resources: {}
-        volumeMounts:
-        - mountPath: /var/lib/rabbitmq
-          name: rabbitmq-data
-      restartPolicy: Always
-      volumes:
-      - name: rabbitmq-data
-        persistentVolumeClaim:
-          claimName: rabbitmq-data
+    ports:
+    - containerPort: 5672
+    - containerPort: 15672
+    volumeMounts:
+    - mountPath: "/var/lib/rabbitmq"
+      name: rabbitmq-storage
+  volumes:
+  - name: rabbitmq-storage
+    persistentVolumeClaim:
+      claimName: rabbitmq-claim
 ---
 apiVersion: v1
 kind: Service
