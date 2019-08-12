@@ -8,8 +8,8 @@ build:
     context: ./services/listings
   - image: notifications-service
     context: ./services/notifications
-#  - image: megaphone-service
-#    context: ./services/megaphone
+  - image: megaphone-service
+    context: ./services/megaphone
 deploy:
   kubectl:
     manifests:
@@ -17,7 +17,7 @@ deploy:
       - ./services/listings/db.yaml
       - ./services/notifications/deployment.yaml
       - ./services/notifications/db.yaml
-#      - ./services/megaphone/deployment.yaml
+      - ./services/megaphone/deployment.yaml
       - ./services/ingress.yaml
       - ./services/rabbitmq.yaml
       - ./config.yaml

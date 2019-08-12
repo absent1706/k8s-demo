@@ -1,4 +1,3 @@
-
 try:
     import googleclouddebugger
 
@@ -15,6 +14,7 @@ from pymongo import MongoClient
 from bson import ObjectId
 import pprint
 import sys
+import os
 
 from celery import Celery
 
@@ -24,8 +24,9 @@ app = Flask(__name__)
 client = MongoClient('listings-db')
 db = client.listings
 
-celery = Celery('tasks')
-celery.config_from_object('celeryconfig')
+celery = Celery('tasks',
+                broker=os.getenv('CELERY_BROKER_URL'),
+                result=os.getenv('CELERY_RESULT_BACKEND'))
 celery.conf.task_default_queue = 'megaphone'
 
 

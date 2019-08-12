@@ -9,19 +9,19 @@
 # except BaseException as e:
 #     print('ERROR!!!!!!!!', e)
 
-import sys
 import requests
+import os
 
 from celery import Celery
 
-sys.path.append('/etc/app/config')
-
-celery = Celery('tasks')
-celery.config_from_object('celeryconfig')
+celery = Celery('tasks',
+                broker=os.getenv('CELERY_BROKER_URL'),
+                result=os.getenv('CELERY_RESULT_BACKEND'))
 celery.conf.task_default_queue = 'megaphone'
 
 
 @celery.task(name='megaphone')
 def megaphone(listing_id):
-    listing = requests.get('http://listings/listing_id').text
+    import time; time.sleep(5)
+    listing = requests.get(f'http://listings/get/{listing_id}').text
     return f'Megaphone for listing {listing} done'

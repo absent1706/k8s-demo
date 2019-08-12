@@ -18,12 +18,20 @@ spec:
         # imagePullPolicy: Never
         ports:
         - containerPort: 8080
+        env:
+        - name: CELERY_BROKER_URL
+          valueFrom:
+            configMapKeyRef:
+              name: main-config
+              key: CELERY_BROKER_URL
+        - name: CELERY_RESULT_BACKEND
+          valueFrom:
+            configMapKeyRef:
+              name: main-config
+              key: CELERY_RESULT_BACKEND
         volumeMounts:
         - name: gcp-service-account-volume
           mountPath: "/etc/app/secrets"
-          readOnly: true
-        - name: config-volume
-          mountPath: "etc/app/config"
           readOnly: true
       volumes:
       - name: gcp-service-account-volume
@@ -31,10 +39,7 @@ spec:
           secretName: gcp-service-account
           items:
           - key: gcp-service-account.json
-            path: gcp-service-account.json    
-      - name: config-volume
-        configMap:
-          name: main-config     
+            path: gcp-service-account.json
 ---
 apiVersion: v1
 kind: Service

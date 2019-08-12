@@ -6,5 +6,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-#CMD ["gunicorn", "app:app", "-b", "0.0.0.0:8080"]
-CMD ["celery", "-A", "worker", "worker", "--loglevel=INFO", "--concurrency=10"]
+RUN adduser --disabled-password --gecos "" non-root-user
+USER non-root-user
+CMD ["celery", "-A", "worker", "worker", "--loglevel=INFO"]
