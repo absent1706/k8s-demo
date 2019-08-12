@@ -93,57 +93,57 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/mnt/sda1/data/celery-results"
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: celery-results-claim
-spec:
-  storageClassName: manual
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 100M
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: celery-results
-spec:
-  selector:
-    role: celery-results
-  type: ClusterIP
-  ports:
-  - port: 3306
-    targetPort: 3306
----
-kind: Pod
-apiVersion: v1
-metadata:
-  name: celery-results
-  labels:
-    role: celery-results
-spec:
-  volumes:
-    - name: celery-results-storage
-      persistentVolumeClaim:
-        claimName: celery-results-claim
-  containers:
-    - name: celery-results-pod
-      image: mariadb
-      ports:
-        - containerPort: 3306
-          name: "db-port"
-#      command: ["mysql"]
-#      args: ["--user='root'", "--password='root'", "--execute='CREATE DATABASE celery-results;"]
-      env:
-        - name: MYSQL_ROOT_PASSWORD
-          value: "root"
-#          valueFrom:
-#            secretKeyRef:
-#              name: mysql
-#              key: password
-      volumeMounts:
-        - mountPath: "/var/lib/mysql"
-          name: celery-results-storage
+#---
+#kind: PersistentVolumeClaim
+#apiVersion: v1
+#metadata:
+#  name: celery-results-claim
+#spec:
+#  storageClassName: manual
+#  accessModes:
+#    - ReadWriteOnce
+#  resources:
+#    requests:
+#      storage: 100M
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: celery-results
+#spec:
+#  selector:
+#    role: celery-results
+#  type: ClusterIP
+#  ports:
+#  - port: 3306
+#    targetPort: 3306
+#---
+#kind: Pod
+#apiVersion: v1
+#metadata:
+#  name: celery-results
+#  labels:
+#    role: celery-results
+#spec:
+#  volumes:
+#    - name: celery-results-storage
+#      persistentVolumeClaim:
+#        claimName: celery-results-claim
+#  containers:
+#    - name: celery-results-pod
+#      image: mariadb
+#      ports:
+#        - containerPort: 3306
+#          name: "db-port"
+##      command: ["mysql"]
+##      args: ["--user='root'", "--password='root'", "--execute='CREATE DATABASE celery-results;"]
+#      env:
+#        - name: MYSQL_ROOT_PASSWORD
+#          value: "root"
+##          valueFrom:
+##            secretKeyRef:
+##              name: mysql
+##              key: password
+#      volumeMounts:
+#        - mountPath: "/var/lib/mysql"
+#          name: celery-results-storage
