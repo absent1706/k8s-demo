@@ -1,11 +1,24 @@
-To start app:
+# App init (once)
 ```
 minikube start
 eval $(minikube docker-env)
 kubectl create secret generic gcp-service-account --from-file=secrets-dont-store-in-git/gcp-service-account.json
+```
+
+# App run (every time)
+```
 skaffold dev
+```
+
+To forward ports:
+```
 sudo kubefwd svc
 ```
+or
+```
+minikube service list
+```
+
 
 # Recommended environment setup 
 
