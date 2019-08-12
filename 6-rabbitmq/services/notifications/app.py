@@ -19,6 +19,11 @@ client = MongoClient('notifications-db')
 db = client.notifications
 
 
+@app.route('/')
+def hello():
+    return 'Hello from notifications service!'
+
+
 @app.route('/request-listings')
 def request_listings():
     return requests.get('http://listings/all').text

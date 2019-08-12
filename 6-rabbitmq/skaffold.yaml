@@ -10,6 +10,8 @@ build:
     context: ./services/notifications
   - image: megaphone-service
     context: ./services/megaphone
+  - image: flower-fixed
+    context: ./services/flower
 deploy:
   kubectl:
     manifests:
@@ -20,6 +22,7 @@ deploy:
       - ./services/megaphone/deployment.yaml
       - ./services/ingress.yaml
       - ./services/rabbitmq.yaml
+      - ./services/flower/deployment.yaml
       - ./config.yaml
 # portForward:
 #   - resourceType: deployment

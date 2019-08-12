@@ -23,5 +23,8 @@ celery.conf.task_default_queue = 'megaphone'
 @celery.task(name='megaphone')
 def megaphone(listing_id):
     import time; time.sleep(5)
+    import random
+    if random.random() < 0.3:
+        raise ValueError('Some test fail reason')
     listing = requests.get(f'http://listings/get/{listing_id}').text
     return f'Megaphone for listing {listing} done'
