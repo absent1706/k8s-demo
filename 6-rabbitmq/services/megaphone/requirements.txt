@@ -1,4 +1,7 @@
 celery
 requests
 
+sqlalchemy
+mysqlclient
+
 google-python-cloud-debugger

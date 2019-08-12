@@ -4,5 +4,6 @@ metadata:
   name: main-config
 data:
   CELERY_BROKER_URL: amqp://rabbitmq:5672//
-  CELERY_RESULT_BACKEND: 'rpc://'
+#  CELERY_RESULT_BACKEND: 'rpc://'
+  CELERY_RESULT_BACKEND: db+mysql://root:root@celery-results/celery_results
 

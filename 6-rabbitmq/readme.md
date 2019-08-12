@@ -24,10 +24,13 @@ minikube service list
 
 Add this to ~./bashrc
 ```
-alias python=python3.7
 source <(kubectl completion bash)
+
+alias python=python3.7
 alias fw='sudo kubefwd svc'
 alias sl='minikube service list'
+alias ka='kubectl get all'
+
 export PYTHONDONTWRITEBYTECODE=1
 export PIPENV_VENV_IN_PROJECT="enabled"
 export SKAFFOLD_NO_PRUNE=true

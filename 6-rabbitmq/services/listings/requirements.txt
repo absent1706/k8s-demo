@@ -1,6 +1,9 @@
 flask
 gunicorn
 pymongo
+
 celery
+sqlalchemy
+mysqlclient
 
 google-python-cloud-debugger
